@@ -29,4 +29,4 @@ const createForm = <T extends object>(): FormWithSubcomponents<T> => {
   return FormComponent as FormWithSubcomponents<T>;
 };
 
-export const Form = createForm<Record<string, unknown>>();
+export const Form = createForm<Record<string, string>>();

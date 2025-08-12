@@ -187,7 +187,6 @@ const MyCards = () => {
       );
     }
   };
-
   return (
     <ParallaxScrollView>
       <ParentView>
