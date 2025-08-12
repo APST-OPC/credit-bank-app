@@ -1,9 +1,10 @@
 import { useState } from "react";
-import { ScrollView, View, Modal, Pressable } from "react-native";
+import { ScrollView, View, Modal, Pressable, Image } from "react-native";
 import { TextInput, Button, Text } from "react-native-paper";
 import styled from "styled-components/native";
 import { useRouter } from "expo-router";
 import theme from "@/theme";
+import React from "react";
 
 const countryCodes = [
   { label: "Philippines (+63)", value: "+63" },
@@ -123,94 +124,93 @@ export default function VerifyPhoneScreen() {
   );
 }
 
-const Container = styled.View`
-  flex: 1;
-  width: 100%;
-  max-width: 480px;
-  align-self: center;
-`;
+const Container = styled(View)({
+  flex: 1,
+  width: "100%",
+  maxWidth: "480px",
+  alignSelf: "center",
+});
 
-const BackgroundImage = styled.Image`
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-`;
+const BackgroundImage = styled(Image)({
+  flex: 1,
+  width: "100%",
+  height: "100%",
+  position: "absolute",
+});
 
-const Card = styled(View)`
-  width: 100%;
-  max-width: 480px;
-  align-self: center;
-  background-color: white;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  padding: 50px 50px;
-  elevation: 4;
-`;
+const Card = styled(View)({
+  width: "100%",
+  maxWidth: "480px",
+  alignSelf: "center",
+  backgroundColor: "white",
+  borderTopLeftRadius: 20,
+  borderTopRightRadius: 20,
+  padding: "50px 50px",
+  elevation: 4,
+});
 
-const Title = styled(Text)`
-  font-size: 24px;
-  font-weight: 600;
-  margin-bottom: 10px;
-  color: #333;
-`;
+const Title = styled(Text)({
+  fontSize: 24,
+  fontWeight: "600",
+  marginBottom: 10,
+  color: "#333",
+});
 
-const Subtitle = styled(Text)`
-  font-size: 14px;
-  color: #666;
-  margin-bottom: 25px;
-  line-height: 20px;
-`;
+const Subtitle = styled(Text)({
+  fontSize: 14,
+  color: "#666",
+  marginBottom: 25,
+  lineHeight: 20,
+});
 
-const PhoneInputContainer = styled(View)`
-  padding-bottom: 300px;
-  flex-direction: row;
-  gap: 8px;
-  margin-bottom: 30px;
-`;
+const PhoneInputContainer = styled(View)({
+  paddingBottom: 300,
+  flexDirection: "row",
+  gap: 8,
+  marginBottom: 30,
+});
 
-const CountryCodeInput = styled(TextInput)`
-  width: 90px;
-  background-color: white;
-`;
+const CountryCodeInput = styled(TextInput)({
+  width: 90,
+  backgroundColor: "white",
+});
 
-const PhoneInput = styled(TextInput)`
-  flex: 1;
-  background-color: white;
-`;
+const PhoneInput = styled(TextInput)({
+  flex: 1,
+  backgroundColor: "white",
+});
 
-const ModalOverlay = styled.Pressable`
-  flex: 1;
-`;
+const ModalOverlay = styled(Pressable)({
+  flex: 1,
+});
 
-const ModalContainer = styled(View)`
-  bottom: 0;
-  width: 100%;
-  background-color: white;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  padding: 20px 0;
-  box-shadow: 0px -2px 10px rgba(0, 0, 0, 0.1);
-  width: 100%;
-  max-width: 480px;
-  align-self: center;
-`;
+const ModalContainer = styled(View)({
+  bottom: 0,
+  width: "100%",
+  backgroundColor: "white",
+  borderTopLeftRadius: 20,
+  borderTopRightRadius: 20,
+  padding: "20px 0",
+  boxShadow: "0px -2px 10px rgba(0, 0, 0, 0.1)",
+  maxWidth: "480px",
+  alignSelf: "center",
+});
 
-const ModalHeader = styled(View)`
-  align-items: center;
-  padding: 10px;
-`;
+const ModalHeader = styled(View)({
+  alignItems: "center",
+  padding: 10,
+});
 
-const ModalTitle = styled(Text)`
-  font-size: 18px;
-  font-weight: bold;
-`;
+const ModalTitle = styled(Text)({
+  fontSize: 18,
+  fontWeight: "bold",
+});
 
-const ModalBody = styled(ScrollView)`
-  max-height: 300px;
-`;
+const ModalBody = styled(ScrollView)({
+  maxHeight: "300px",
+});
 
-const ModalFooter = styled(View)`
-  align-items: center;
-  padding: 10px;
-`;
+const ModalFooter = styled(View)({
+  alignItems: "center",
+  padding: 10,
+});

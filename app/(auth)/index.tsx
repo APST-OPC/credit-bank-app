@@ -1,234 +1,155 @@
 import React, { useEffect } from "react";
 import styled from "styled-components/native";
-import AsyncStorage from "@react-native-async-storage/async-storage";
-import { TextInput, Button, Text, Surface } from "react-native-paper";
-import {
-  ScrollView,
-  KeyboardAvoidingView,
-  Platform,
-  View,
-  Image,
-} from "react-native";
+import { Button, Text } from "react-native-paper";
+import { View, Image, TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
-import { Formik } from "formik";
-import OnboardingScreen from "@/components/onboard/OnboardingScreen";
-import { useOnboard } from "@/store/onboard/onBoard";
+import OnboardingScreen from "@/components/auth/onboard/OnboardingScreen";
+import { useOnboarding } from "@/hooks/useOnboarding";
+import ElevatedView from "@/components/auth/elevated-view/ElevatedView";
+import { Form } from "@/components/form/Form";
+
+const Container = styled(View)({
+  flex: 1,
+  width: "100%",
+  maxWidth: 480,
+  alignSelf: "center",
+  position: "relative",
+});
+const BackgroundImage = styled(Image)({
+  flex: 1,
+  width: "100%",
+  height: "100%",
+  position: "absolute",
+});
+
+const Title = styled(Text)({
+  fontSize: 27,
+  fontFamily: "PoppinsBold",
+  textAlign: "center",
+  color: "#333",
+});
+
+const SocialButtons = styled(View)({
+  flexDirection: "row",
+  justifyContent: "center",
+  gap: 30,
+});
+
+const AuthContainer = styled(View)({
+  flexDirection: "row",
+  justifyContent: "center",
+  alignItems: "center",
+});
+
+const AuthText = styled(Text)({
+  color: "#666",
+});
+
+const SocialIcon = styled(Image)({
+  width: 30,
+  height: 30,
+});
+
+const DescriptionView = styled(View)({
+  display: "flex",
+  flexDirection: "column",
+  gap: 10,
+});
 
 export default function LoginScreen() {
+  const socialBtn = [
+    require("@/assets/images/google.png"),
+    require("@/assets/images/fb.png"),
+    require("@/assets/images/twitter.png"),
+  ];
   const router = useRouter();
-  const { isOnboarded = false, completeOnboarding } = useOnboard(
-    (state) => state
-  );
+  const { isOnboarded, checkFirstLaunch, completeOnboarding } = useOnboarding();
 
   useEffect(() => {
-    const checkFirstLaunch = async () => {
-      try {
-        const value = await AsyncStorage.getItem("hasLaunched");
-        if (value === null) {
-          completeOnboarding(true);
-        } else {
-          completeOnboarding(false);
-        }
-      } catch (error) {
-        console.error("Error checking first launch", error);
-      }
-    };
-
     checkFirstLaunch();
   }, [completeOnboarding]);
 
-  const handleSubmit = () => {
-    router.push("/(tabs)");
+  const handleSignUp = () => {
+    router.push("/(auth)/signup");
   };
 
-  return (
-    <>
-      {isOnboarded ? (
-        <OnboardingScreen />
-      ) : (
-        <Container>
-          <BackgroundImage
-            source={require("@/assets/images/bgworld.png")}
-            resizeMode="cover"
+  const renderBackground = () => {
+    return (
+      <BackgroundImage
+        source={require("@/assets/images/bgworld.png")}
+        resizeMode="cover"
+      />
+    );
+  };
+
+  const renderForm = () => {
+    return (
+      <Form
+        instance={{
+          initialValues: { email: "", password: "" },
+          onSubmit: (values) => console.log("form", values),
+        }}
+      >
+        <View style={{ display: "flex", flexDirection: "column", gap: 15 }}>
+          <Form.ControlledTextInput
+            name="email"
+            label="Email"
+            keyboardType="email-address"
+            placeholder="ex: jon.smith@email.com"
           />
+          <Form.ControlledTextInput
+            name="password"
+            type="password"
+            label="Password"
+            placeholder="********"
+          />
+          <Form.Button mode="contained">SIGN IN</Form.Button>
+        </View>
+      </Form>
+    );
+  };
 
-          <KeyboardAvoidingView
-            behavior={Platform.OS === "ios" ? "padding" : undefined}
-            style={{ flex: 1 }}
-          >
-            <ScrollView
-              contentContainerStyle={{
-                flexGrow: 1,
-                justifyContent: "flex-end",
-              }}
-              keyboardShouldPersistTaps="handled"
-            >
-              <StyledSurface>
-                <Title>Sign in to your account</Title>
+  const renderDescriptions = () => {
+    return (
+      <DescriptionView>
+        <AuthContainer>
+          <AuthText>or sign in with</AuthText>
+        </AuthContainer>
 
-                <Formik
-                  initialValues={{ email: "", password: "" }}
-                  onSubmit={handleSubmit}
-                >
-                  {({ handleChange, handleBlur, handleSubmit, values }) => (
-                    <View style={{ flexDirection: "column", rowGap: 5 }}>
-                      <InputGroup>
-                        <StyledLabel>Email</StyledLabel>
-                        <StyledTextInput
-                          mode="outlined"
-                          keyboardType="email-address"
-                          placeholder="ex: jon.smith@email.com"
-                          placeholderTextColor="#9A9A9A"
-                          value={values.email}
-                          onChangeText={handleChange("email")}
-                          onBlur={handleBlur("email")}
-                        />
-                      </InputGroup>
+        <SocialButtons>
+          {socialBtn.map((data, index) => (
+            <TouchableOpacity key={index}>
+              <SocialIcon source={data} resizeMode="contain" />
+            </TouchableOpacity>
+          ))}
+        </SocialButtons>
 
-                      <InputGroup>
-                        <StyledLabel>Password</StyledLabel>
-                        <StyledTextInput
-                          mode="outlined"
-                          placeholder="********"
-                          secureTextEntry
-                          value={values.password}
-                          onChangeText={handleChange("password")}
-                          onBlur={handleBlur("password")}
-                        />
-                      </InputGroup>
+        <AuthContainer>
+          <AuthText>Don't have an account? </AuthText>
+          <Button mode="text" onPress={handleSignUp}>
+            SIGN UP
+          </Button>
+        </AuthContainer>
+      </DescriptionView>
+    );
+  };
 
-                      <Button mode="contained" onPress={() => handleSubmit()}>
-                        SIGN IN
-                      </Button>
-                    </View>
-                  )}
-                </Formik>
+  const renderElevatedView = () => {
+    return (
+      <ElevatedView>
+        <Title>Sign in to your account</Title>
+        {renderForm()}
+        {renderDescriptions()}
+      </ElevatedView>
+    );
+  };
 
-                <OrText>or sign in with</OrText>
-
-                <SocialButtons>
-                  <SocialButton>
-                    <SocialIcon
-                      source={require("@/assets/images/google.png")}
-                      resizeMode="contain"
-                    />
-                  </SocialButton>
-                  <SocialButton>
-                    <SocialIcon
-                      source={require("@/assets/images/fb.png")}
-                      resizeMode="contain"
-                    />
-                  </SocialButton>
-                  <SocialButton>
-                    <SocialIcon
-                      source={require("@/assets/images/twitter.png")}
-                      resizeMode="contain"
-                    />
-                  </SocialButton>
-                </SocialButtons>
-
-                <SignUpContainer>
-                  <SignUpText>Don't have an account? </SignUpText>
-                  <SignUpButton
-                    mode="text"
-                    onPress={() => router.push("/(auth)/signup")}
-                  >
-                    SIGN UP
-                  </SignUpButton>
-                </SignUpContainer>
-              </StyledSurface>
-            </ScrollView>
-          </KeyboardAvoidingView>
-        </Container>
-      )}
-    </>
+  return isOnboarded ? (
+    <OnboardingScreen />
+  ) : (
+    <Container>
+      {renderBackground()}
+      {renderElevatedView()}
+    </Container>
   );
 }
-
-const Container = styled.View`
-  flex: 1;
-  width: 100%;
-  max-width: 480px;
-  align-self: center;
-`;
-
-const BackgroundImage = styled.Image`
-  flex: 1;
-  width: 100%;
-  height: 100%;
-  position: absolute;
-`;
-
-const StyledSurface = styled(Surface)`
-  width: 100%;
-  max-width: 480px;
-  align-self: center;
-  background-color: white;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  padding: 50px 60px;
-  elevation: 4;
-`;
-
-const Title = styled(Text)`
-  font-size: 27px;
-  font-weight: 600;
-  margin-bottom: 20px;
-  text-align: center;
-  color: #333;
-`;
-
-const InputGroup = styled.View`
-  margin-bottom: 12px;
-`;
-
-const StyledLabel = styled(Text)`
-  padding-bottom: 5px;
-  color: #333;
-`;
-
-const StyledTextInput = styled(TextInput)`
-  background-color: white;
-`;
-
-const SocialButtons = styled.View`
-  flex-direction: row;
-  justify-content: center;
-  gap: 15px;
-  margin-bottom: 20px;
-`;
-
-const SocialButton = styled(Button)`
-  width: 50px;
-  height: 50px;
-  border-radius: 25px;
-  justify-content: center;
-  align-items: center;
-  padding: 0px;
-`;
-
-const SignUpContainer = styled.View`
-  flex-direction: row;
-  justify-content: center;
-  align-items: center;
-`;
-
-const SignUpText = styled(Text)`
-  color: #666;
-`;
-
-const SignUpButton = styled(Button)`
-  color: #006d77;
-  font-weight: bold;
-`;
-
-const SocialIcon = styled(Image)`
-  width: 30px;
-  height: 30px;
-`;
-
-const OrText = styled(Text)`
-  text-align: center;
-  margin-vertical: 15px;
-  color: #666;
-`;

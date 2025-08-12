@@ -5,6 +5,7 @@ import Animated, { useAnimatedRef } from "react-native-reanimated";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import styled from "styled-components/native";
+import React from "react";
 
 const WebView = styled(View)({
   flex: 1,

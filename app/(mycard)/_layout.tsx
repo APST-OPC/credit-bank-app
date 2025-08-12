@@ -1,5 +1,6 @@
 import StackLayout from "@/components/StackLayout";
 import { Stack } from "expo-router";
+import React from "react";
 const MyCardsLayout = () => {
   return (
     <StackLayout>

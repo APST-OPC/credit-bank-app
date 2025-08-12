@@ -1,12 +1,14 @@
-import React, { useState } from "react";
+import React from "react";
 import styled from "styled-components/native";
-import { TextInput, Button, Text, Surface, Checkbox } from "react-native-paper";
+import { Button, Text, Checkbox } from "react-native-paper";
 import { Image, ScrollView } from "react-native";
 import { useRouter } from "expo-router";
 import { Formik } from "formik";
 import * as Yup from "yup";
 
 import { useAppTheme } from "@/hooks/useTheme";
+import TextInput from "@/components/form/text-input/TextInput";
+import ElevatedView from "@/components/auth/elevated-view/ElevatedView";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string()
@@ -47,9 +49,6 @@ export default function SignUpScreen() {
   const router = useRouter();
   const theme = useAppTheme();
 
-  const [showPassword, setShowPassword] = useState(false);
-  const [showConfirmPassword, setShowConfirmPassword] = useState(false);
-
   const areAllFieldsFilled = (values: {
     name: string;
     email: string;
@@ -65,14 +64,6 @@ export default function SignUpScreen() {
     );
   };
 
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword);
-  };
-
-  const toggleConfirmPasswordVisibility = () => {
-    setShowConfirmPassword(!showConfirmPassword);
-  };
-
   return (
     <Container>
       <BackgroundImage
@@ -83,7 +74,7 @@ export default function SignUpScreen() {
       <ScrollView
         contentContainerStyle={{ flexGrow: 1, justifyContent: "flex-end" }}
       >
-        <Card>
+        <ElevatedView>
           <Formik
             initialValues={{
               name: "",
@@ -108,17 +99,8 @@ export default function SignUpScreen() {
             }) => (
               <>
                 <Title>Create your account</Title>
-                <Text
-                  variant="bodyLarge"
-                  style={{
-                    paddingBottom: "5px",
-                    color: touched.name && errors.name ? "red" : "black",
-                  }}
-                >
-                  Name
-                </Text>
-
-                <StyledTextInput
+                <TextInput
+                  label="Name"
                   mode="outlined"
                   value={values.name}
                   onChangeText={handleChange("name")}
@@ -130,16 +112,8 @@ export default function SignUpScreen() {
                 {touched.name && errors.name && (
                   <ErrorText>{errors.name}</ErrorText>
                 )}
-                <Text
-                  variant="bodyLarge"
-                  style={{
-                    paddingBottom: "5px",
-                    color: touched.email && errors.email ? "red" : "black",
-                  }}
-                >
-                  Email
-                </Text>
-                <StyledTextInput
+                <TextInput
+                  label="Email"
                   mode="outlined"
                   value={values.email}
                   onChangeText={handleChange("email")}
@@ -152,88 +126,38 @@ export default function SignUpScreen() {
                 {touched.email && errors.email && (
                   <ErrorText>{errors.email}</ErrorText>
                 )}
-                <Text
-                  variant="bodyLarge"
-                  style={{
-                    paddingBottom: "5px",
-                    color:
-                      touched.password && errors.password ? "red" : "black",
-                  }}
-                >
-                  Password
-                </Text>
-
-                <StyledTextInput
+                <TextInput
+                  label="Password"
+                  type="password"
                   mode="outlined"
                   value={values.password}
                   onChangeText={handleChange("password")}
                   onBlur={handleBlur("password")}
-                  secureTextEntry={!showPassword}
                   error={
                     touched.confirmPassword && errors.confirmPassword
                       ? true
                       : false
                   }
-                  right={
-                    <TextInput.Icon
-                      onPress={togglePasswordVisibility}
-                      icon={showPassword ? "eye-off" : "eye"}
-                      size={24}
-                      color={
-                        values.password.trim() === ""
-                          ? "#A0A0A0"
-                          : theme.colors.primary
-                      }
-                    />
-                  }
                 />
-
                 {touched.password && errors.password && (
                   <ErrorText>{errors.password}</ErrorText>
                 )}
-
-                <Text
-                  variant="bodyLarge"
-                  style={{
-                    paddingBottom: "5px",
-                    color:
-                      touched.confirmPassword && errors.confirmPassword
-                        ? "red"
-                        : "black",
-                  }}
-                >
-                  Confirm Password
-                </Text>
-
-                <StyledTextInput
+                <TextInput
+                  label="Confirm Password"
+                  type="password"
                   mode="outlined"
                   value={values.confirmPassword}
                   onChangeText={handleChange("confirmPassword")}
                   onBlur={handleBlur("confirmPassword")}
-                  secureTextEntry={!showConfirmPassword}
                   error={
                     touched.confirmPassword && errors.confirmPassword
                       ? true
                       : false
                   }
-                  right={
-                    <TextInput.Icon
-                      onPress={toggleConfirmPasswordVisibility}
-                      icon={showConfirmPassword ? "eye-off" : "eye"}
-                      size={24}
-                      color={
-                        values.confirmPassword.trim() === ""
-                          ? "#A0A0A0"
-                          : theme.colors.primary
-                      }
-                    />
-                  }
                 />
-
                 {touched.confirmPassword && errors.confirmPassword && (
                   <ErrorText>{errors.confirmPassword}</ErrorText>
                 )}
-
                 <TermsContainer>
                   <Checkbox.Android
                     status={values.termsAccepted ? "checked" : "unchecked"}
@@ -296,8 +220,8 @@ export default function SignUpScreen() {
                 </SignInContainer>
               </>
             )}
-          </Formik>
-        </Card>
+          </Formik>{" "}
+        </ElevatedView>
       </ScrollView>
     </Container>
   );
@@ -317,27 +241,11 @@ const BackgroundImage = styled.Image`
   position: absolute;
 `;
 
-const Card = styled(Surface)`
-  width: 100%;
-  max-width: 480px;
-  align-self: center;
-  background-color: white;
-  border-top-left-radius: 20px;
-  border-top-right-radius: 20px;
-  padding: 30px;
-  elevation: 4;
-`;
-
 const Title = styled(Text)`
   font-size: 24px;
   font-weight: bold;
   margin-bottom: 20px;
   color: #333;
-`;
-
-const StyledTextInput = styled(TextInput)`
-  margin-bottom: 12px;
-  background-color: white;
 `;
 
 const TermsContainer = styled.View`

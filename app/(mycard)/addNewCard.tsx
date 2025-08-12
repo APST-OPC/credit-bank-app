@@ -1,19 +1,16 @@
+import TextInput from "@/components/form/text-input/TextInput";
 import ParallaxScrollView from "@/components/ParralaxView";
 import theme from "@/theme";
+import React from "react";
 import { useState } from "react";
 import { View } from "react-native";
-import { Text, TextInput, Button } from "react-native-paper";
-import Animated from "react-native-reanimated";
+import { Button } from "react-native-paper";
 import styled from "styled-components/native";
 
 const StyledView = styled(View)({
   paddingHorizontal: 16,
-  paddingVertical: 8,
+  paddingVertical: 20,
   gap: 15,
-});
-
-const StyledContainer = styled(Animated.View)({
-  gap: 10,
 });
 
 const StyledCardInfoContainer = styled(View)({
@@ -21,12 +18,6 @@ const StyledCardInfoContainer = styled(View)({
   flexDirection: "row",
   flexWrap: "wrap",
   gap: 15,
-});
-
-const StyledCardInfo = styled(Animated.View)({
-  flexGrow: 1,
-  gap: 10,
-  flexBasis: "calc(50% - 15px)",
 });
 
 type CardInfoArrayProps = {
@@ -103,40 +94,30 @@ const AddNewCard = () => {
     <ParallaxScrollView>
       <StyledView>
         {cardDetailsArr.map((data, index) => (
-          <StyledContainer key={index}>
-            <Text variant="bodyLarge">{data.label}</Text>
-            <TextInput
-              mode="outlined"
-              value={data.value}
-              outlineStyle={{ borderRadius: 10 }}
-              activeOutlineColor="#0265A1"
-              placeholder={data.placeHolder ?? ""}
-              placeholderTextColor={data.placeHolder ? "#9A9A9A" : ""}
-              editable={data.editable ?? true}
-              onChangeText={data.onChangeText}
-              keyboardType={
-                data.label === "Card Number" ? "numeric" : undefined
-              }
-              maxLength={data.label === "Card Number" ? 16 : undefined}
-              inputMode={data.label === "Card Number" ? "numeric" : undefined}
-            />
-          </StyledContainer>
+          <TextInput
+            key={index}
+            label={data.label}
+            value={data.value}
+            placeholder={data.placeHolder}
+            placeholderTextColor={data.placeHolder && "#9A9A9A"}
+            editable={data.editable}
+            onChangeText={data.onChangeText}
+            keyboardType={data.label === "Card Number" ? "numeric" : undefined}
+            maxLength={data.label === "Card Number" ? 16 : undefined}
+            inputMode={data.label === "Card Number" ? "numeric" : undefined}
+          />
         ))}
         <StyledCardInfoContainer>
           {cardInfoArray.map(
             ({ title, placeHolder, onChangeText, value, maxLength }, index) => (
-              <StyledCardInfo key={index}>
-                <Text variant="bodyLarge">{title}</Text>
-                <TextInput
-                  mode="outlined"
-                  value={value}
-                  placeholder={placeHolder}
-                  outlineStyle={{ borderRadius: 10 }}
-                  placeholderTextColor="#9A9A9A"
-                  onChangeText={onChangeText}
-                  maxLength={maxLength}
-                />
-              </StyledCardInfo>
+              <TextInput
+                key={index}
+                label={title}
+                value={value}
+                placeholder={placeHolder}
+                onChangeText={onChangeText}
+                maxLength={maxLength}
+              />
             )
           )}
         </StyledCardInfoContainer>

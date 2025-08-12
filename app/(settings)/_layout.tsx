@@ -1,5 +1,6 @@
 import { Stack } from "expo-router";
 import StackLayout from "@/components/StackLayout";
+import React from "react";
 
 const SettingsLayout = () => {
   return (
