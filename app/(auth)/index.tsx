@@ -67,7 +67,7 @@ export default function LoginScreen() {
 
   useEffect(() => {
     checkFirstLaunch();
-  }, [completeOnboarding]);
+  }, [checkFirstLaunch, completeOnboarding]);
 
   const handleSignUp = () => {
     router.push("/(auth)/signup");

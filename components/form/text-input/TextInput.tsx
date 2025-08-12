@@ -1,4 +1,3 @@
-import { useFormikContext } from "formik";
 import React, { useState } from "react";
 import {
   Text,
@@ -13,7 +12,7 @@ export interface ITextInput extends TextInputProps {
   iconColor?: string;
 }
 
-const TextInput = <T extends object>(props: ITextInput) => {
+const TextInput = (props: ITextInput) => {
   const {
     label,
     type = "text",
@@ -23,7 +22,6 @@ const TextInput = <T extends object>(props: ITextInput) => {
     iconColor = "#9A9A9A",
     ...rest
   } = props;
-  const {} = useFormikContext<T>();
 
   const [show, setShow] = useState(false);
   return (
