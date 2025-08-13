@@ -5,10 +5,19 @@ import { ReactNode } from "react";
 import { Button as RNButton } from "react-native-paper";
 
 const ButtonWrapper = <T extends object>(props: IButton): ReactNode => {
-  const { children, ...rest } = props;
-  const { handleSubmit } = useFormikContext<T>();
+  const { children, submitFn, ...rest } = props;
+  const { handleSubmit, validateForm } = useFormikContext<T>();
+
+  const onSubmit = async () => {
+    const errors = await validateForm();
+    handleSubmit();
+    if (Object.keys(errors).length === 0) {
+      submitFn?.();
+    }
+  };
+
   return (
-    <RNButton onPress={() => handleSubmit()} {...rest}>
+    <RNButton onPress={() => onSubmit()} {...rest}>
       {children}
     </RNButton>
   );

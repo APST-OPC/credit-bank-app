@@ -4,7 +4,6 @@ import {
   TextInput as RNPTextInput,
   TextInputProps,
 } from "react-native-paper";
-import { InputGroup } from "./utils";
 
 export interface ITextInput extends TextInputProps {
   label: string;
@@ -25,7 +24,7 @@ const TextInput = (props: ITextInput) => {
 
   const [show, setShow] = useState(false);
   return (
-    <InputGroup>
+    <>
       <Text variant="bodyLarge">{label}</Text>
       <RNPTextInput
         mode={mode}
@@ -46,7 +45,7 @@ const TextInput = (props: ITextInput) => {
         secureTextEntry={type === "password" ? !show : false}
         {...rest}
       />
-    </InputGroup>
+    </>
   );
 };
 
