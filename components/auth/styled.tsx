@@ -16,8 +16,13 @@ export const BackgroundImage = styled(Image)({
 });
 
 export const Title = styled(Text)({
-  fontSize: 27,
+  fontSize: 20,
   fontFamily: "PoppinsBold",
   textAlign: "center",
   color: "#333",
+});
+
+export const Subtitle = styled(Text)({
+  fontSize: 14,
+  color: "#666",
 });

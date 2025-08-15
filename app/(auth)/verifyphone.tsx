@@ -1,10 +1,14 @@
-import { useState } from "react";
-import { ScrollView, View, Modal, Pressable, Image } from "react-native";
+import { ReactNode, useState } from "react";
+import { ScrollView, View, Modal, Pressable, Platform } from "react-native";
 import { TextInput, Button, Text } from "react-native-paper";
 import styled from "styled-components/native";
 import { useRouter } from "expo-router";
-import theme from "@/theme";
 import React from "react";
+import AuthContainer from "@/components/auth/auth-container/AuthContainer";
+import ElevatedView from "@/components/auth/elevated-view/ElevatedView";
+import { Subtitle, Title } from "@/components/auth/styled";
+import { KeyboardAvoidingView } from "react-native";
+import { Form } from "@/components/form/Form";
 
 const countryCodes = [
   { label: "Philippines (+63)", value: "+63" },
@@ -21,64 +25,67 @@ export default function VerifyPhoneScreen() {
 
   const router = useRouter();
 
-  return (
-    <Container>
-      <BackgroundImage
-        source={require("@/assets/images/bgworld.png")}
-        resizeMode="cover"
-      />
+  const renderHeader = (): ReactNode => {
+    return (
+      <>
+        <Title>Verify your phone number</Title>
+        <Subtitle>
+          We will send you a One-Time-Password (OTP){"\n"}
+          on this mobile number.
+        </Subtitle>
+      </>
+    );
+  };
 
-      <ScrollView
-        contentContainerStyle={{ flexGrow: 1, justifyContent: "flex-end" }}
-      >
-        <Card>
-          <Title>Verify your phone number</Title>
-          <Subtitle>
-            We will send you a One-Time-Password (OTP){"\n"}
-            on this mobile number.
-          </Subtitle>
-
-          <PhoneInputContainer>
-            <Pressable onPress={() => setModalVisible(true)}>
-              <CountryCodeInput
-                mode="outlined"
-                value={countryCode.value}
-                editable={false}
-                pointerEvents="none"
-                right={
-                  <TextInput.Icon
-                    icon="chevron-down"
-                    onPress={() => setModalVisible(true)}
-                  />
-                }
-              />
-            </Pressable>
-
-            <PhoneInput
-              mode="outlined"
-              value={phoneNumber}
-              onChangeText={(text: string) =>
-                setPhoneNumber(text.replace(/[^0-9]/g, "").slice(0, 10))
-              }
-              keyboardType="phone-pad"
-              placeholder="Enter phone number"
-              maxLength={10}
+  const renderPhoneInput = (): ReactNode => {
+    return (
+      <PhoneInputContainer>
+        <Form.ControlledTextInput
+          label=""
+          name="countryCode"
+          value={countryCode.value}
+          style={{ width: "25%" }}
+          editable={false}
+          right={
+            <TextInput.Icon
+              icon="chevron-down"
+              onPress={() => setModalVisible(true)}
             />
-          </PhoneInputContainer>
+          }
+        />
 
-          <Button
-            mode="contained"
-            onPress={() => router.push("/(auth)/otpverify")}
-            disabled={phoneNumber.length < 10}
-            contentStyle={{ height: 45 }}
-            buttonColor={theme.colors.primary}
-            style={{ borderRadius: 10 }}
-          >
-            SEND CODE
-          </Button>
-        </Card>
-      </ScrollView>
+        <Form.ControlledTextInput
+          label=""
+          name="phoneNumber"
+          style={{ width: "73%" }}
+          onChangeText={(text: string) =>
+            setPhoneNumber(text.replace(/[^0-9]/g, "").slice(0, 10))
+          }
+          keyboardType="phone-pad"
+          placeholder="Enter phone number"
+          maxLength={10}
+        />
+      </PhoneInputContainer>
+    );
+  };
 
+  const renderSubmitBtn = (): ReactNode => {
+    return (
+      <Form.Button
+        mode="contained"
+        // onPress={() => router.push("/(auth)/otpverify")}
+        submitFn={() => router.push("/(auth)/otpverify")}
+        disabled={phoneNumber.length < 10}
+        contentStyle={{ height: 45 }}
+        style={{ borderRadius: 10 }}
+      >
+        SEND CODE
+      </Form.Button>
+    );
+  };
+
+  const renderModal = () => {
+    return (
       <Modal
         animationType="slide"
         transparent={true}
@@ -120,64 +127,38 @@ export default function VerifyPhoneScreen() {
           </ModalFooter>
         </ModalContainer>
       </Modal>
-    </Container>
+    );
+  };
+
+  return (
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <AuthContainer>
+        <Form
+          instance={{
+            initialValues: { countryCode: "", phoneNumber: "" },
+            onSubmit: (values) => console.log(values),
+          }}
+        >
+          <ElevatedView>
+            {renderHeader()}
+            {renderPhoneInput()}
+            {renderSubmitBtn()}
+          </ElevatedView>
+        </Form>
+
+        {renderModal()}
+      </AuthContainer>
+    </KeyboardAvoidingView>
   );
 }
 
-const Container = styled(View)({
-  flex: 1,
-  width: "100%",
-  maxWidth: "480px",
-  alignSelf: "center",
-});
-
-const BackgroundImage = styled(Image)({
-  flex: 1,
-  width: "100%",
-  height: "100%",
-  position: "absolute",
-});
-
-const Card = styled(View)({
-  width: "100%",
-  maxWidth: "480px",
-  alignSelf: "center",
-  backgroundColor: "white",
-  borderTopLeftRadius: 20,
-  borderTopRightRadius: 20,
-  padding: "50px 50px",
-  elevation: 4,
-});
-
-const Title = styled(Text)({
-  fontSize: 24,
-  fontWeight: "600",
-  marginBottom: 10,
-  color: "#333",
-});
-
-const Subtitle = styled(Text)({
-  fontSize: 14,
-  color: "#666",
-  marginBottom: 25,
-  lineHeight: 20,
-});
-
 const PhoneInputContainer = styled(View)({
-  paddingBottom: 300,
+  display: "flex",
   flexDirection: "row",
-  gap: 8,
-  marginBottom: 30,
-});
-
-const CountryCodeInput = styled(TextInput)({
-  width: 90,
-  backgroundColor: "white",
-});
-
-const PhoneInput = styled(TextInput)({
-  flex: 1,
-  backgroundColor: "white",
+  justifyContent: "space-between",
 });
 
 const ModalOverlay = styled(Pressable)({

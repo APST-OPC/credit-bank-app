@@ -42,7 +42,7 @@ const SignUpForm = () => {
 
       <Button
         mode="contained"
-        submitFn={() => router.navigate("/(auth)/otpverify")}
+        submitFn={() => router.navigate("/(auth)/verifyphone")}
         disabled={values.termsAccepted === false}
       >
         SIGN UP

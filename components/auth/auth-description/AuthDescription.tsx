@@ -3,6 +3,7 @@ import { View, TouchableOpacity, Text, Image } from "react-native";
 import styled from "styled-components/native";
 import { useRouter } from "expo-router";
 import { socialBtn } from "@/components/auth/utils";
+import theme from "@/theme";
 
 interface IProps {
   type: "sign-up" | "sign-in";
@@ -40,7 +41,7 @@ const ModeButton = styled(TouchableOpacity)({
   marginTop: 4,
 });
 const ModeLabel = styled(Text)({
-  color: "#004068",
+  color: theme.colors.primary,
   fontFamily: "PoppinsSemiBold",
 });
 

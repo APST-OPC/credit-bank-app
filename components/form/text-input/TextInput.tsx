@@ -9,11 +9,13 @@ export interface ITextInput extends TextInputProps {
   label: string;
   type?: "password" | "text";
   iconColor?: string;
+  errorFn?: boolean;
 }
 
 const TextInput = (props: ITextInput) => {
   const {
     label,
+    errorFn,
     type = "text",
     mode = "outlined",
     right,
@@ -25,10 +27,16 @@ const TextInput = (props: ITextInput) => {
   const [show, setShow] = useState(false);
   return (
     <>
-      <Text variant="bodyLarge">{label}</Text>
+      <Text variant="bodyLarge" style={{ color: errorFn ? "red" : undefined }}>
+        {label}
+      </Text>
       <RNPTextInput
         mode={mode}
-        outlineStyle={{ borderRadius: 10 }}
+        outlineStyle={{
+          borderRadius: 10,
+          borderColor: errorFn ? "red" : "#A9A9A9",
+          borderWidth: 1.5,
+        }}
         activeOutlineColor="#0265A1"
         placeholderTextColor={placeholderTextColor}
         right={

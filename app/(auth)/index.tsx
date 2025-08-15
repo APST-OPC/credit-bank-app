@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { View } from "react-native";
+import { KeyboardAvoidingView, Platform, View } from "react-native";
 import ElevatedView from "@/components/auth/elevated-view/ElevatedView";
 import { Form } from "@/components/form/Form";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -78,9 +78,14 @@ export default function LoginScreen() {
   return isOnboarded ? (
     <OnboardingScreen completeOnboarding={setIsOnboarded} />
   ) : (
-    <Container>
-      {renderBackground()}
-      {renderElevatedView()}
-    </Container>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <Container>
+        {renderBackground()}
+        {renderElevatedView()}
+      </Container>
+    </KeyboardAvoidingView>
   );
 }

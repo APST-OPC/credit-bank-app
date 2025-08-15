@@ -1,59 +1,30 @@
 import ElevatedView from "@/components/auth/elevated-view/ElevatedView";
 import theme from "@/theme";
 import { useRouter } from "expo-router";
-import React, { useState, useEffect } from "react";
-import { TextInput as RNTextInput, View, Image } from "react-native";
-import { Button, Text } from "react-native-paper";
+import React, { useState, useEffect, createRef } from "react";
+import { TextInput as RNTextInput, Platform } from "react-native";
+import { Button } from "react-native-paper";
 import styled from "styled-components/native";
+import TextInput from "@/components/form/text-input/TextInput";
+import { KeyboardAvoidingView } from "react-native";
+import AuthContainer from "@/components/auth/auth-container/AuthContainer";
+import { Subtitle, Title } from "@/components/auth/styled";
 
 interface FormValues {
   otp: string[];
 }
 
-const Container = styled(View)({
-  flex: 1,
-  width: "100%",
-  maxWidth: 480,
-  alignSelf: "center",
-});
-
-const BackgroundImage = styled(Image)({
-  flex: 1,
-  width: "100%",
-  height: "100%",
-  position: "absolute",
-});
-
-const Title = styled(Text)({
-  fontSize: 24,
-  fontWeight: "600",
-  marginBottom: 10,
-  color: "#333",
-});
-
-const Subtitle = styled(Text)({
-  fontSize: 14,
-  color: "#666",
-  marginBottom: 25,
-  lineHeight: 20,
-});
-
 const PhoneInputContainer = styled.View({
-  paddingBottom: 300,
+  display: "flex",
   flexDirection: "row",
-  gap: 8,
-  alignSelf: "center",
-  marginBottom: 30,
+  justifyContent: "space-between",
 });
 
-const OtpInput = styled(RNTextInput)({
-  backgroundColor: "#ffffff",
-  width: 50,
-  height: 50,
-  borderWidth: 1,
-  borderRadius: 8,
-  textAlign: "center",
-  fontSize: 20,
+const OtpInput = styled(TextInput)({
+  width: 60,
+  height: 60,
+  fontSize: 30,
+  paddingLeft: 7,
 });
 
 export default function VerifyPhoneScreen() {
@@ -88,43 +59,45 @@ export default function VerifyPhoneScreen() {
 
   const inputRefs = Array(5)
     .fill(0)
-    .map(() => React.createRef<RNTextInput>());
+    .map(() => createRef<RNTextInput>());
 
   return (
-    <Container>
-      <BackgroundImage
-        source={require("@/assets/images/bgworld.png")}
-        resizeMode="cover"
-      />
-      <ElevatedView>
-        <Title>Verify your phone number</Title>
-        <Subtitle>
-          We will send you a One-Time-Password (OTP){"\n"}on this mobile number.
-        </Subtitle>
-        <PhoneInputContainer>
-          {formValue.otp.map((digit, index) => (
-            <OtpInput
-              key={index}
-              ref={inputRefs[index]}
-              keyboardType="number-pad"
-              maxLength={1}
-              selectTextOnFocus
-              value={digit}
-              onChangeText={handleOtpChange(index)}
-            />
-          ))}
-        </PhoneInputContainer>
-        <Button
-          mode="contained"
-          onPress={() => router.push("/(auth)/verified")}
-          buttonColor={theme.colors.primary}
-          style={{ borderRadius: 10 }}
-          contentStyle={{ height: 45 }}
-          disabled={isButtonDisabled}
-        >
-          SEND CODE
-        </Button>
-      </ElevatedView>
-    </Container>
+    <KeyboardAvoidingView
+      behavior={Platform.OS === "ios" ? "padding" : "height"}
+      style={{ flex: 1 }}
+    >
+      <AuthContainer isAbsolute>
+        <ElevatedView>
+          <Title>Verify your phone number</Title>
+          <Subtitle>
+            We will send you a One-Time-Password (OTP){"\n"}on this mobile
+            number.
+          </Subtitle>
+          <PhoneInputContainer>
+            {formValue.otp.map((digit, index) => (
+              <OtpInput
+                key={index}
+                ref={inputRefs[index]}
+                keyboardType="number-pad"
+                maxLength={1}
+                selectTextOnFocus
+                value={digit}
+                onChangeText={handleOtpChange(index)}
+              />
+            ))}
+          </PhoneInputContainer>
+          <Button
+            mode="contained"
+            onPress={() => router.push("/(auth)/verified")}
+            buttonColor={theme.colors.primary}
+            style={{ borderRadius: 10 }}
+            contentStyle={{ height: 45 }}
+            disabled={isButtonDisabled}
+          >
+            SEND CODE
+          </Button>
+        </ElevatedView>
+      </AuthContainer>
+    </KeyboardAvoidingView>
   );
 }

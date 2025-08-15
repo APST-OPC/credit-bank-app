@@ -4,25 +4,16 @@ import { Button, Text } from "react-native-paper";
 import { useRouter } from "expo-router";
 import theme from "@/theme";
 import { Image, View } from "react-native";
-
-const Background = styled(Image)({
-  flex: 1,
-  width: "100%",
-  height: "100%",
-});
+import AuthContainer from "@/components/auth/auth-container/AuthContainer";
 
 const Content = styled(View)({
-  flex: 1,
+  display: "flex",
+  width: "100%",
+  height: "100%",
   justifyContent: "center",
   alignItems: "center",
   padding: 20,
-});
-
-const Container = styled(View)({
-  flex: 1,
-  width: "100%",
-  maxWidth: 480,
-  alignSelf: "center",
+  position: "absolute",
 });
 
 const IconContainer = styled(Image)({
@@ -57,24 +48,19 @@ const StyledButton = styled(Button)({
 export default function VerificationScreen() {
   const router = useRouter();
   return (
-    <Container>
-      <Background
-        source={require("@/assets/images/bgworld.png")}
-        resizeMode="cover"
-      >
-        <Content>
-          <IconContainer source={require("@/assets/images/verifiedlogo.png")} />
-          <Title>Verified!</Title>
-          <Subtitle>Your account has been created successfully.</Subtitle>
-          <StyledButton
-            onPress={() => router.push("/(auth)")}
-            buttonColor={theme.colors.primary}
-            style={{ borderRadius: 10 }}
-          >
-            SIGN IN
-          </StyledButton>
-        </Content>
-      </Background>
-    </Container>
+    <AuthContainer>
+      <Content>
+        <IconContainer source={require("@/assets/images/verifiedlogo.png")} />
+        <Title>Verified!</Title>
+        <Subtitle>Your account has been created successfully.</Subtitle>
+        <StyledButton
+          onPress={() => router.push("/(auth)")}
+          buttonColor={theme.colors.primary}
+          style={{ borderRadius: 10 }}
+        >
+          SIGN IN
+        </StyledButton>
+      </Content>
+    </AuthContainer>
   );
 }
