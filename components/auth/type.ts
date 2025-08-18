@@ -5,3 +5,8 @@ export interface SignUpFormInstance {
   confirmPassword: string;
   termsAccepted: boolean;
 }
+
+export interface PhoneVerifyForm {
+  countryCode: string;
+  phoneNumber: string;
+}

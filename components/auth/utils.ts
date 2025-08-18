@@ -39,3 +39,12 @@ export const signInFormInstance = {
   initialValues: { email: "", password: "" },
   validationSchema: validationSchemaSignIn,
 };
+
+export const countryCodes = [
+  { label: "Philippines (+63)", value: "+63" },
+  { label: "United States (+1)", value: "+1" },
+  { label: "United Kingdom (+44)", value: "+44" },
+  { label: "Australia (+61)", value: "+61" },
+  { label: "China (+86)", value: "+86" },
+];
+
