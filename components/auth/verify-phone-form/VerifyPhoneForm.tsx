@@ -2,47 +2,18 @@ import { Form } from "@/components/form/Form";
 import { useRouter } from "expo-router";
 import { useFormikContext } from "formik";
 import React, { ReactElement, ReactNode, useState } from "react";
-import { Modal, Pressable, ScrollView, View } from "react-native";
+import { Modal, Pressable } from "react-native";
 import { TextInput, Text } from "react-native-paper";
-import { styled } from "styled-components/native";
 import { PhoneVerifyForm } from "../type";
 import { countryCodes } from "../utils";
-
-const PhoneInputContainer = styled(View)({
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "space-between",
-});
-
-const ModalOverlay = styled(Pressable)({
-  flex: 1,
-});
-
-const ModalContainer = styled(View)({
-  bottom: 0,
-  width: "100%",
-  backgroundColor: "white",
-  borderTopLeftRadius: 20,
-  borderTopRightRadius: 20,
-  padding: "20px 0",
-  boxShadow: "0px -2px 10px rgba(0, 0, 0, 0.1)",
-  maxWidth: "480px",
-  alignSelf: "center",
-});
-
-const ModalHeader = styled(View)({
-  alignItems: "center",
-  padding: 10,
-});
-
-const ModalTitle = styled(Text)({
-  fontSize: 18,
-  fontWeight: "bold",
-});
-
-const ModalBody = styled(ScrollView)({
-  maxHeight: "300px",
-});
+import {
+  ModalHeader,
+  ModalTitle,
+  ModalBody,
+  ModalOverlay,
+  ModalContainer,
+  PhoneInputContainer,
+} from "@/components/auth/styled";
 
 const VerifyPhoneForm = (): ReactElement => {
   const router = useRouter();

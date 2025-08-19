@@ -1,3 +1,21 @@
+import { ReactNode } from "react";
+//auth-container
+export interface IAuthContainer {
+  isAbsolute?: boolean;
+  children: ReactNode;
+}
+
+//auth-description
+export interface IProps {
+  type: "sign-up" | "sign-in";
+}
+
+//elevated-view
+export interface IElevatedView {
+  children: ReactNode;
+}
+
+//sign-up-form
 export interface SignUpFormInstance {
   name: string;
   email: string;
@@ -6,6 +24,7 @@ export interface SignUpFormInstance {
   termsAccepted: boolean;
 }
 
+//verify-phone-form
 export interface PhoneVerifyForm {
   countryCode: string;
   phoneNumber: string;

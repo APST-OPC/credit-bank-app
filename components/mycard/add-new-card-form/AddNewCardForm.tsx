@@ -1,9 +1,11 @@
 import React from "react";
-import { View } from "react-native";
 import { useFormikContext } from "formik";
 import { Form } from "@/components/form/Form";
 import { IAddNewCardForm } from "@/components/mycard/type";
-import { StyledTextInput } from "@/components/mycard/styled";
+import {
+  StyledLowerFormView,
+  StyledTextInput,
+} from "@/components/mycard/styled";
 import { inputRestrict } from "@/components/mycard/utils";
 
 const AddNewCardForm = () => {
@@ -33,7 +35,7 @@ const AddNewCardForm = () => {
           setFieldValue("cardNumber", inputRestrict(e, false))
         }
       />
-      <View style={{ display: "flex", flexDirection: "row", gap: 10 }}>
+      <StyledLowerFormView>
         <StyledTextInput
           name="expiry"
           label="Expiry"
@@ -48,7 +50,7 @@ const AddNewCardForm = () => {
           placeholder="XXX"
           maxLength={3}
         />
-      </View>
+      </StyledLowerFormView>
       <Button mode="contained">Add Card</Button>
     </>
   );

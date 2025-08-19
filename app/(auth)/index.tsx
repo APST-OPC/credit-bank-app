@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { KeyboardAvoidingView, Platform, View } from "react-native";
-import ElevatedView from "@/components/auth/elevated-view/ElevatedView";
+import { useRouter } from "expo-router";
 import { Form } from "@/components/form/Form";
+import { signInFormInstance } from "@/components/auth/utils";
+import { Background, Container, Title } from "@/components/auth/styled";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import OnboardingScreen from "@/components/auth/onboard/OnboardingScreen";
 import AuthDescription from "@/components/auth/auth-description/AuthDescription";
-import { signInFormInstance } from "@/components/auth/utils";
-import { BackgroundImage, Container, Title } from "@/components/auth/styled";
+import ElevatedView from "@/components/auth/elevated-view/ElevatedView";
 
 export default function LoginScreen() {
   const [isOnboarded, setIsOnboarded] = useState<boolean>();
+  const router = useRouter();
 
   const checkFirstLaunch = async () => {
     try {
@@ -30,11 +32,16 @@ export default function LoginScreen() {
 
   const renderBackground = () => {
     return (
-      <BackgroundImage
+      <Background
         source={require("@/assets/images/bgworld.png")}
         resizeMode="cover"
       />
     );
+  };
+
+  const handleSubmit = (values: Record<string, unknown>) => {
+    console.log("form", values);
+    router.push("/(tabs)");
   };
 
   const renderForm = () => {
@@ -43,7 +50,7 @@ export default function LoginScreen() {
       <Form
         instance={{
           ...signInFormInstance,
-          onSubmit: (values) => console.log("form", values),
+          onSubmit: handleSubmit,
         }}
       >
         <View style={{ display: "flex", flexDirection: "column", gap: 15 }}>

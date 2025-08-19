@@ -1,49 +1,17 @@
 import React from "react";
-import { View, TouchableOpacity, Text, Image } from "react-native";
-import styled from "styled-components/native";
+import { TouchableOpacity } from "react-native";
 import { useRouter } from "expo-router";
 import { socialBtn } from "@/components/auth/utils";
-import theme from "@/theme";
-
-interface IProps {
-  type: "sign-up" | "sign-in";
-}
-
-const SocialButtons = styled(View)({
-  flexDirection: "row",
-  justifyContent: "center",
-  gap: 30,
-});
-
-const AuthContainer = styled(View)({
-  flexDirection: "row",
-  justifyContent: "center",
-  alignItems: "center",
-  gap: 5,
-});
-
-const AuthText = styled(Text)({
-  color: "#666",
-});
-
-const SocialIcon = styled(Image)({
-  width: 30,
-  height: 30,
-});
-
-const DescriptionView = styled(View)({
-  display: "flex",
-  flexDirection: "column",
-  gap: 10,
-});
-
-const ModeButton = styled(TouchableOpacity)({
-  marginTop: 4,
-});
-const ModeLabel = styled(Text)({
-  color: theme.colors.primary,
-  fontFamily: "PoppinsSemiBold",
-});
+import {
+  AuthContainer,
+  AuthText,
+  DescriptionView,
+  ModeButton,
+  ModeLabel,
+  SocialButtons,
+  SocialIcon,
+} from "@/components/auth/styled";
+import { IProps } from "@/components/auth/type";
 
 const AuthDescription = (props: IProps) => {
   const { type } = props;
