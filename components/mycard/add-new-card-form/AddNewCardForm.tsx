@@ -42,7 +42,12 @@ const AddNewCardForm = () => {
             setFieldValue("expiry", inputRestrict(e))
           }
         />
-        <StyledTextInput name="cvv" label="CVV" placeholder="XXX" />
+        <StyledTextInput
+          name="cvv"
+          label="CVV"
+          placeholder="XXX"
+          maxLength={3}
+        />
       </View>
       <Button mode="contained">Add Card</Button>
     </>
