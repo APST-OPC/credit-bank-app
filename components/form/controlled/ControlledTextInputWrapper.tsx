@@ -21,7 +21,9 @@ const ControlledTextInputWrapper = <T, K extends keyof T>(
         label={label}
         value={values[name] as string}
         placeholder={
-          validator ? `* ${errors[name]?.toString().toLowerCase()}` : undefined
+          validator
+            ? `* ${errors[name]?.toString().toLowerCase()}`
+            : placeholder
         }
         placeholderTextColor={validator ? "red" : undefined}
         onChangeText={handleChange(String(name))}
