@@ -2,7 +2,7 @@ import React from "react";
 import { View } from "react-native";
 import { Checkbox as RNCheckbox, Text } from "react-native-paper";
 import styled from "styled-components/native";
-import { ICheckbox } from "@/components/form/type";
+import { ICheckbox } from "@/components/common/form/type";
 
 const CheckBoxView = styled(View)({
   display: "flex",

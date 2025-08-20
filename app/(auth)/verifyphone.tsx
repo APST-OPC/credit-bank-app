@@ -5,7 +5,7 @@ import AuthContainer from "@/components/auth/auth-container/AuthContainer";
 import ElevatedView from "@/components/auth/elevated-view/ElevatedView";
 import { Subtitle, Title } from "@/components/auth/styled";
 import { KeyboardAvoidingView } from "react-native";
-import { Form } from "@/components/form/Form";
+import { Form } from "@/components/common/form/Form";
 import VerifyPhoneForm from "@/components/auth/verify-phone-form/VerifyPhoneForm";
 import { countryCodes } from "@/components/auth/utils";
 

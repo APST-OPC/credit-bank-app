@@ -1,7 +1,7 @@
 import { Field, useFormikContext } from "formik";
 import React, { ReactNode } from "react";
 import { ControlledTextInputProps } from "../type";
-import TextInput from "@/components/form/text-input/TextInput";
+import TextInput from "@/components/common/form/text-input/TextInput";
 import { InputGroup } from "./utils";
 
 const ControlledTextInputWrapper = <T, K extends keyof T>(

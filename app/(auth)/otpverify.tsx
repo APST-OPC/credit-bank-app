@@ -5,7 +5,7 @@ import React, { useState, useEffect, createRef } from "react";
 import { TextInput as RNTextInput, Platform } from "react-native";
 import { Button } from "react-native-paper";
 import styled from "styled-components/native";
-import TextInput from "@/components/form/text-input/TextInput";
+import TextInput from "@/components/common/form/text-input/TextInput";
 import { KeyboardAvoidingView } from "react-native";
 import AuthContainer from "@/components/auth/auth-container/AuthContainer";
 import { Subtitle, Title } from "@/components/auth/styled";

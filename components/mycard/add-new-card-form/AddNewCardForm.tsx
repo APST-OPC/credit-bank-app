@@ -1,6 +1,6 @@
 import React from "react";
 import { useFormikContext } from "formik";
-import { Form } from "@/components/form/Form";
+import { Form } from "@/components/common/form/Form";
 import { IAddNewCardForm } from "@/components/mycard/type";
 import {
   StyledLowerFormView,

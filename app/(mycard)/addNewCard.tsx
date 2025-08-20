@@ -1,7 +1,7 @@
 import React from "react";
 import { View } from "react-native";
 import styled from "styled-components/native";
-import { Form } from "@/components/form/Form";
+import { Form } from "@/components/common/form/Form";
 import AddNewCardForm from "@/components/mycard/add-new-card-form/AddNewCardForm";
 import { initialValues } from "@/components/mycard/utils";
 import ParallaxScrollView from "@/components/ParralaxView";

@@ -1,6 +1,6 @@
 import React from "react";
 import ElevatedView from "@/components/auth/elevated-view/ElevatedView";
-import { Form } from "@/components/form/Form";
+import { Form } from "@/components/common/form/Form";
 import AuthDescription from "@/components/auth/auth-description/AuthDescription";
 import { signUpFormInstance } from "@/components/auth/utils";
 import { Title } from "@/components/auth/styled";

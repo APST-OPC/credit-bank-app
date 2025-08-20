@@ -4,7 +4,7 @@ import { ControlledCheckboxProps } from "../type";
 import { InputGroup } from "./utils";
 import styled from "styled-components/native";
 import { Text } from "react-native-web";
-import Checkbox from "@/components/form/checkbox/Checkbox";
+import Checkbox from "@/components/common/form/checkbox/Checkbox";
 
 const ErrorText = styled(Text)({
   color: "red",

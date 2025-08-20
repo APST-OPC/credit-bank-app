@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { KeyboardAvoidingView, Platform, View } from "react-native";
 import { useRouter } from "expo-router";
-import { Form } from "@/components/form/Form";
+import { Form } from "@/components/common/form/Form";
 import { signInFormInstance } from "@/components/auth/utils";
 import { Background, Container, Title } from "@/components/auth/styled";
 import AsyncStorage from "@react-native-async-storage/async-storage";
