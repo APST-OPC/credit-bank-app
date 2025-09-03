@@ -1,4 +1,5 @@
 import { Link, Stack } from "expo-router";
+import React from "react";
 import { Fragment } from "react";
 import { View } from "react-native";
 import { Text } from "react-native-paper";

@@ -7,6 +7,7 @@ import { useAppTheme } from "@/hooks/useTheme";
 import { useState } from "react";
 import { CardProperty } from "./types";
 import { renderNumbers } from "./utils";
+import React from "react";
 
 const ParentView = styled(Card)({
   boxShadow: "none",

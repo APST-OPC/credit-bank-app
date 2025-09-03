@@ -11,6 +11,7 @@ import {
 } from "@/store/mycard/useCardData";
 import theme from "@/theme";
 import { Ionicons } from "@expo/vector-icons";
+import React from "react";
 
 const ParentView = styled(View)({
   padding: 15,
@@ -186,7 +187,6 @@ const MyCards = () => {
       );
     }
   };
-
   return (
     <ParallaxScrollView>
       <ParentView>

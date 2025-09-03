@@ -5,97 +5,83 @@ import {
   useWindowDimensions,
   Image,
   View,
+  Text
 } from "react-native";
-import { Button, Text } from "react-native-paper";
+import { Button } from "react-native-paper";
 import styled from "styled-components/native";
-import { useOnboard } from "@/store/onboard/onBoard";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+import { screens } from "./utils";
 
-const Container = styled.View`
-  flex: 1;
-  background-color: #006d84;
-`;
+interface IOnboarding {
+  completeOnboarding: (isOnboarded: boolean) => void;
+}
+interface PaginationDotProps {
+  isActive: boolean
+}
 
-const ContentWrapper = styled(Animated.View)`
-  flex: 1;
-  align-items: center;
-  justify-content: center;
-  padding: 20px;
-  padding-bottom: 140px;
-`;
+const Container = styled.View({
+  flex: 1,
+  backgroundColor: "#006d84",
+});
 
-const AnimationContainer = styled.View`
-  width: 100%;
-  height: 200px;
-  align-items: center;
-  justify-content: center;
-  margin-bottom: 40px;
-`;
+const ContentWrapper = styled(Animated.View)({
+  flex: 1,
+  alignItems: "center",
+  justifyContent: "center",
+  padding: 20,
+  paddingBottom: 140,
+});
 
-const TitleText = styled(Text)`
-  color: white;
-  font-size: 24px;
-  font-weight: bold;
-  text-align: center;
-  margin-bottom: 16px;
-`;
+const AnimationContainer = styled.View({
+  width: "100%",
+  height: 200,
+  alignItems: "center",
+  justifyContent: "center",
+  marginBottom: 40,
+});
 
-const DescriptionText = styled(Text)`
-  color: rgba(255, 255, 255, 0.8);
-  font-size: 16px;
-  text-align: center;
-  line-height: 24px;
-  max-width: 320px;
-`;
+const TitleText = styled(Text)({
+  color: "white",
+  fontSize: 24,
+  fontWeight: "bold",
+  textAlign: "center",
+  marginBottom: 16,
+});
 
-const BottomSection = styled(View)`
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  padding: 70px;
-  align-items: center;
-`;
+const DescriptionText = styled(Text)({
+  color: "rgba(255, 255, 255, 0.8)",
+  fontSize: 16,
+  textAlign: "center",
+  lineHeight: 24,
+  maxWidth: 320,
+});
 
-const PaginationContainer = styled.View`
-  flex-direction: row;
-  gap: 8px;
-  margin-bottom: 20px;
-`;
+const BottomSection = styled(View)({
+  position: "absolute",
+  bottom: 0,
+  left: 0,
+  right: 0,
+  padding: 70,
+  alignItems: "center",
+});
 
-const PaginationDot = styled.View<{ isActive: boolean }>`
-  width: ${(props: { isActive: string }) => (props.isActive ? "24px" : "8px")};
-  height: 8px;
-  border-radius: 4px;
-  background-color: ${(props: { isActive: string }) =>
-    props.isActive ? "white" : "rgba(255, 255, 255, 0.3)"};
-`;
+const PaginationContainer = styled.View({
+  flexDirection: "row",
+  gap: 8,
+  marginBottom: 20,
+});
 
-const screens = [
-  {
-    animation: require("@/assets/images/real-time.gif"),
-    title: "Real-time Spending Insights",
-    description:
-      "Help you track expenses effortlessly with automatic categorization, detailed analytics, and instant alerts—giving you full control over your finances at a glance",
-  },
-  {
-    animation: require("@/assets/images/notif.gif"),
-    title: "Bank-Level Security",
-    description:
-      "Ensures your money and data stay safe with encryption, multi-factor authentication, and real-time fraud protection",
-  },
-  {
-    animation: require("@/assets/images/security.gif"),
-    title: "Instant Notification",
-    description:
-      "Keep you updated with real-time alerts for transactions, account activity, and security updates—so you're always in control",
-  },
-];
+const PaginationDot = styled(View)((props: PaginationDotProps) => ({
+  width: props.isActive ? 24 : 8,
+  height: 8,
+  borderRadius: 4,
+  backgroundColor: props.isActive ? "white" : "rgba(255, 255, 255, 0.3)",
+}));
 
-export default function OnboardingScreen() {
+const OnboardingScreen = (props: IOnboarding) => {
+  const { completeOnboarding } = props;
   const [currentIndex, setCurrentIndex] = useState(0);
   const [mountGif, setMountGif] = useState(true);
-  const { completeOnboarding } = useOnboard((state) => state);
   const translateX = useRef(new Animated.Value(0)).current;
 
   const { width } = useWindowDimensions();
@@ -194,4 +180,6 @@ export default function OnboardingScreen() {
       </BottomSection>
     </Container>
   );
-}
+};
+
+export default OnboardingScreen;

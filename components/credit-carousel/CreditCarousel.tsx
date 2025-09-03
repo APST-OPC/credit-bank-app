@@ -14,6 +14,7 @@ import { useCardData } from "@/store/mycard/useCardData";
 import { creditCardArray } from "@/data/mycard";
 import { CarouselProperty } from "./types";
 import { CARD_WIDTH, viewableConfig } from "./utils";
+import React from "react";
 
 const CarouselPagination = styled(View)({
   flexDirection: "row",
