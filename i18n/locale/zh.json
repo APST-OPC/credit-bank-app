@@ -1,0 +1,13 @@
+{
+  "auth": {
+    "signIn": {
+      "signInHeader": "Sign in to your account",
+      "email": "email",
+      "password": "password",
+      "signInBtn": "SIGN IN",
+      "alternativeSignIn": "or sign in with",
+      "haveAnAccount": "already have an account?",
+      "signUp": "SIGN UP"
+    }
+  }
+}

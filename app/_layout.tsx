@@ -15,6 +15,7 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from "react-native-reanimated";
+import "@/i18n/index";
 
 SplashScreen.preventAutoHideAsync();
 
