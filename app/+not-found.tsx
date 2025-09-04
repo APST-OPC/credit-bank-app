@@ -10,7 +10,7 @@ const NotFoundScreen = (): ReactElement => {
       <Stack.Screen options={{ title: "Oops!" }} />
       <View>
         <Text>
-          Oops! This page does not exist!{" "}
+          Oops! This page does not exist!
           <Link href="./index">Click here to return</Link>
         </Text>
       </View>
