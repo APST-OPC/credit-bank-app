@@ -2,7 +2,7 @@ import { Text, Button, TextInput } from "react-native-paper";
 import { ScrollView, Platform, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
-import React, { useState } from "react";
+import React, { Fragment, ReactElement, useState } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import theme from "@/theme";
 
@@ -42,20 +42,15 @@ type PasswordFieldProps = {
   toggleVisibility: () => void;
 };
 
-const PasswordField = ({
-  label,
-  value,
-  onChange,
-  visibility,
-  toggleVisibility,
-}: PasswordFieldProps) => {
+const PasswordField = (props: PasswordFieldProps): ReactElement => {
+  const { label, value, onChange, visibility, toggleVisibility } = props;
   const handleSpaceReject = (text: string) => {
     const newValue = text.replace(/\s/g, "");
     onChange(newValue);
   };
 
   return (
-    <>
+    <Fragment>
       <StyledText>{label}</StyledText>
       <TextInput
         placeholder={`Enter your ${label.toLowerCase()}`}
@@ -80,11 +75,11 @@ const PasswordField = ({
           />
         }
       />
-    </>
+    </Fragment>
   );
 };
 
-const ChangePassword = () => {
+const ChangePassword = (): ReactElement => {
   const [passwords, setPasswords] = useState<{
     password: string;
     newPassword: string;

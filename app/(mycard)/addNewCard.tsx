@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { View } from "react-native";
 import styled from "styled-components/native";
 import { Form } from "@/components/common/form/Form";
@@ -12,7 +12,7 @@ const StyledView = styled(View)({
   gap: 15,
 });
 
-const AddNewCard = () => {
+const AddNewCard = (): ReactElement => {
   return (
     <ParallaxScrollView>
       <Form

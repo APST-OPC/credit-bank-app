@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import ElevatedView from "@/components/auth/elevated-view/ElevatedView";
 import { Form } from "@/components/common/form/Form";
 import AuthDescription from "@/components/auth/auth-description/AuthDescription";
@@ -7,7 +7,7 @@ import { Title } from "@/components/auth/styled";
 import SignUpForm from "@/components/auth/sign-up-form/SignUpForm";
 import AuthContainer from "@/components/auth/auth-container/AuthContainer";
 
-export default function SignUpScreen() {
+const SignUpScreen = (): ReactElement => {
   return (
     <AuthContainer>
       <ElevatedView>
@@ -24,4 +24,6 @@ export default function SignUpScreen() {
       </ElevatedView>
     </AuthContainer>
   );
-}
+};
+
+export default SignUpScreen;

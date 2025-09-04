@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { RelativePathString, useRouter } from "expo-router";
 import {
   FlatList,
@@ -55,7 +55,7 @@ const TextBold = styled(Text)({
   fontFamily: "PoppinsBold",
 });
 
-const RenderTransactionItem = (props: TransactionItem) => {
+const RenderTransactionItem = (props: TransactionItem): ReactElement => {
   return (
     <TransactionContainer>
       <TransactionAvatar>

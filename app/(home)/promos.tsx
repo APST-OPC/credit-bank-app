@@ -1,6 +1,6 @@
 import { promos } from "@/data/home";
 import theme from "@/theme";
-import React from "react";
+import React, { ReactNode } from "react";
 import { Fragment, useEffect, useRef, useState } from "react";
 import {
   Dimensions,
@@ -11,6 +11,7 @@ import {
   Animated,
   PanResponder,
   Platform,
+  PanResponderInstance,
 } from "react-native";
 import { Card, Text } from "react-native-paper";
 import styled from "styled-components/native";
@@ -112,17 +113,20 @@ const ImageDetail = styled(Image)({
   height: Math.min(700, (1000 / 667) * (width * 0.95)),
 });
 
-const CustomBottomSheet = ({
-  visible,
-  onClose,
-  children,
-  sheetHeight = Platform.OS === "web" ? height : height * 1,
-}: {
+interface CustomBotSheetProps {
   visible: boolean;
   onClose: () => void;
-  children: React.ReactNode;
+  children: ReactNode;
   sheetHeight?: number;
-}) => {
+}
+
+const CustomBottomSheet = (props: CustomBotSheetProps) => {
+  const {
+    visible,
+    onClose,
+    children,
+    sheetHeight = Platform.OS === "web" ? height : height * 1,
+  } = props;
   const translateY = useRef(new Animated.Value(height)).current;
 
   useEffect(() => {
@@ -155,7 +159,7 @@ const CustomBottomSheet = ({
     });
   };
 
-  const panResponder = useRef(
+  const panResponder: PanResponderInstance = useRef(
     PanResponder.create({
       onMoveShouldSetPanResponder: (_, gestureState) => {
         return gestureState.dy > 5;

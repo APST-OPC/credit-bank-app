@@ -1,13 +1,27 @@
 {
   "auth": {
     "signIn": {
-      "signInHeader": "Sign in to your account",
-      "email": "email",
-      "password": "password",
-      "signInBtn": "SIGN IN",
-      "alternativeSignIn": "or sign in with",
-      "haveAnAccount": "already have an account?",
-      "signUp": "SIGN UP"
+      "signInHeader": {
+        "label": "登录您的账户"
+      },
+      "email": {
+        "label": "电子邮件"
+      },
+      "password": {
+        "label": "密码"
+      },
+      "signInBtn": {
+        "label": "登录"
+      },
+      "alternativeSignIn": {
+        "label": "或使用以下方式登录"
+      },
+      "haveAnAccount": {
+        "label": "已经有账户了吗？"
+      },
+      "signUp": {
+        "label": "注册"
+      }
     }
   }
 }

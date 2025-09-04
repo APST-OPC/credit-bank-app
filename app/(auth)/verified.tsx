@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import styled from "styled-components/native";
 import { Button, Text } from "react-native-paper";
 import { useRouter } from "expo-router";
@@ -45,7 +45,7 @@ const StyledButton = styled(Button)({
   paddingVertical: 8,
 });
 
-export default function VerificationScreen() {
+const VerificationScreen = (): ReactElement => {
   const router = useRouter();
   return (
     <AuthContainer>
@@ -63,4 +63,6 @@ export default function VerificationScreen() {
       </Content>
     </AuthContainer>
   );
-}
+};
+
+export default VerificationScreen;

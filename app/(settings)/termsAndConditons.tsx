@@ -2,7 +2,7 @@ import { Text } from "react-native-paper";
 import { ScrollView, Platform } from "react-native";
 import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
-import React from "react";
+import React, { ReactElement } from "react";
 import theme from "@/theme";
 
 const commonPadding = Platform.OS === "ios" ? 20 : 30;
@@ -29,7 +29,7 @@ const policyContent = {
   },
 };
 
-const TermsAndConditions = () => {
+const TermsAndConditions = (): ReactElement => {
   return (
     <ParallaxScrollView>
       <StyledView>

@@ -1,9 +1,9 @@
-import React from "react";
+import React, { ReactElement } from "react";
 
 import { Stack } from "expo-router";
 
 import StackLayout from "@/components/StackLayout";
-const HomeLayout = () => {
+const HomeLayout = (): ReactElement => {
   return (
     <StackLayout>
       <Stack.Screen

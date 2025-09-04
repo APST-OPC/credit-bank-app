@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import { StatusBar } from "expo-status-bar";
@@ -26,7 +26,7 @@ const ContainedView = styled(View)({
   alignSelf: "center",
 });
 
-export default function RootLayout() {
+const RootLayout = (): ReactElement => {
   const [isSplashVisible, setIsSplashVisible] = useState<boolean>(true);
   const fadeAnim = useSharedValue(1);
 
@@ -113,4 +113,6 @@ export default function RootLayout() {
       </ContainedView>
     </PaperProvider>
   );
-}
+};
+
+export default RootLayout;

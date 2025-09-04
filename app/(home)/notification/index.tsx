@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { ReactElement, useEffect } from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
 import Animated from "react-native-reanimated";
 import styled from "styled-components/native";
@@ -26,7 +26,7 @@ interface NotificationItemProps extends NotificationItem {
   handlePress: () => void;
 }
 
-const RenderNotificationItem = (props: NotificationItemProps) => {
+const RenderNotificationItem = (props: NotificationItemProps): ReactElement => {
   return (
     <TouchableOpacity onPress={props.handlePress}>
       <Animated.View
@@ -68,7 +68,7 @@ const RenderNotificationItem = (props: NotificationItemProps) => {
   );
 };
 
-const Notification = () => {
+const Notification = (): ReactElement => {
   const router = useRouter();
   const {
     notifications,

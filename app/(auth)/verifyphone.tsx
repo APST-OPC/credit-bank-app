@@ -1,4 +1,4 @@
-import { ReactNode } from "react";
+import { ReactElement, ReactNode } from "react";
 import { Platform } from "react-native";
 import React from "react";
 import AuthContainer from "@/components/auth/auth-container/AuthContainer";
@@ -9,7 +9,7 @@ import { Form } from "@/components/common/form/Form";
 import VerifyPhoneForm from "@/components/auth/verify-phone-form/VerifyPhoneForm";
 import { countryCodes } from "@/components/auth/utils";
 
-export default function VerifyPhoneScreen() {
+const VerifyPhoneScreen = (): ReactElement => {
   const renderHeader = (): ReactNode => {
     return (
       <>
@@ -44,4 +44,6 @@ export default function VerifyPhoneScreen() {
       </AuthContainer>
     </KeyboardAvoidingView>
   );
-}
+};
+
+export default VerifyPhoneScreen;

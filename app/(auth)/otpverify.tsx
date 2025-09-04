@@ -1,7 +1,7 @@
 import ElevatedView from "@/components/auth/elevated-view/ElevatedView";
 import theme from "@/theme";
 import { useRouter } from "expo-router";
-import React, { useState, useEffect, createRef } from "react";
+import React, { useState, useEffect, createRef, ReactElement } from "react";
 import { TextInput as RNTextInput, Platform } from "react-native";
 import { Button } from "react-native-paper";
 import styled from "styled-components/native";
@@ -27,7 +27,7 @@ const OtpInput = styled(TextInput)({
   paddingLeft: 7,
 });
 
-export default function VerifyPhoneScreen() {
+const VerifyPhoneScreen = (): ReactElement => {
   const router = useRouter();
   const initialValues: FormValues = {
     otp: Array(5).fill(""),
@@ -36,6 +36,10 @@ export default function VerifyPhoneScreen() {
   const [formValue, setFormValue] = useState<FormValues>(initialValues);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
 
+  const inputRefs = Array(5)
+    .fill(0)
+    .map(() => createRef<RNTextInput>());
+
   const handleOtpChange = (index: number) => (text: string) => {
     if (/^\d*$/.test(text)) {
       const newOtp = [...formValue.otp];
@@ -43,11 +47,11 @@ export default function VerifyPhoneScreen() {
       setFormValue({ ...formValue, otp: newOtp });
 
       if (text.length === 1 && index < 4) {
-        (inputRefs[index + 1].current as RNTextInput)?.focus();
+        inputRefs[index + 1].current?.focus();
       }
 
       if (text === "" && index > 0) {
-        (inputRefs[index - 1].current as RNTextInput)?.focus();
+        inputRefs[index - 1].current?.focus();
       }
     }
   };
@@ -56,10 +60,6 @@ export default function VerifyPhoneScreen() {
     const allFieldsFilled = formValue.otp.every((digit) => digit.length === 1);
     setIsButtonDisabled(!allFieldsFilled);
   }, [formValue.otp]);
-
-  const inputRefs = Array(5)
-    .fill(0)
-    .map(() => createRef<RNTextInput>());
 
   return (
     <KeyboardAvoidingView
@@ -100,4 +100,6 @@ export default function VerifyPhoneScreen() {
       </AuthContainer>
     </KeyboardAvoidingView>
   );
-}
+};
+
+export default VerifyPhoneScreen;

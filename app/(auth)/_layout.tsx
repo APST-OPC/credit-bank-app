@@ -1,13 +1,13 @@
 import { Stack } from "expo-router";
-import React from "react";
+import React, { ReactElement } from "react";
 
-const AuthenticationLayout = () => {
+const AuthenticationLayout = (): ReactElement => {
   return (
     <Stack
       screenOptions={{
         headerShown: false,
       }}
-    ></Stack>
+    />
   );
 };
 

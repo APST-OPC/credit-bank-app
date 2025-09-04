@@ -2,7 +2,7 @@ import { Text } from "react-native-paper";
 import { ScrollView, Platform, Linking, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
-import React from "react";
+import React, { ReactElement } from "react";
 import { MaterialIcons } from "@expo/vector-icons";
 import theme from "@/theme";
 
@@ -40,7 +40,7 @@ const StyledInfo = styled(Text)(() => ({
   textAlign: "center",
 }));
 
-const ContactUs = () => {
+const ContactUs = (): ReactElement => {
   const handlePhonePress = () => {
     Linking.openURL("tel:+639187388888");
   };

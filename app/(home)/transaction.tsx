@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { FlatList, TouchableOpacity, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { Avatar, Text } from "react-native-paper";
@@ -6,7 +6,7 @@ import { Avatar, Text } from "react-native-paper";
 import { transaction } from "@/data/home";
 import Container from "@/components/Container";
 
-export default function Transaction() {
+const Transaction = (): ReactElement => {
   return (
     <Container>
       <Animated.View
@@ -78,4 +78,6 @@ export default function Transaction() {
       </Animated.View>
     </Container>
   );
-}
+};
+
+export default Transaction;

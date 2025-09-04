@@ -12,9 +12,13 @@ import {
   SocialIcon,
 } from "@/components/auth/styled";
 import { IProps } from "@/components/auth/type";
+import { useTranslation } from "react-i18next";
+import { localizationKey } from "@/i18n/key";
 
 const AuthDescription = (props: IProps) => {
   const { type } = props;
+  const { t } = useTranslation();
+  const signInLocalKey = localizationKey.auth.signIn;
   const router = useRouter();
   const handleSignUp = () => {
     if (type === "sign-in") {
@@ -26,7 +30,7 @@ const AuthDescription = (props: IProps) => {
   return (
     <DescriptionView>
       <AuthContainer>
-        <AuthText>or sign in with</AuthText>
+        <AuthText>{t(signInLocalKey.alternativeSignIn)}</AuthText>
       </AuthContainer>
 
       <SocialButtons>
@@ -38,9 +42,11 @@ const AuthDescription = (props: IProps) => {
       </SocialButtons>
 
       <AuthContainer>
-        <AuthText>Don't have an account? </AuthText>
+        <AuthText>{t(signInLocalKey.haveAnAccount)}</AuthText>
         <ModeButton onPress={handleSignUp}>
-          <ModeLabel>{type === "sign-in" ? "SIGN UP" : "SIGN-IN"}</ModeLabel>
+          <ModeLabel>
+            {type === "sign-in" ? t(signInLocalKey.signUp) : "SIGN-IN"}
+          </ModeLabel>
         </ModeButton>
       </AuthContainer>
     </DescriptionView>

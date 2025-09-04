@@ -2,7 +2,7 @@ import { Text, Button, Avatar, TextInput } from "react-native-paper";
 import { ScrollView, Platform, View, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, ReactElement } from "react";
 import {
   Ionicons,
   MaterialCommunityIcons,
@@ -72,7 +72,7 @@ const OverlayButton = styled(TouchableOpacity)({
   padding: 8,
 });
 
-const Profile = () => {
+const Profile = (): ReactElement => {
   const [fields, setFields] = useState({
     name: "James Charles",
     email: "jamescharles@email.com",
@@ -96,7 +96,7 @@ const Profile = () => {
     setFacing((current) => (current === "back" ? "front" : "back"));
   };
 
-  const handleChangePhoto = async () => {
+  const handleChangePhoto = async (): Promise<void> => {
     if (!permission) {
       return;
     }
@@ -111,7 +111,7 @@ const Profile = () => {
     setIsCameraOpen(true);
   };
 
-  const capturePhoto = async () => {
+  const capturePhoto = async (): Promise<void> => {
     if (cameraRef.current) {
       try {
         const photoData = await cameraRef.current.takePictureAsync();
@@ -128,7 +128,7 @@ const Profile = () => {
     }
   };
 
-  const openGallery = async () => {
+  const openGallery = async (): Promise<void> => {
     const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permission.granted) {
       const result = await ImagePicker.launchImageLibraryAsync({
@@ -145,7 +145,7 @@ const Profile = () => {
     }
   };
 
-  const openCamera = () => {
+  const openCamera = (): ReactElement => {
     return (
       <CameraView style={{ flex: 1 }} facing={facing} ref={cameraRef}>
         <View

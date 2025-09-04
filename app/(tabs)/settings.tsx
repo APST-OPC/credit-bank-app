@@ -1,11 +1,12 @@
 import React, { useState } from "react";
-import { Text } from "react-native-paper";
+import { Menu, Text } from "react-native-paper";
 import { Modal, TouchableOpacity, View, Platform } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import ParallaxScrollView from "@/components/ParralaxView";
 import styled from "styled-components/native";
 import { useRouter } from "expo-router";
 import theme from "@/theme";
+import { useTranslation } from "react-i18next";
 
 const commonPadding = Platform.OS === "ios" ? 16 : 12;
 
@@ -111,10 +112,12 @@ const ButtonsContainer = styled(View)(() => ({
   width: "100%",
 }));
 
-export default function SettingsScreen() {
+const SettingsScreen = () => {
+  const { i18n } = useTranslation();
   const router = useRouter();
   const reroute = useRouter();
   const [modalVisible, setModalVisible] = useState(false);
+  const [visible, setVisible] = useState(false);
 
   const handleLogout = () => {
     setModalVisible(true);
@@ -127,6 +130,11 @@ export default function SettingsScreen() {
   const handleConfirmLogout = () => {
     setModalVisible(false);
     router.push("/(auth)");
+  };
+
+  const handleLanguageChange = (lng: string) => {
+    i18n.changeLanguage(lng);
+    setVisible(false);
   };
 
   return (
@@ -146,6 +154,33 @@ export default function SettingsScreen() {
           <MenuText>Contact Us</MenuText>
           <MaterialIcons name="chevron-right" size={24} color="#7E848D" />
         </MenuItem>
+        <Menu
+          visible={visible}
+          contentStyle={{
+            maxWidth: "455px",
+          }}
+          onDismiss={() => setVisible(false)}
+          anchor={
+            <MenuItem onPress={() => setVisible(true)}>
+              <MenuText>Language</MenuText>
+              <MaterialIcons name="more-vert" size={24} color="#7E848D" />
+            </MenuItem>
+          }
+          anchorPosition="bottom"
+        >
+          <Menu.Item
+            onPress={() => handleLanguageChange("en")}
+            title="English"
+          />
+          <Menu.Item
+            onPress={() => handleLanguageChange("zh")}
+            title="Simplified Chinese"
+          />
+          <Menu.Item
+            onPress={() => handleLanguageChange("zk")}
+            title="Traditional Chinese"
+          />
+        </Menu>
 
         <Description>Security</Description>
         <MenuItem onPress={() => reroute.push("/termsAndConditons")}>
@@ -208,4 +243,6 @@ export default function SettingsScreen() {
       </StyledView>
     </ParallaxScrollView>
   );
-}
+};
+
+export default SettingsScreen;

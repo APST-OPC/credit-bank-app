@@ -1,13 +1,27 @@
 {
   "auth": {
     "signIn": {
-      "signInHeader": "Sign in to your account",
-      "email": "email",
-      "password": "password",
-      "signInBtn": "SIGN IN",
-      "alternativeSignIn": "or sign in with",
-      "haveAnAccount": "already have an account?",
-      "signUp": "SIGN UP"
+      "signInHeader": {
+        "label": "Sign in to your account"
+      },
+      "email": {
+        "label": "email"
+      },
+      "password": {
+        "label": "password"
+      },
+      "signInBtn": {
+        "label": "SIGN IN"
+      },
+      "alternativeSignIn": {
+        "label": "or sign in with"
+      },
+      "haveAnAccount": {
+        "label": "already have an account?"
+      },
+      "signUp": {
+        "label": "SIGN UP"
+      }
     }
   }
 }

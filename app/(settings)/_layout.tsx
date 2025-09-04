@@ -1,8 +1,8 @@
 import { Stack } from "expo-router";
 import StackLayout from "@/components/StackLayout";
-import React from "react";
+import React, { ReactElement } from "react";
 
-const SettingsLayout = () => {
+const SettingsLayout = (): ReactElement => {
   return (
     <StackLayout>
       <Stack.Screen

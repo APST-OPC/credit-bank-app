@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { ReactElement, useEffect, useState } from "react";
 import { KeyboardAvoidingView, Platform, View } from "react-native";
 import { useRouter } from "expo-router";
 import { Form } from "@/components/common/form/Form";
@@ -8,8 +8,12 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import OnboardingScreen from "@/components/auth/onboard/OnboardingScreen";
 import AuthDescription from "@/components/auth/auth-description/AuthDescription";
 import ElevatedView from "@/components/auth/elevated-view/ElevatedView";
+import { useTranslation } from "react-i18next";
+import { localizationKey } from "@/i18n/key";
 
-export default function LoginScreen() {
+const LoginScreen = (): ReactElement => {
+  const { t } = useTranslation();
+  const signInLocalKey = localizationKey.auth.signIn;
   const [isOnboarded, setIsOnboarded] = useState<boolean>();
   const router = useRouter();
 
@@ -56,17 +60,17 @@ export default function LoginScreen() {
         <View style={{ display: "flex", flexDirection: "column", gap: 15 }}>
           <ControlledTextInput
             name="email"
-            label="Email"
+            label={t(signInLocalKey.email)}
             keyboardType="email-address"
             placeholder="ex: jon.smith@email.com"
           />
           <ControlledTextInput
             name="password"
             type="password"
-            label="Password"
+            label={t(signInLocalKey.password)}
             placeholder="********"
           />
-          <Button mode="contained">SIGN IN</Button>
+          <Button mode="contained">{t(signInLocalKey.signInBtn)}</Button>
         </View>
       </Form>
     );
@@ -75,7 +79,7 @@ export default function LoginScreen() {
   const renderElevatedView = () => {
     return (
       <ElevatedView>
-        <Title>Sign in to your account</Title>
+        <Title>{t(signInLocalKey.signInHeader)}</Title>
         {renderForm()}
         <AuthDescription type="sign-in" />
       </ElevatedView>
@@ -95,4 +99,6 @@ export default function LoginScreen() {
       </Container>
     </KeyboardAvoidingView>
   );
-}
+};
+
+export default LoginScreen;

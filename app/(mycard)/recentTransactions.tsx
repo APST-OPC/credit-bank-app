@@ -1,11 +1,11 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { FlatList, Platform, TouchableOpacity, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { Avatar, Text } from "react-native-paper";
 import Container from "@/components/Container";
 import { useCardData } from "@/store/mycard/useCardData";
 
-export default function RecentTransactions() {
+const RecentTransactions = (): ReactElement => {
   const { cardData, activeIndex } = useCardData();
   const transactionList =
     Platform.OS === "web"
@@ -71,4 +71,6 @@ export default function RecentTransactions() {
       </Animated.View>
     </Container>
   );
-}
+};
+
+export default RecentTransactions;

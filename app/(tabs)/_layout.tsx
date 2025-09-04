@@ -1,5 +1,5 @@
 import { Tabs } from "expo-router";
-import React from "react";
+import React, { ReactElement } from "react";
 
 import { IconSymbol } from "@/components/ui/IconSymbol";
 import {
@@ -36,7 +36,7 @@ const TabBarIcon = ({
   return <IconSymbol size={28} name={name} color={color} />;
 };
 
-const HapticsTab = (props: BottomTabBarButtonProps) => {
+const HapticsTab = (props: BottomTabBarButtonProps): ReactElement => {
   return (
     <PlatformPressable
       {...props}
@@ -50,7 +50,7 @@ const HapticsTab = (props: BottomTabBarButtonProps) => {
   );
 };
 
-export default function TabLayout() {
+const TabLayout = (): ReactElement => {
   return (
     <Tabs
       screenOptions={{
@@ -92,4 +92,6 @@ export default function TabLayout() {
       />
     </Tabs>
   );
-}
+};
+
+export default TabLayout;

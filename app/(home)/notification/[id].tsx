@@ -1,4 +1,4 @@
-import React from "react";
+import React, { ReactElement } from "react";
 import { useNotificationStore } from "@/store/home/useNotification";
 import { Stack } from "expo-router";
 import { Fragment } from "react";
@@ -6,7 +6,7 @@ import Animated from "react-native-reanimated";
 
 import { Text } from "react-native-paper";
 
-export default function GetNotification() {
+const GetNotification = (): ReactElement => {
   const selectedNotification = useNotificationStore(
     (state) => state.selectedNotification
   );
@@ -36,4 +36,6 @@ export default function GetNotification() {
       </Animated.View>
     </Fragment>
   );
-}
+};
+
+export default GetNotification;

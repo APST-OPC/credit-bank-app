@@ -1,4 +1,4 @@
-import { authLocalKey } from "./module/auth";
+import { authLocalKey } from "./modules/auth";
 
 export const localizationKey = {
   auth: authLocalKey,

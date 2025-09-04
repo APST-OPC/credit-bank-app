@@ -1,4 +1,11 @@
-import React, { Fragment, useCallback, useRef, useState } from "react";
+import React, {
+  Fragment,
+  ReactElement,
+  ReactNode,
+  useCallback,
+  useRef,
+  useState,
+} from "react";
 import styled from "styled-components/native";
 import { Card, Switch, Text } from "react-native-paper";
 import Animated from "react-native-reanimated";
@@ -92,44 +99,45 @@ interface CardSettingProps {
   onToggle: () => void;
 }
 
-const CardSetting: React.FC<CardSettingProps> = ({
-  label,
-  value,
-  onToggle,
-}) => (
-  <Card
-    style={{
-      ...(Platform.OS === "web" && { padding: 8 }),
-      ...(Platform.OS === "ios" && { padding: 8 }),
-    }}
-  >
-    <Card.Content
-      style={{
-        flexDirection: "row",
-        alignItems: "center",
-        justifyContent: "space-between",
-        paddingVertical: 8,
-      }}
-    >
-      <Text variant="bodyLarge" style={{ fontFamily: "PoppinsSemiBold" }}>
-        {label}
-      </Text>
-      <Switch hitSlop={20} value={value} onValueChange={onToggle} />
-    </Card.Content>
-  </Card>
-);
-
-const CardLockModal = ({
-  isVisible,
-  isLocked,
-  onClose,
-  onConfirm,
-}: {
+interface CardLockProps {
   isVisible: boolean;
   isLocked: boolean;
   onClose: () => void;
   onConfirm: () => void;
-}) => {
+}
+
+interface CustomOverlayProps {
+  closeBottomSheet: () => void;
+}
+
+const CardSetting = (props: CardSettingProps): ReactElement => {
+  const { label, value, onToggle } = props;
+  return (
+    <Card
+      style={{
+        ...(Platform.OS === "web" && { padding: 8 }),
+        ...(Platform.OS === "ios" && { padding: 8 }),
+      }}
+    >
+      <Card.Content
+        style={{
+          flexDirection: "row",
+          alignItems: "center",
+          justifyContent: "space-between",
+          paddingVertical: 8,
+        }}
+      >
+        <Text variant="bodyLarge" style={{ fontFamily: "PoppinsSemiBold" }}>
+          {label}
+        </Text>
+        <Switch hitSlop={20} value={value} onValueChange={onToggle} />
+      </Card.Content>
+    </Card>
+  );
+};
+
+const CardLockModal = (props: CardLockProps): ReactElement => {
+  const { isVisible, isLocked, onClose, onConfirm } = props;
   return (
     <Modal
       animationType="fade"
@@ -195,9 +203,7 @@ const CardLockModal = ({
 
 const CustomOverlay = ({
   closeBottomSheet,
-}: {
-  closeBottomSheet: () => void;
-}) => {
+}: CustomOverlayProps): ReactElement => {
   return (
     <TouchableOpacity
       onPress={closeBottomSheet}
@@ -213,7 +219,7 @@ const CustomOverlay = ({
   );
 };
 
-export default function ActivateCard() {
+const ActivateCard = () => {
   const [isLockCard, setIsLockCard] = useState<boolean>(false);
   const [isLockVisible, setIsLockVisible] = useState<boolean>(false);
   const [isHome, setIsHome] = useState<boolean>(false);
@@ -224,7 +230,7 @@ export default function ActivateCard() {
     sheetRef.current?.open();
   }, []);
 
-  const renderBottomSheet = () => {
+  const renderBottomSheet = (): ReactNode => {
     return (
       <BottomSheet
         ref={sheetRef}
@@ -353,4 +359,6 @@ export default function ActivateCard() {
       {renderBottomSheet()}
     </Fragment>
   );
-}
+};
+
+export default ActivateCard;

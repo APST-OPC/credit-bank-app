@@ -1,10 +1,10 @@
 import { Link, Stack } from "expo-router";
-import React from "react";
+import React, { ReactElement } from "react";
 import { Fragment } from "react";
 import { View } from "react-native";
 import { Text } from "react-native-paper";
 
-export default function NotFoundScreen() {
+const NotFoundScreen = (): ReactElement => {
   return (
     <Fragment>
       <Stack.Screen options={{ title: "Oops!" }} />
@@ -16,4 +16,6 @@ export default function NotFoundScreen() {
       </View>
     </Fragment>
   );
-}
+};
+
+export default NotFoundScreen;

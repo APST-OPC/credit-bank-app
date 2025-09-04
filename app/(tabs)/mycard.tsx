@@ -11,7 +11,7 @@ import {
 } from "@/store/mycard/useCardData";
 import theme from "@/theme";
 import { Ionicons } from "@expo/vector-icons";
-import React from "react";
+import React, { ReactElement, ReactNode } from "react";
 
 const ParentView = styled(View)({
   padding: 15,
@@ -82,7 +82,7 @@ const TransactionAvatar = styled(View)({
   alignItems: "center",
 });
 
-const renderViewMore = (item: TransactionProsps[]) => {
+const renderViewMore = (item: TransactionProsps[]): ReactNode[] => {
   return item.map(({ title, category, price }, index) => {
     const newPrice = price.replace(/[^0-9]/g, "");
     if (index <= 3) {
@@ -114,7 +114,7 @@ const renderCardDetails = (
   data: CardDataProps,
   reroute: Router,
   key: number
-) => {
+): ReactElement => {
   return (
     <ParentView key={key}>
       <PointView>
@@ -169,7 +169,7 @@ const renderCardDetails = (
   );
 };
 
-const MyCards = () => {
+const MyCards = (): ReactElement => {
   const reroute = useRouter();
   const { activeIndex, cardData } = useCardData();
   const platformView = () => {
