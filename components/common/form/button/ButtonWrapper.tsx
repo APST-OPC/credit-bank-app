@@ -5,7 +5,7 @@ import { ReactNode } from "react";
 import { Button as RNButton } from "react-native-paper";
 
 const ButtonWrapper = <T extends object>(props: IButton): ReactNode => {
-  const { children, submitFn, ...rest } = props;
+  const { children, submitFn, mode = "contained", ...rest } = props;
   const { handleSubmit, validateForm } = useFormikContext<T>();
 
   const onSubmit = async () => {
@@ -17,7 +17,12 @@ const ButtonWrapper = <T extends object>(props: IButton): ReactNode => {
   };
 
   return (
-    <RNButton onPress={() => onSubmit()} {...rest}>
+    <RNButton
+      onPress={() => onSubmit()}
+      labelStyle={{ fontSize: 17 }}
+      mode={mode}
+      {...rest}
+    >
       {children}
     </RNButton>
   );

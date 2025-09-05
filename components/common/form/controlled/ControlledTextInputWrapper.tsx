@@ -7,7 +7,7 @@ import { InputGroup } from "./utils";
 const ControlledTextInputWrapper = <T, K extends keyof T>(
   props: ControlledTextInputProps<T, K>
 ): ReactNode => {
-  const { name, label, placeholder, style, ...rest } = props;
+  const { name, label, placeholder, mode = "outlined", style, ...rest } = props;
   const { handleBlur, handleChange, values, errors, touched } =
     useFormikContext<T>();
   const validator = Boolean(touched[name] && errors[name]);
@@ -15,6 +15,7 @@ const ControlledTextInputWrapper = <T, K extends keyof T>(
     <InputGroup style={style}>
       <Field
         as={TextInput}
+        mode={mode}
         nativeID={String(name)}
         name={name}
         errorFn={validator}

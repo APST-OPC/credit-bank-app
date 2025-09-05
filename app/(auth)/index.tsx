@@ -61,7 +61,6 @@ const LoginScreen = (): ReactElement => {
           <ControlledTextInput
             name="email"
             label={t(signInLocalKey.email)}
-            keyboardType="email-address"
             placeholder="ex: jon.smith@email.com"
           />
           <ControlledTextInput
@@ -70,7 +69,7 @@ const LoginScreen = (): ReactElement => {
             label={t(signInLocalKey.password)}
             placeholder="********"
           />
-          <Button mode="contained">{t(signInLocalKey.signInBtn)}</Button>
+          <Button>{t(signInLocalKey.signInBtn)}</Button>
         </View>
       </Form>
     );

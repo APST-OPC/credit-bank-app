@@ -1,4 +1,4 @@
-import { Text, Button, Avatar, TextInput } from "react-native-paper";
+import { Text, Button, Avatar } from "react-native-paper";
 import { ScrollView, Platform, View, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
@@ -11,6 +11,9 @@ import {
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import theme from "@/theme";
+import { Form } from "@/components/common/form/Form";
+import { profileChangeInitialValues } from "@/components/settings/utils";
+import ProfileChangeForm from "@/components/settings/profile-change-form/ProfileChangeForm";
 
 const commonPadding = Platform.OS === "ios" ? 20 : 25;
 
@@ -19,12 +22,6 @@ const StyledView = styled(ScrollView)({
   gap: 5,
   paddingLeft: commonPadding,
   paddingRight: commonPadding,
-});
-
-const StyledButton = styled(Button)({
-  marginTop: 35,
-  backgroundColor: theme.colors.primary,
-  color: "black",
 });
 
 const StyledButtonChangePhoto = styled(Button)({
@@ -41,13 +38,6 @@ const StyledButtonChangePhoto = styled(Button)({
 const StyledButtonTitle = styled(Text)({
   color: "white",
   alignSelf: "center",
-});
-
-const StyledText = styled(Text)({
-  color: "#6F6F6F",
-  marginBottom: 10,
-  marginTop: 20,
-  fontSize: 16,
 });
 
 const AvatarFrame = styled(View)({
@@ -73,19 +63,6 @@ const OverlayButton = styled(TouchableOpacity)({
 });
 
 const Profile = (): ReactElement => {
-  const [fields, setFields] = useState({
-    name: "James Charles",
-    email: "jamescharles@email.com",
-    phoneNumber: "09123456789",
-  });
-
-  const handleFieldChange = (field: keyof typeof fields, value: string) => {
-    setFields((prev) => ({
-      ...prev,
-      [field]: value,
-    }));
-  };
-
   const [facing, setFacing] = useState<CameraType>("front");
   const [permission, requestPermission] = useCameraPermissions();
   const [isCameraOpen, setIsCameraOpen] = useState(false);
@@ -200,54 +177,32 @@ const Profile = (): ReactElement => {
     openCamera()
   ) : (
     <ParallaxScrollView>
-      <StyledView>
-        <AvatarFrame>
-          <Avatar.Image
-            size={120}
-            source={{
-              uri:
-                photo ||
-                "https://images7.alphacoders.com/489/thumb-1920-489447.jpg",
-            }}
-          />
-          <OverlayButton onPress={handleChangePhoto}>
-            <MaterialIcons name="camera-alt" size={24} color="white" />
-          </OverlayButton>
-        </AvatarFrame>
-        <StyledButtonChangePhoto onPress={openGallery}>
-          <StyledButtonTitle>Change Photo</StyledButtonTitle>
-        </StyledButtonChangePhoto>
-        <StyledText>Name</StyledText>
-        <TextInput
-          mode="outlined"
-          outlineStyle={{ borderRadius: 10 }}
-          activeOutlineColor={theme.colors.primary}
-          value={fields.name}
-          onChangeText={(value: string) => handleFieldChange("name", value)}
-        />
-
-        <StyledText>Email</StyledText>
-        <TextInput
-          mode="outlined"
-          outlineStyle={{ borderRadius: 10 }}
-          activeOutlineColor={theme.colors.primary}
-          value={fields.email}
-          onChangeText={(value: string) => handleFieldChange("email", value)}
-        />
-        <StyledText>Phone Number</StyledText>
-        <TextInput
-          mode="outlined"
-          outlineStyle={{ borderRadius: 10 }}
-          activeOutlineColor={theme.colors.primary}
-          value={fields.phoneNumber}
-          onChangeText={(value: string) =>
-            handleFieldChange("phoneNumber", value)
-          }
-        />
-        <StyledButton>
-          <StyledButtonTitle>Save Profile</StyledButtonTitle>
-        </StyledButton>
-      </StyledView>
+      <Form
+        instance={{
+          initialValues: { ...profileChangeInitialValues },
+          onSubmit: (values) => console.log(values),
+        }}
+      >
+        <StyledView>
+          <AvatarFrame>
+            <Avatar.Image
+              size={120}
+              source={{
+                uri:
+                  photo ||
+                  "https://images7.alphacoders.com/489/thumb-1920-489447.jpg",
+              }}
+            />
+            <OverlayButton onPress={handleChangePhoto}>
+              <MaterialIcons name="camera-alt" size={24} color="white" />
+            </OverlayButton>
+          </AvatarFrame>
+          <StyledButtonChangePhoto onPress={openGallery}>
+            <StyledButtonTitle>Change Photo</StyledButtonTitle>
+          </StyledButtonChangePhoto>
+        </StyledView>
+        <ProfileChangeForm />
+      </Form>
     </ParallaxScrollView>
   );
 };

@@ -22,7 +22,6 @@ const VerifyPhoneForm = (): ReactElement => {
   const renderSubmitBtn = (): ReactNode => {
     return (
       <Form.Button
-        mode="contained"
         submitFn={() => router.push("/(auth)/otpverify")}
         disabled={values.phoneNumber.length < 10}
         contentStyle={{ height: 45 }}

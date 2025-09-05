@@ -1,7 +1,5 @@
 import { Tabs } from "expo-router";
 import React, { ReactElement } from "react";
-
-import { IconSymbol } from "@/components/ui/IconSymbol";
 import {
   OpaqueColorValue,
   StyleProp,
@@ -13,6 +11,7 @@ import theme from "@/theme";
 import * as Haptics from "expo-haptics";
 import { BottomTabBarButtonProps } from "@react-navigation/bottom-tabs";
 import { PlatformPressable } from "@react-navigation/elements";
+import { IconSymbol } from "@/components/ui/IconSymbol";
 
 const tabBarStyle: StyleProp<ViewStyle> = {
   maxWidth: 480,

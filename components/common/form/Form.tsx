@@ -1,6 +1,6 @@
 import React, { FC, ReactNode } from "react";
 import { Formik } from "formik";
-import { View } from "react-native";
+import { Platform, View } from "react-native";
 import {
   ControlledCheckboxProps,
   ControlledTextInputProps,
@@ -25,7 +25,13 @@ const createForm = <T extends object>(): FormWithSubcomponents<T> => {
   const FormComponent: FC<IFormProps<T>> = ({ children, instance }) => {
     return (
       <Formik {...instance}>
-        <View>{children}</View>
+        {Platform.OS === "web" ? (
+          <form>
+            <View>{children}</View>
+          </form>
+        ) : (
+          <View>{children}</View>
+        )}
       </Formik>
     );
   };
@@ -34,7 +40,9 @@ const createForm = <T extends object>(): FormWithSubcomponents<T> => {
     ControlledTextInputWrapper as <K extends keyof T>(
       props: ControlledTextInputProps<T, K>
     ) => ReactNode;
-  (FormComponent as FormWithSubcomponents<T>).Button = ButtonWrapper as (props: IButton) => ReactNode;
+  (FormComponent as FormWithSubcomponents<T>).Button = ButtonWrapper as (
+    props: IButton
+  ) => ReactNode;
   (FormComponent as FormWithSubcomponents<T>).Checkbox =
     ControlledCheckboxWrapper as <K extends keyof T>(
       props: ControlledCheckboxProps<T, K>

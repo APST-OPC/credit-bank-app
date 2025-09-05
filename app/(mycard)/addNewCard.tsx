@@ -1,16 +1,10 @@
 import React, { ReactElement } from "react";
-import { View } from "react-native";
-import styled from "styled-components/native";
 import { Form } from "@/components/common/form/Form";
 import AddNewCardForm from "@/components/mycard/add-new-card-form/AddNewCardForm";
 import { initialValues } from "@/components/mycard/utils";
 import ParallaxScrollView from "@/components/ParralaxView";
+import FormContainer from "@/components/common/form/form-container/FormContainer";
 
-const StyledView = styled(View)({
-  paddingHorizontal: 16,
-  paddingVertical: 20,
-  gap: 15,
-});
 
 const AddNewCard = (): ReactElement => {
   return (
@@ -21,9 +15,9 @@ const AddNewCard = (): ReactElement => {
           onSubmit: (values) => console.log(values),
         }}
       >
-        <StyledView>
+        <FormContainer>
           <AddNewCardForm />
-        </StyledView>
+        </FormContainer>
       </Form>
     </ParallaxScrollView>
   );

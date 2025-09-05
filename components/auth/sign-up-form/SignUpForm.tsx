@@ -4,44 +4,32 @@ import { useRouter } from "expo-router";
 import { useFormikContext } from "formik";
 import { SignUpFormInstance } from "../type";
 import { View } from "react-native";
+import { signUpFormInstance } from "../utils";
+import { stringFormat } from "@/components/settings/utils";
 
 const SignUpForm = () => {
   const { Button, Checkbox, ControlledTextInput } = Form;
   const router = useRouter();
   const { values } = useFormikContext<SignUpFormInstance>();
+  const placeHolders = [
+    "ex: Jon Smith",
+    "ex: jon.smith@email.com",
+    "******",
+    "******",
+  ];
+  const signUpObj = Object.keys(signUpFormInstance.initialValues);
   return (
     <View style={{ display: "flex", flexDirection: "column", gap: 15 }}>
-      <ControlledTextInput
-        name="name"
-        label="Name"
-        mode="outlined"
-        placeholder="ex: Jon Smith"
-        autoCapitalize="words"
-      />
-      <ControlledTextInput
-        name="email"
-        label="Email"
-        mode="outlined"
-        placeholder="ex: jon.smith@email.com"
-        keyboardType="email-address"
-        autoCapitalize="none"
-      />
-      <ControlledTextInput
-        name="password"
-        label="Password"
-        type="password"
-        mode="outlined"
-      />
-      <ControlledTextInput
-        name="confirmPassword"
-        label="Confirm Password"
-        type="password"
-        mode="outlined"
-      />
+      {signUpObj.slice(0, 4).map((data, index) => (
+        <ControlledTextInput
+          name={data}
+          label={stringFormat(data)}
+          placeholder={placeHolders[index]}
+          type={index >= 2 ? "password" : undefined}
+        />
+      ))}
       <Checkbox name="termsAccepted" label="I understood the terms & policy" />
-
       <Button
-        mode="contained"
         submitFn={() => router.navigate("/(auth)/verifyphone")}
         disabled={values.termsAccepted === false}
       >
