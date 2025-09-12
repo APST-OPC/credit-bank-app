@@ -8,7 +8,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Form } from "@/components/common/form/Form";
 import { signInFormInstance } from "@/components/auth/utils";
 import { ElevatedView, FormView, Title } from "@/components/auth/styled";
-import OnboardingScreen from "@/components/auth/onboard/OnboardingScreen";
+import OnboardingScreen from "@/components/onboard/OnboardingScreen";
 import AuthDescription from "@/components/auth/auth-description/AuthDescription";
 import { localizationKey } from "@/i18n/key";
 import AuthContainer from "@/components/auth/auth-container/AuthContainer";
