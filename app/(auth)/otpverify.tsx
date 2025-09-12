@@ -25,7 +25,7 @@ interface FormValues {
 }
 
 const OptForm = () => {
-  const { Button, ControlledTextInput } = Form;
+  const { Button } = Form;
   const initialValues: FormValues = {
     otp: Array(5).fill(""),
   };
@@ -67,7 +67,6 @@ const OptForm = () => {
   return (
     <>
       <OtpContainer>
-        <ControlledTextInput name="otp" style={{ display: "none" }} />
         {formValue.otp.map((digit, index) => (
           <OtpInput
             key={index}
