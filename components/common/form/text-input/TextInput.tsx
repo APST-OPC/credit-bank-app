@@ -6,7 +6,7 @@ import {
 } from "react-native-paper";
 
 export interface ITextInput extends TextInputProps {
-  label: string;
+  label?: string;
   type?: "password" | "text";
   iconColor?: string;
   errorFn?: boolean;

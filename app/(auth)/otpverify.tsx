@@ -1,40 +1,38 @@
-import ElevatedView from "@/components/auth/elevated-view/ElevatedView";
-import theme from "@/theme";
+import type { IOtpVerify } from "@/components/auth/type";
+import type { ReactElement } from "react";
+import React, { useState, useEffect, createRef } from "react";
+import {
+  TextInput as RNTextInput,
+  Platform,
+  KeyboardAvoidingView,
+} from "react-native";
 import { useRouter } from "expo-router";
-import React, { useState, useEffect, createRef, ReactElement } from "react";
-import { TextInput as RNTextInput, Platform } from "react-native";
-import { Button } from "react-native-paper";
-import styled from "styled-components/native";
-import TextInput from "@/components/common/form/text-input/TextInput";
-import { KeyboardAvoidingView } from "react-native";
+import { useFormikContext } from "formik";
+
 import AuthContainer from "@/components/auth/auth-container/AuthContainer";
-import { Subtitle, Title } from "@/components/auth/styled";
+import {
+  ElevatedView,
+  OtpContainer,
+  OtpFormView,
+  OtpInput,
+  Subtitle,
+  Title,
+} from "@/components/auth/styled";
+import { Form } from "@/components/common/form/Form";
 
 interface FormValues {
   otp: string[];
 }
 
-const PhoneInputContainer = styled.View({
-  display: "flex",
-  flexDirection: "row",
-  justifyContent: "space-between",
-});
-
-const OtpInput = styled(TextInput)({
-  width: 60,
-  height: 60,
-  fontSize: 30,
-  paddingLeft: 7,
-});
-
-const VerifyPhoneScreen = (): ReactElement => {
-  const router = useRouter();
+const OptForm = () => {
+  const { Button, ControlledTextInput } = Form;
   const initialValues: FormValues = {
     otp: Array(5).fill(""),
   };
-
   const [formValue, setFormValue] = useState<FormValues>(initialValues);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
+  const { setFieldValue } = useFormikContext<IOtpVerify>();
+  const router = useRouter();
 
   const inputRefs = Array(5)
     .fill(0)
@@ -56,11 +54,40 @@ const VerifyPhoneScreen = (): ReactElement => {
     }
   };
 
+  const handleSubmit = () => {
+    const reducedOpt = formValue.otp.reduce((prev, current) => prev + current);
+    setFieldValue("otp", `${reducedOpt}`);
+    router.push("/(auth)/verified");
+  };
+
   useEffect(() => {
     const allFieldsFilled = formValue.otp.every((digit) => digit.length === 1);
     setIsButtonDisabled(!allFieldsFilled);
   }, [formValue.otp]);
+  return (
+    <>
+      <OtpContainer>
+        <ControlledTextInput name="otp" style={{ display: "none" }} />
+        {formValue.otp.map((digit, index) => (
+          <OtpInput
+            key={index}
+            ref={inputRefs[index]}
+            keyboardType="number-pad"
+            maxLength={1}
+            selectTextOnFocus
+            value={digit}
+            onChangeText={handleOtpChange(index)}
+          />
+        ))}
+      </OtpContainer>
+      <Button submitFn={handleSubmit} disabled={isButtonDisabled}>
+        SEND CODE
+      </Button>
+    </>
+  );
+};
 
+const VerifyPhoneScreen = (): ReactElement => {
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -73,29 +100,16 @@ const VerifyPhoneScreen = (): ReactElement => {
             We will send you a One-Time-Password (OTP){"\n"}on this mobile
             number.
           </Subtitle>
-          <PhoneInputContainer>
-            {formValue.otp.map((digit, index) => (
-              <OtpInput
-                key={index}
-                ref={inputRefs[index]}
-                keyboardType="number-pad"
-                maxLength={1}
-                selectTextOnFocus
-                value={digit}
-                onChangeText={handleOtpChange(index)}
-              />
-            ))}
-          </PhoneInputContainer>
-          <Button
-            mode="contained"
-            onPress={() => router.push("/(auth)/verified")}
-            buttonColor={theme.colors.primary}
-            style={{ borderRadius: 10 }}
-            contentStyle={{ height: 45 }}
-            disabled={isButtonDisabled}
+          <Form
+            instance={{
+              initialValues: { otp: "" },
+              onSubmit: (values) => console.log(values),
+            }}
           >
-            SEND CODE
-          </Button>
+            <OtpFormView>
+              <OptForm />
+            </OtpFormView>
+          </Form>
         </ElevatedView>
       </AuthContainer>
     </KeyboardAvoidingView>

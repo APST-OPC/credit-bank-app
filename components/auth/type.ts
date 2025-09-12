@@ -1,4 +1,5 @@
 import { ReactNode } from "react";
+
 //auth-container
 export interface IAuthContainer {
   isAbsolute?: boolean;
@@ -15,6 +16,11 @@ export interface IElevatedView {
   children: ReactNode;
 }
 
+//sign-in-form
+export interface ISignInForm {
+  onSubmit: (values: Record<string, unknown>) => void;
+  translate: Record<string, string>;
+}
 //sign-up-form
 export interface SignUpFormInstance {
   name: string;
@@ -28,4 +34,14 @@ export interface SignUpFormInstance {
 export interface PhoneVerifyForm {
   countryCode: string;
   phoneNumber: string;
+}
+export interface IVerifierModal {
+  open: boolean;
+  handleFieldValue: (name: string, value: string) => void;
+  handleOnClose: () => void;
+}
+
+//otp-verify-form
+export interface IOtpVerify {
+  otp: string;
 }

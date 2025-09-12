@@ -1,15 +1,45 @@
-import React, { ReactElement, useEffect, useState } from "react";
-import { KeyboardAvoidingView, Platform, View } from "react-native";
+import type { ReactElement } from "react";
+import type { ISignInForm } from "@/components/auth/type";
+import React, { useEffect, useState } from "react";
+import { KeyboardAvoidingView, Platform } from "react-native";
 import { useRouter } from "expo-router";
+import { useTranslation } from "react-i18next";
+import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Form } from "@/components/common/form/Form";
 import { signInFormInstance } from "@/components/auth/utils";
-import { Background, Container, Title } from "@/components/auth/styled";
-import AsyncStorage from "@react-native-async-storage/async-storage";
+import { ElevatedView, FormView, Title } from "@/components/auth/styled";
 import OnboardingScreen from "@/components/auth/onboard/OnboardingScreen";
 import AuthDescription from "@/components/auth/auth-description/AuthDescription";
-import ElevatedView from "@/components/auth/elevated-view/ElevatedView";
-import { useTranslation } from "react-i18next";
 import { localizationKey } from "@/i18n/key";
+import AuthContainer from "@/components/auth/auth-container/AuthContainer";
+
+const SignInForm = ({ onSubmit, translate }: ISignInForm): ReactElement => {
+  const { Button, ControlledTextInput } = Form;
+  const { t } = useTranslation();
+  return (
+    <Form
+      instance={{
+        ...signInFormInstance,
+        onSubmit: onSubmit,
+      }}
+    >
+      <FormView>
+        <ControlledTextInput
+          name="email"
+          label={t(translate.email)}
+          placeholder="ex: jon.smith@email.com"
+        />
+        <ControlledTextInput
+          name="password"
+          type="password"
+          label={t(translate.password)}
+          placeholder="********"
+        />
+        <Button>{t(translate.signInBtn)}</Button>
+      </FormView>
+    </Form>
+  );
+};
 
 const LoginScreen = (): ReactElement => {
   const { t } = useTranslation();
@@ -34,52 +64,16 @@ const LoginScreen = (): ReactElement => {
     checkFirstLaunch();
   });
 
-  const renderBackground = () => {
-    return (
-      <Background
-        source={require("@/assets/images/bgworld.png")}
-        resizeMode="cover"
-      />
-    );
-  };
-
   const handleSubmit = (values: Record<string, unknown>) => {
     console.log("form", values);
     router.push("/(tabs)");
-  };
-
-  const renderForm = () => {
-    const { Button, ControlledTextInput } = Form;
-    return (
-      <Form
-        instance={{
-          ...signInFormInstance,
-          onSubmit: handleSubmit,
-        }}
-      >
-        <View style={{ display: "flex", flexDirection: "column", gap: 15 }}>
-          <ControlledTextInput
-            name="email"
-            label={t(signInLocalKey.email)}
-            placeholder="ex: jon.smith@email.com"
-          />
-          <ControlledTextInput
-            name="password"
-            type="password"
-            label={t(signInLocalKey.password)}
-            placeholder="********"
-          />
-          <Button>{t(signInLocalKey.signInBtn)}</Button>
-        </View>
-      </Form>
-    );
   };
 
   const renderElevatedView = () => {
     return (
       <ElevatedView>
         <Title>{t(signInLocalKey.signInHeader)}</Title>
-        {renderForm()}
+        <SignInForm onSubmit={handleSubmit} translate={signInLocalKey} />
         <AuthDescription type="sign-in" />
       </ElevatedView>
     );
@@ -92,10 +86,7 @@ const LoginScreen = (): ReactElement => {
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{ flex: 1 }}
     >
-      <Container>
-        {renderBackground()}
-        {renderElevatedView()}
-      </Container>
+      <AuthContainer>{renderElevatedView()}</AuthContainer>
     </KeyboardAvoidingView>
   );
 };

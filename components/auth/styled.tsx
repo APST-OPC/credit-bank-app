@@ -1,62 +1,10 @@
-import {
-  View,
-  Image,
-  Text,
-  TouchableOpacity,
-  Pressable,
-  ScrollView,
-} from "react-native";
+import { View, Text, Pressable, ScrollView, Image } from "react-native";
 import { styled } from "styled-components/native";
-import theme from "@/theme";
-
-//auth-container
-export const Container = styled(View)({
-  flex: 1,
-  width: "100%",
-  maxWidth: 480,
-  alignSelf: "center",
-  position: "relative",
-});
-export const Background = styled(Image)({
-  flex: 1,
-  width: "100%",
-  height: "100%",
-});
-
-//auth-description
-export const SocialButtons = styled(View)({
-  flexDirection: "row",
-  justifyContent: "center",
-  gap: 30,
-});
-export const AuthContainer = styled(View)({
-  flexDirection: "row",
-  justifyContent: "center",
-  alignItems: "center",
-  gap: 5,
-});
-export const AuthText = styled(Text)({
-  color: "#666",
-});
-export const SocialIcon = styled(Image)({
-  width: 30,
-  height: 30,
-});
-export const DescriptionView = styled(View)({
-  display: "flex",
-  flexDirection: "column",
-  gap: 10,
-});
-export const ModeButton = styled(TouchableOpacity)({
-  marginTop: 4,
-});
-export const ModeLabel = styled(Text)({
-  color: theme.colors.primary,
-  fontFamily: "PoppinsSemiBold",
-});
+import { Button } from "react-native-paper";
+import TextInput from "@/components/common/form/text-input/TextInput";
 
 //elevated-view
-export const StyledElevatedView = styled(View)({
+export const ElevatedView = styled(View)({
   width: "100%",
   maxWidth: 480,
   backgroundColor: "white",
@@ -89,9 +37,13 @@ export const PhoneInputContainer = styled(View)({
   flexDirection: "row",
   justifyContent: "space-between",
 });
-export const ModalOverlay = styled(Pressable)({
-  flex: 1,
+export const FormView = styled(View)({
+  display: "flex",
+  flexDirection: "column",
+  gap: 15,
 });
+
+//Modal
 export const ModalContainer = styled(View)({
   bottom: 0,
   width: "100%",
@@ -113,4 +65,65 @@ export const ModalTitle = styled(Text)({
 });
 export const ModalBody = styled(ScrollView)({
   maxHeight: "300px",
+});
+export const ModalOverlay = styled(Pressable)({
+  flex: 1,
+});
+
+//otp verify
+export const OtpInput = styled(TextInput)({
+  width: 60,
+  height: 60,
+  fontSize: 30,
+  paddingLeft: 7,
+});
+
+export const OtpContainer = styled.View({
+  display: "flex",
+  flexDirection: "row",
+  justifyContent: "space-between",
+});
+
+export const OtpFormView = styled(View)({
+  gap: 15,
+});
+
+//verified
+export const Content = styled(View)({
+  display: "flex",
+  width: "100%",
+  height: "100%",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: 20,
+  position: "absolute",
+});
+
+export const IconContainer = styled(Image)({
+  width: 80,
+  height: 80,
+  marginBottom: 20,
+});
+
+export const VerifiedTitle = styled(Text)({
+  fontSize: 24,
+  fontWeight: "bold",
+  color: "#fff",
+  marginBottom: 10,
+});
+
+export const VerifiedSubtitle = styled(Text)({
+  fontSize: 16,
+  color: "#fff",
+  textAlign: "center",
+  marginBottom: 40,
+  opacity: 0.8,
+});
+
+export const StyledButton = styled(Button)({
+  width: "100%",
+  marginTop: 20,
+  backgroundColor: "#fff",
+  borderRadius: 25,
+  paddingVertical: 8,
 });

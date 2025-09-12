@@ -48,3 +48,13 @@ export const countryCodes = [
   { label: "China (+86)", value: "+86" },
 ];
 
+export const signInPlaceholders = [
+  "ex: Jon Smith",
+  "ex: jon.smith@email.com",
+  "******",
+  "******",
+];
+export const signUpObj = Object.keys(signUpFormInstance.initialValues).slice(
+  0,
+  4
+);
