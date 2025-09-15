@@ -24,9 +24,12 @@ import i18next from "i18next";
 import { initReactI18next } from "react-i18next";
 import { I18NextProps } from "./type";
 import { i18nextResource } from "./locale";
+import LanguageDetector from "i18next-browser-languagedetector";
 
-i18next.use(initReactI18next).init<I18NextProps>({
-  lng: "en",
+const systemLanguage = navigator.language.replace("-", "");
+i18next.use(LanguageDetector).use(initReactI18next).init<I18NextProps>({
+  lng: systemLanguage,
+  fallbackLng: "en",
   debug: true,
   resources: i18nextResource,
 });

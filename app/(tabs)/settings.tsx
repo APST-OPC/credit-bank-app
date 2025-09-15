@@ -112,6 +112,18 @@ const ButtonsContainer = styled(View)(() => ({
   width: "100%",
 }));
 
+const LanguageView = styled(View)({
+  flexDirection: "row",
+  gap: 10,
+  alignItems: "center",
+});
+
+const LanguageText = styled(Text)(() => ({
+  fontSize: 16,
+  color: "#000000",
+  fontWeight: "bold",
+}));
+
 const SettingsScreen = () => {
   const { i18n } = useTranslation();
   const router = useRouter();
@@ -163,7 +175,13 @@ const SettingsScreen = () => {
           anchor={
             <MenuItem onPress={() => setVisible(true)}>
               <MenuText>Language</MenuText>
-              <MaterialIcons name="more-vert" size={24} color="#7E848D" />
+
+              <LanguageView>
+                <LanguageText>
+                  {i18n.language.toUpperCase().slice(0, 2)}
+                </LanguageText>
+                <MaterialIcons name="more-vert" size={24} color="#7E848D" />
+              </LanguageView>
             </MenuItem>
           }
           anchorPosition="bottom"
