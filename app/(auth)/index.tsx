@@ -1,14 +1,12 @@
 import type { ReactElement } from "react";
 import type { ISignInForm } from "@/components/auth/type";
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { KeyboardAvoidingView, Platform } from "react-native";
 import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
-import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Form } from "@/components/common/form/Form";
 import { signInFormInstance } from "@/components/auth/utils";
 import { ElevatedView, FormView, Title } from "@/components/auth/styled";
-import OnboardingScreen from "@/components/onboard/OnboardingScreen";
 import AuthDescription from "@/components/auth/auth-description/AuthDescription";
 import { localizationKey } from "@/i18n/key";
 import AuthContainer from "@/components/auth/auth-container/AuthContainer";
@@ -44,25 +42,7 @@ const SignInForm = ({ onSubmit, translate }: ISignInForm): ReactElement => {
 const LoginScreen = (): ReactElement => {
   const { t } = useTranslation();
   const signInLocalKey = localizationKey.auth.signIn;
-  const [isOnboarded, setIsOnboarded] = useState<boolean>();
   const router = useRouter();
-
-  const checkFirstLaunch = async () => {
-    try {
-      const value = await AsyncStorage.getItem("hasLaunched");
-      if (value === null) {
-        setIsOnboarded(true);
-      } else {
-        setIsOnboarded(false);
-      }
-    } catch (error) {
-      console.error("Error checking first launch", error);
-    }
-  };
-
-  useEffect(() => {
-    checkFirstLaunch();
-  });
 
   const handleSubmit = (values: Record<string, unknown>) => {
     console.log("form", values);
@@ -79,9 +59,7 @@ const LoginScreen = (): ReactElement => {
     );
   };
 
-  return isOnboarded ? (
-    <OnboardingScreen completeOnboarding={setIsOnboarded} />
-  ) : (
+  return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
       style={{ flex: 1 }}

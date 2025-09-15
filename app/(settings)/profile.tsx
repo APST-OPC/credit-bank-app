@@ -13,7 +13,8 @@ import * as ImagePicker from "expo-image-picker";
 import theme from "@/theme";
 import { Form } from "@/components/common/form/Form";
 import { profileChangeInitialValues } from "@/components/settings/utils";
-import ProfileChangeForm from "@/components/settings/profile-change-form/ProfileChangeForm";
+import FormContainer from "@/components/common/form/form-container/FormContainer";
+import { stringFormat } from "@/utils/helpers";
 
 const commonPadding = Platform.OS === "ios" ? 20 : 25;
 
@@ -61,6 +62,23 @@ const OverlayButton = styled(TouchableOpacity)({
   borderRadius: 30,
   padding: 8,
 });
+
+const ProfileChangeForm = (): ReactElement => {
+  const placeHolderStrings = ["John Doe", "doe@gmail.com", "12313"];
+  return (
+    <FormContainer>
+      {Object.keys(profileChangeInitialValues).map((data, index) => (
+        <Form.ControlledTextInput
+          key={index}
+          name={data}
+          label={stringFormat(data)}
+          placeholder={placeHolderStrings[index]}
+        />
+      ))}
+      <Form.Button>Save Profile</Form.Button>
+    </FormContainer>
+  );
+};
 
 const Profile = (): ReactElement => {
   const [facing, setFacing] = useState<CameraType>("front");
