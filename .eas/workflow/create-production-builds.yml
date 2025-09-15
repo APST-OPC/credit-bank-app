@@ -1,4 +1,4 @@
-name: Create Production Builds
+name: Deployment Build
 
 on:
   push:
@@ -6,11 +6,13 @@ on:
 
 jobs:
   build_android:
-    type: build # This job type creates a production build for Android
+    type: build
     params:
       platform: android
-  build_ios:
-    type: build # This job type creates a production build for iOS
+
+  deploy:
+    type: deploy
+    name: Deployment Build
+    environment: production
     params:
-      platform: ios
-  
+      prod: true

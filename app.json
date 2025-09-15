@@ -17,7 +17,13 @@
         "foregroundImage": "./assets/images/neo-splash-logo.png",
         "backgroundColor": "#ffffff"
       },
-      "package": "com.vergilferolino.creditbankappV2"
+      "package": "com.vergilferolino.creditbankappV2",
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO",
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ]
     },
     "web": {
       "bundler": "metro",
@@ -58,6 +64,12 @@
       "eas": {
         "projectId": "aa8a6234-c9ca-4a12-ae96-db06a086ac35"
       }
+    },
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/aa8a6234-c9ca-4a12-ae96-db06a086ac35"
     }
   }
 }
