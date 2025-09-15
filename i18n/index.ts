@@ -26,7 +26,8 @@ import { I18NextProps } from "./type";
 import { i18nextResource } from "./locale";
 import LanguageDetector from "i18next-browser-languagedetector";
 
-const systemLanguage = navigator.language.replace("-", "");
+const systemLanguage =
+  typeof navigator !== "undefined" ? navigator.language : "en";
 i18next.use(LanguageDetector).use(initReactI18next).init<I18NextProps>({
   lng: systemLanguage,
   fallbackLng: "en",
