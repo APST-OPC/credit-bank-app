@@ -55,6 +55,20 @@ const TextBold = styled(Text)({
   fontFamily: "PoppinsBold",
 });
 
+const StyledAccountView = styled(View)({
+  flexDirection: "row",
+  padding: "10px 15px 10px 15px",
+  backgroundColor: "#004068",
+  borderRadius: 10,
+  justifyContent: "space-between",
+  alignItems: "center",
+  gap: 10,
+});
+const StyledAccountText = styled(Text)({
+  fontFamily: "PoppinsBold",
+  color: "white",
+});
+
 const RenderTransactionItem = (props: TransactionItem): ReactElement => {
   return (
     <TransactionContainer>
@@ -174,6 +188,15 @@ export default function HomeScreen() {
     ));
   };
 
+  const renderBalance = () => {
+    return (
+      <StyledAccountView>
+        <StyledAccountText>Available Credit</StyledAccountText>
+        <StyledAccountText>PHP 60,530.00</StyledAccountText>
+      </StyledAccountView>
+    );
+  };
+
   return (
     <ParallaxScrollView>
       <BlueBackground />
@@ -182,6 +205,7 @@ export default function HomeScreen() {
         {renderHeader()}
 
         <CreditCard creditCard={creditCardArray[0]} />
+        {renderBalance()}
 
         <View
           style={{

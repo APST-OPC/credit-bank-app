@@ -128,12 +128,8 @@ const renderCardDetails = (
         <StyledAccountView>
           {data.account.map(({ label, value }, index) => (
             <HeaderView key={index}>
-              <StyledAccountText variant="labelSmall">
-                {label}
-              </StyledAccountText>
-              <StyledAccountText variant="labelSmall">
-                {value}
-              </StyledAccountText>
+              <StyledAccountText>{label}</StyledAccountText>
+              <StyledAccountText>{value}</StyledAccountText>
             </HeaderView>
           ))}
         </StyledAccountView>
