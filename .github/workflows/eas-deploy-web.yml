@@ -33,6 +33,6 @@ jobs:
         run: npx expo export -p web
 
       - name: Deploy to EAS Hosting
-        run: eas deploy --platform web
+        run: eas deploy
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
