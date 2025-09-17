@@ -29,11 +29,6 @@ jobs:
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
 
-      - name: Build Web App
-        run: eas build --platform web --non-interactive
-        env:
-          EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
-
       - name: Deploy to EAS Hosting
         run: eas deploy --platform web --non-interactive
         env:
