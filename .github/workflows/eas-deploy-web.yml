@@ -28,8 +28,11 @@ jobs:
           echo "Token length: ${#EXPO_TOKEN}"
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
+      
+      - name: Extract dist folder
+        run: npx expo export -p web
 
       - name: Deploy to EAS Hosting
-        run: eas deploy --platform web --non-interactive
+        run: eas deploy --platform web
         env:
           EXPO_TOKEN: ${{ secrets.EXPO_TOKEN }}
