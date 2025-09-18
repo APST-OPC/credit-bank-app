@@ -1,15 +1,15 @@
 import englishLng from "./en.json";
-import simplifiedChLng from "./zh.json";
-import traditionalChLng from "./zk.json";
+import simplifiedChLng from "./zhCN.json";
+import traditionalChLng from "./zhTW.json";
 
 export const i18nextResource = {
   en: {
     translation: englishLng,
   },
-  zh: {
+  zhCN: {
     translation: simplifiedChLng,
   },
-  zk: {
+  zhTW: {
     translation: traditionalChLng,
   },
 };

@@ -191,11 +191,11 @@ const SettingsScreen = () => {
             title="English"
           />
           <Menu.Item
-            onPress={() => handleLanguageChange("zh")}
+            onPress={() => handleLanguageChange("zhCN")}
             title="Simplified Chinese"
           />
           <Menu.Item
-            onPress={() => handleLanguageChange("zk")}
+            onPress={() => handleLanguageChange("zhTW")}
             title="Traditional Chinese"
           />
         </Menu>

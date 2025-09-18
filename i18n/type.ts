@@ -9,7 +9,7 @@ export interface I18NextProps {
   debug: boolean;
   resources: {
     en: Itransalation;
-    zh: Itransalation;
-    zk: Itransalation;
+    zhCN: Itransalation;
+    zhTW: Itransalation;
   };
 }
