@@ -4,11 +4,7 @@ import { ReactNode } from "react";
 export interface IAuthContainer {
   isAbsolute?: boolean;
   children: ReactNode;
-}
-
-//auth-description
-export interface IProps {
-  type: "sign-up" | "sign-in";
+  type?: "sign-up" | "sign-in";
 }
 
 //elevated-view

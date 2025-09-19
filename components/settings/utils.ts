@@ -1,4 +1,4 @@
-import { IChangePassForm, IChangeProfileForm } from "./type";
+import { IChangePassForm, IChangeProfileForm, ILanguage } from "./type";
 
 export const changePasswordInitialValues: IChangePassForm = {
   password: "",
@@ -11,3 +11,18 @@ export const profileChangeInitialValues: IChangeProfileForm = {
   email: "",
   phoneNumber: "",
 };
+
+export const languageSetting: ILanguage[] = [
+  {
+    label: "English",
+    code: "en",
+  },
+  {
+    label: "Traditional Chinese",
+    code: "zhTW",
+  },
+  {
+    label: "Simplified Chinese",
+    code: "zhCN",
+  },
+];

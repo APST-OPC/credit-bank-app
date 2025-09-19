@@ -1,7 +1,6 @@
 import React, { ReactElement } from "react";
 
 import { Form } from "@/components/common/form/Form";
-import AuthDescription from "@/components/auth/auth-description/AuthDescription";
 import {
   signInPlaceholders,
   signUpFormInstance,
@@ -13,6 +12,7 @@ import { useRouter } from "expo-router";
 import { useFormikContext } from "formik";
 import { SignUpFormInstance } from "@/components/auth/type";
 import { stringFormat } from "@/utils/helpers";
+import AuthDescription from "@/components/auth/auth-description/AuthDescription";
 
 const SignUpForm = () => {
   const { Button, Checkbox, ControlledTextInput } = Form;
@@ -23,6 +23,7 @@ const SignUpForm = () => {
     <FormView>
       {signUpObj.map((data, index) => (
         <ControlledTextInput
+          key={index}
           name={data}
           label={stringFormat(data)}
           placeholder={signInPlaceholders[index]}

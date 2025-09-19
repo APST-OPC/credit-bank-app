@@ -7,9 +7,10 @@ import { useTranslation } from "react-i18next";
 import { Form } from "@/components/common/form/Form";
 import { signInFormInstance } from "@/components/auth/utils";
 import { ElevatedView, FormView, Title } from "@/components/auth/styled";
-import AuthDescription from "@/components/auth/auth-description/AuthDescription";
+
 import { localizationKey } from "@/i18n/key";
 import AuthContainer from "@/components/auth/auth-container/AuthContainer";
+import AuthDescription from "@/components/auth/auth-description/AuthDescription";
 
 const SignInForm = ({ onSubmit, translate }: ISignInForm): ReactElement => {
   const { Button, ControlledTextInput } = Form;

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { Menu, Text } from "react-native-paper";
+import { Text } from "react-native-paper";
 import { Modal, TouchableOpacity, View, Platform } from "react-native";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import ParallaxScrollView from "@/components/ParralaxView";
@@ -7,37 +7,39 @@ import styled from "styled-components/native";
 import { useRouter } from "expo-router";
 import theme from "@/theme";
 import { useTranslation } from "react-i18next";
+import { ISettingsModal } from "@/components/settings/type";
+import { languageSetting } from "@/components/settings/utils";
 
 const commonPadding = Platform.OS === "ios" ? 16 : 12;
 
-const StyledView = styled(View)(() => ({
+const StyledView = styled(View)({
   paddingTop: 15,
   gap: 10,
   paddingLeft: commonPadding,
   paddingRight: commonPadding,
-}));
+});
 
-const Section = styled(View)(() => ({
+const Section = styled(View)({
   padding: commonPadding,
   alignItems: "center",
-}));
+});
 
-const SectionTitle = styled(Text)(() => ({
+const SectionTitle = styled(Text)({
   fontSize: 17,
   fontWeight: "600",
   padding: commonPadding,
   marginBottom: 26,
-}));
+});
 
-const Description = styled(Text)(() => ({
+const Description = styled(Text)({
   fontSize: 16,
   color: theme.colors.primary,
   padding: commonPadding,
   paddingBottom: 7,
   fontWeight: "bold",
-}));
+});
 
-const MenuItem = styled(TouchableOpacity)(() => ({
+const MenuItem = styled(TouchableOpacity)({
   flexDirection: "row",
   alignItems: "center",
   justifyContent: "space-between",
@@ -48,57 +50,64 @@ const MenuItem = styled(TouchableOpacity)(() => ({
   borderRadius: 10,
   shadowColor: "#d8e1eb",
   shadowRadius: 8,
-}));
+});
 
-const MenuText = styled(Text)(() => ({
+const MenuText = styled(Text)({
   fontSize: 16,
   color: "#000000",
-}));
+});
 
-const LogoutItem = styled(MenuItem)(() => ({
+const LogoutItem = styled(MenuItem)({
   padding: commonPadding,
   gap: 100,
   borderBottomWidth: 1,
   borderBottomColor: "white",
   marginTop: 20,
-}));
+});
 
-const LogoutText = styled(Text)(() => ({
+const LogoutText = styled(Text)({
   color: "#FF0000",
   fontSize: 17,
   fontWeight: "bold",
-}));
+});
 
-const ModalContainer = styled(View)(() => ({
+const ModalContainer = styled(View)({
   flex: 1,
   justifyContent: "center",
   alignItems: "center",
   backgroundColor: "rgba(0, 0, 0, 0.5)",
   alignSelf: "center",
   width: 480,
-}));
+});
 
-const ModalContent = styled(View)(() => ({
+const ModalContent = styled(View)({
   backgroundColor: "white",
   padding: 20,
   borderRadius: 25,
   width: "70%",
   alignItems: "center",
-}));
+});
+const ModalText = styled(Text)({
+  fontSize: 19,
+  marginBottom: 25,
+  fontWeight: "600",
+  padding: commonPadding,
+});
 
-const ModalButton = styled(TouchableOpacity)(() => ({
+const ModalButton = styled(TouchableOpacity)({
   backgroundColor: "#FFFFFF",
   padding: 6,
   width: "50%",
   alignItems: "center",
   borderTopWidth: 2,
   borderTopColor: "#D3D3D3",
-}));
+});
 
-const ModalButtonText = styled(Text)(() => ({
+const ModalButtonText = styled(Text)({
   fontSize: 16,
   fontWeight: "600",
-}));
+  marginTop: 15,
+});
 
 const Separator = styled(View)(() => ({
   borderLeftWidth: 2,
@@ -118,11 +127,37 @@ const LanguageView = styled(View)({
   alignItems: "center",
 });
 
-const LanguageText = styled(Text)(() => ({
+const LanguageText = styled(Text)({
   fontSize: 16,
   color: "#000000",
   fontWeight: "bold",
-}));
+});
+
+const LanguageItem = styled(TouchableOpacity)({
+  width: "100%",
+  padding: 10,
+  display: "flex",
+  flexDirection: "column",
+  alignItems: "center",
+  backgroundColor: "#f0f0f0",
+  borderRadius: 10,
+  marginTop: 2,
+  marginBottom: 2,
+});
+
+const SettingsModal = (props: ISettingsModal) => {
+  const { open, title, children } = props;
+  return (
+    <Modal visible={open} transparent animationType="fade">
+      <ModalContainer>
+        <ModalContent>
+          <ModalText>{title}</ModalText>
+          {children}
+        </ModalContent>
+      </ModalContainer>
+    </Modal>
+  );
+};
 
 const SettingsScreen = () => {
   const { i18n } = useTranslation();
@@ -166,39 +201,18 @@ const SettingsScreen = () => {
           <MenuText>Contact Us</MenuText>
           <MaterialIcons name="chevron-right" size={24} color="#7E848D" />
         </MenuItem>
-        <Menu
-          visible={visible}
-          contentStyle={{
-            maxWidth: "455px",
-          }}
-          onDismiss={() => setVisible(false)}
-          anchor={
-            <MenuItem onPress={() => setVisible(true)}>
-              <MenuText>Language</MenuText>
 
-              <LanguageView>
-                <LanguageText>
-                  {i18n.language.toUpperCase().slice(0, 2)}
-                </LanguageText>
-                <MaterialIcons name="more-vert" size={24} color="#7E848D" />
-              </LanguageView>
-            </MenuItem>
-          }
-          anchorPosition="bottom"
-        >
-          <Menu.Item
-            onPress={() => handleLanguageChange("en")}
-            title="English"
-          />
-          <Menu.Item
-            onPress={() => handleLanguageChange("zhCN")}
-            title="Simplified Chinese"
-          />
-          <Menu.Item
-            onPress={() => handleLanguageChange("zhTW")}
-            title="Traditional Chinese"
-          />
-        </Menu>
+        <MenuItem onPress={() => setVisible(true)}>
+          <MenuText>Language</MenuText>
+          <LanguageView>
+            <LanguageText>
+              {i18n.language !== "en"
+                ? i18n.language.toUpperCase().slice(2, 4)
+                : "en".toUpperCase()}
+            </LanguageText>
+            <MaterialIcons name="more-vert" size={24} color="#7E848D" />
+          </LanguageView>
+        </MenuItem>
 
         <Description>Security</Description>
         <MenuItem onPress={() => reroute.push("/termsAndConditons")}>
@@ -215,49 +229,34 @@ const SettingsScreen = () => {
           <MaterialIcons name="exit-to-app" size={24} color="#FF0000" />
         </LogoutItem>
 
-        <Modal visible={modalVisible} transparent animationType="fade">
-          <ModalContainer>
-            <ModalContent>
-              <Text
-                style={{
-                  fontSize: 19,
-                  marginBottom: 25,
-                  fontWeight: "600",
-                  padding: commonPadding,
-                }}
-              >
+        <SettingsModal open={modalVisible} title="Log out">
+          <Text style={{ fontSize: 14, marginBottom: 30 }}>
+            Are you sure you want to logout?
+          </Text>
+
+          <ButtonsContainer>
+            <ModalButton onPress={handleConfirmLogout}>
+              <ModalButtonText style={{ color: "red" }}>
                 Log out
-              </Text>
-              <Text style={{ fontSize: 14, marginBottom: 30 }}>
-                Are you sure you want to logout?
-              </Text>
-              <ButtonsContainer>
-                <ModalButton onPress={handleConfirmLogout}>
-                  <ModalButtonText
-                    style={{
-                      fontSize: 19,
-                      color: "red",
-                      marginTop: 15,
-                    }}
-                  >
-                    Log out
-                  </ModalButtonText>
-                </ModalButton>
-                <Separator />
-                <ModalButton onPress={handleCloseModal}>
-                  <ModalButtonText
-                    style={{
-                      fontSize: 19,
-                      marginTop: 15,
-                    }}
-                  >
-                    Cancel
-                  </ModalButtonText>
-                </ModalButton>
-              </ButtonsContainer>
-            </ModalContent>
-          </ModalContainer>
-        </Modal>
+              </ModalButtonText>
+            </ModalButton>
+            <Separator />
+            <ModalButton onPress={handleCloseModal}>
+              <ModalButtonText>Cancel</ModalButtonText>
+            </ModalButton>
+          </ButtonsContainer>
+        </SettingsModal>
+
+        <SettingsModal open={visible} title="Language">
+          {languageSetting.map(({ label, code }, index) => (
+            <LanguageItem
+              key={index}
+              onPress={() => handleLanguageChange(code)}
+            >
+              <MenuText>{label}</MenuText>
+            </LanguageItem>
+          ))}
+        </SettingsModal>
       </StyledView>
     </ParallaxScrollView>
   );

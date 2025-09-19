@@ -26,15 +26,33 @@ const ContainedView = styled(View)({
   alignSelf: "center",
 });
 
+const LayoutView = styled(View)({
+  maxWidth: 480,
+  width: "100%",
+  height: "100%",
+  justifyContent: "center",
+  alignItems: "center",
+  overflow: "hidden",
+  backgroundColor: "#0061A7",
+});
+const AnimatedLayoutView = styled(Animated.View)({
+  flex: 1,
+  justifyContent: "center",
+  alignItems: "center",
+  height: "100vh",
+  width: "100vw",
+  overflow: "hidden",
+});
+
 const RootLayout = (): ReactElement => {
   const [isSplashVisible, setIsSplashVisible] = useState<boolean>(true);
   const fadeAnim = useSharedValue(1);
 
   const [loaded] = useFonts({
-    Poppins: require("../assets/fonts/Poppins-Regular.ttf"),
-    PoppinsBold: require("../assets/fonts/Poppins-Bold.ttf"),
-    PoppinsExtraBold: require("../assets/fonts/Poppins-ExtraBold.ttf"),
-    PoppinsSemiBold: require("../assets/fonts/Poppins-SemiBold.ttf"),
+    Poppins: require("@/assets/fonts/Poppins-Regular.ttf"),
+    PoppinsBold: require("@/assets/fonts/Poppins-Bold.ttf"),
+    PoppinsExtraBold: require("@/assets/fonts/Poppins-ExtraBold.ttf"),
+    PoppinsSemiBold: require("@/assets/fonts/Poppins-SemiBold.ttf"),
   });
 
   useEffect(() => {
@@ -58,30 +76,8 @@ const RootLayout = (): ReactElement => {
 
   if (isSplashVisible) {
     return (
-      <Animated.View
-        style={[
-          {
-            flex: 1,
-            justifyContent: "center",
-            alignItems: "center",
-            height: "100vh",
-            width: "100vw",
-            overflow: "hidden",
-          },
-          animatedStyle,
-        ]}
-      >
-        <View
-          style={{
-            maxWidth: 480,
-            width: "100%",
-            height: "100%",
-            justifyContent: "center",
-            alignItems: "center",
-            overflow: "hidden",
-            backgroundColor: "#0061A7",
-          }}
-        >
+      <AnimatedLayoutView style={animatedStyle}>
+        <LayoutView>
           <Image
             source={require("@/assets/images/logo.gif")}
             style={{
@@ -89,8 +85,8 @@ const RootLayout = (): ReactElement => {
               height: "50%",
             }}
           />
-        </View>
-      </Animated.View>
+        </LayoutView>
+      </AnimatedLayoutView>
     );
   }
 
@@ -101,6 +97,7 @@ const RootLayout = (): ReactElement => {
           screenOptions={{
             headerShown: false,
           }}
+          initialRouteName="(tabs)"
         >
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="(home)" />

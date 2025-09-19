@@ -82,7 +82,7 @@ const TransactionAvatar = styled(View)({
   alignItems: "center",
 });
 
-const renderViewMore = (item: TransactionProsps[]): ReactNode[] => {
+const ViewMore = ({ item }: { item: TransactionProsps[] }): ReactNode[] => {
   return item.map(({ title, category, price }, index) => {
     const newPrice = price.replace(/[^0-9]/g, "");
     if (index <= 3) {
@@ -157,7 +157,7 @@ const renderCardDetails = (
           {data.transaction.length <= 0 ? (
             <Text>No Transaction Available</Text>
           ) : (
-            renderViewMore(data.transaction)
+            <ViewMore item={data.transaction} />
           )}
         </StyledTransactionCard>
       </CategoryView>
