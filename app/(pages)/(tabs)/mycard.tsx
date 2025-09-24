@@ -3,7 +3,7 @@ import { Router, useRouter } from "expo-router";
 import { Platform, View, TouchableOpacity } from "react-native";
 import styled from "styled-components/native";
 import ParallaxScrollView from "@/components/ParralaxView";
-import CreditCarousel from "@/components/credit-carousel/CreditCarousel";
+import CreditCarousel from "@/components/mycard/credit-carousel/CreditCarousel";
 import {
   CardDataProps,
   TransactionProsps,

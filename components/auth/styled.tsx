@@ -1,7 +1,7 @@
 import { View, Text, Pressable, ScrollView, Image } from "react-native";
 import { styled } from "styled-components/native";
 import { Button } from "react-native-paper";
-import TextInput from "@/components/common/form/text-input/TextInput";
+import TextField from "../common/app-form/text-field/TextField";
 
 //elevated-view
 export const ElevatedView = styled(View)({
@@ -36,6 +36,7 @@ export const PhoneInputContainer = styled(View)({
   display: "flex",
   flexDirection: "row",
   justifyContent: "space-between",
+  gap: 5,
 });
 export const FormView = styled(View)({
   display: "flex",
@@ -71,7 +72,7 @@ export const ModalOverlay = styled(Pressable)({
 });
 
 //otp verify
-export const OtpInput = styled(TextInput)({
+export const OtpInput = styled(TextField)({
   width: 60,
   height: 60,
   fontSize: 30,

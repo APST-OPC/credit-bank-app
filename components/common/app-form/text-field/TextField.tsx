@@ -1,20 +1,12 @@
 import React, { useState } from "react";
-import {
-  Text,
-  TextInput as RNPTextInput,
-  TextInputProps,
-} from "react-native-paper";
+import { View } from "react-native";
+import { Text, TextInput } from "react-native-paper";
+import { ITextInput } from "@/components/common/app-form/type";
 
-export interface ITextInput extends TextInputProps {
-  label?: string;
-  type?: "password" | "text";
-  iconColor?: string;
-  errorFn?: boolean;
-}
-
-const TextInput = (props: ITextInput) => {
+const TextField = (props: ITextInput) => {
   const {
     label,
+    width = "100%",
     errorFn,
     type = "text",
     mode = "outlined",
@@ -26,25 +18,27 @@ const TextInput = (props: ITextInput) => {
 
   const [show, setShow] = useState(false);
   return (
-    <>
-      <Text variant="bodyLarge" style={{ color: errorFn ? "red" : undefined }}>
+    <View style={{ width: width }}>
+      <Text
+        variant="bodyLarge"
+        style={{ color: errorFn ? "red" : "black", marginBottom: 5 }}
+      >
         {label}
       </Text>
-      <RNPTextInput
+      <TextInput
         mode={mode}
         outlineStyle={{
           borderRadius: 10,
           borderColor: errorFn ? "red" : "#A9A9A9",
-          borderWidth: 1.5,
         }}
         activeOutlineColor="#0265A1"
-        placeholderTextColor={placeholderTextColor}
+        placeholderTextColor={errorFn ? "red" : placeholderTextColor}
         right={
           type === "password" ? (
-            <RNPTextInput.Icon
+            <TextInput.Icon
               icon={show ? "eye" : "eye-off"}
               onPress={() => setShow((prev) => !prev)}
-              color={iconColor}
+              color={errorFn ? "red" : iconColor}
             />
           ) : (
             right
@@ -53,8 +47,8 @@ const TextInput = (props: ITextInput) => {
         secureTextEntry={type === "password" ? !show : false}
         {...rest}
       />
-    </>
+    </View>
   );
 };
 
-export default TextInput;
+export default TextField;

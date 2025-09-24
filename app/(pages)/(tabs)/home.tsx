@@ -12,7 +12,7 @@ import styled from "styled-components/native";
 
 import { Ionicons } from "@expo/vector-icons";
 
-import CreditCard from "@/components/credit-carousel/CreditCard";
+import CreditCard from "@/components/mycard/credit-carousel/CreditCard";
 import ParallaxScrollView from "@/components/ParralaxView";
 import { initialNotifications, menuList, transaction } from "@/data/home";
 import { useAppTheme } from "@/hooks/useTheme";

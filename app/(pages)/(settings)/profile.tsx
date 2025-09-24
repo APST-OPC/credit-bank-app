@@ -11,10 +11,14 @@ import {
 import { CameraView, CameraType, useCameraPermissions } from "expo-camera";
 import * as ImagePicker from "expo-image-picker";
 import theme from "@/theme";
-import { Form } from "@/components/common/form/Form";
 import { profileChangeInitialValues } from "@/components/settings/utils";
-import FormContainer from "@/components/common/form/form-container/FormContainer";
+import FormContainer from "@/components/common/app-form/form-container/FormContainer";
 import { stringFormat } from "@/utils/helpers";
+import { ControlledTextField } from "@/components/common/app-form/controlled";
+import SubmitButton from "@/components/common/submit-button/SubmitButton";
+import Form from "@/components/common/app-form/Form";
+import { useFormik } from "formik";
+import { IChangeProfileForm } from "@/components/settings/type";
 
 const commonPadding = Platform.OS === "ios" ? 20 : 25;
 
@@ -68,19 +72,23 @@ const ProfileChangeForm = (): ReactElement => {
   return (
     <FormContainer>
       {Object.keys(profileChangeInitialValues).map((data, index) => (
-        <Form.ControlledTextInput
+        <ControlledTextField
           key={index}
           name={data}
           label={stringFormat(data)}
           placeholder={placeHolderStrings[index]}
         />
       ))}
-      <Form.Button>Save Profile</Form.Button>
+      <SubmitButton>Save Profile</SubmitButton>
     </FormContainer>
   );
 };
 
 const Profile = (): ReactElement => {
+  const formValue = useFormik<IChangeProfileForm>({
+    initialValues: profileChangeInitialValues,
+    onSubmit: (values) => console.log(values),
+  });
   const [facing, setFacing] = useState<CameraType>("front");
   const [permission, requestPermission] = useCameraPermissions();
   const [isCameraOpen, setIsCameraOpen] = useState(false);
@@ -195,12 +203,7 @@ const Profile = (): ReactElement => {
     openCamera()
   ) : (
     <ParallaxScrollView>
-      <Form
-        instance={{
-          initialValues: { ...profileChangeInitialValues },
-          onSubmit: (values) => console.log(values),
-        }}
-      >
+      <Form instance={formValue}>
         <StyledView>
           <AvatarFrame>
             <Avatar.Image

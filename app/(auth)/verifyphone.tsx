@@ -10,7 +10,7 @@ import {
 } from "react-native";
 import { TextInput } from "react-native-paper";
 import { useRouter } from "expo-router";
-import { useFormikContext } from "formik";
+import { useFormik, useFormikContext } from "formik";
 import React from "react";
 
 import AuthContainer from "@/components/auth/auth-container/AuthContainer";
@@ -25,9 +25,11 @@ import {
   Subtitle,
   Title,
 } from "@/components/auth/styled";
-import { Form } from "@/components/common/form/Form";
 import { countryCodes } from "@/components/auth/utils";
-import FormContainer from "@/components/common/form/form-container/FormContainer";
+import FormContainer from "@/components/common/app-form/form-container/FormContainer";
+import Form from "@/components/common/app-form/Form";
+import { ControlledTextField } from "@/components/common/app-form/controlled";
+import SubmitButton from "@/components/common/submit-button/SubmitButton";
 
 const CountryModal = (props: IVerifierModal) => {
   const { open, handleFieldValue, handleOnClose } = props;
@@ -78,20 +80,18 @@ const CountryModal = (props: IVerifierModal) => {
 };
 
 const VerifyPhoneForm = (): ReactElement => {
-  const { Button, ControlledTextInput } = Form;
-  const router = useRouter();
-  const { values, setFieldValue } = useFormikContext<PhoneVerifyForm>();
+  const { values, setFieldValue, handleSubmit } =
+    useFormikContext<PhoneVerifyForm>();
   const [modalOpen, setModalOpen] = useState(false);
   const handleFieldValue = (name: string, value: string) => {
     setFieldValue(name, value);
   };
-
   return (
     <FormContainer>
       <PhoneInputContainer>
-        <ControlledTextInput
+        <ControlledTextField
+          width={"23.5%"}
           name="countryCode"
-          style={{ width: "25%" }}
           editable={false}
           right={
             <TextInput.Icon
@@ -100,10 +100,10 @@ const VerifyPhoneForm = (): ReactElement => {
             />
           }
         />
-        <ControlledTextInput
+        <ControlledTextField
+          width={"73.5%"}
           name="phoneNumber"
           value={values.phoneNumber.replace(/\D/g, "")}
-          style={{ width: "73%" }}
           inputMode="tel"
           keyboardType="phone-pad"
           placeholder="Enter phone number"
@@ -115,17 +115,25 @@ const VerifyPhoneForm = (): ReactElement => {
           handleOnClose={() => setModalOpen(false)}
         />
       </PhoneInputContainer>
-      <Button
-        submitFn={() => router.push("/(auth)/otpverify")}
+      <SubmitButton
+        onPress={() => handleSubmit()}
         disabled={values.phoneNumber.length < 10}
       >
         SEND CODE
-      </Button>
+      </SubmitButton>
     </FormContainer>
   );
 };
 
 const VerifyPhoneScreen = (): ReactElement => {
+  const router = useRouter();
+  const formValue = useFormik<PhoneVerifyForm>({
+    initialValues: { countryCode: countryCodes[0].value, phoneNumber: "" },
+    onSubmit: (values) => {
+      console.log(values);
+      router.push("/verified");
+    },
+  });
   const renderHeader = (): ReactNode => {
     return (
       <>
@@ -143,15 +151,7 @@ const VerifyPhoneScreen = (): ReactElement => {
       style={{ flex: 1 }}
     >
       <AuthContainer>
-        <Form
-          instance={{
-            initialValues: {
-              countryCode: countryCodes[0].value,
-              phoneNumber: "",
-            },
-            onSubmit: (values) => console.log(values),
-          }}
-        >
+        <Form instance={formValue}>
           <ElevatedView>
             {renderHeader()}
             <VerifyPhoneForm />

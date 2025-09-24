@@ -22,7 +22,7 @@ import Container from "@/components/Container";
 
 import BottomSheet, { BottomSheetMethods } from "@devvie/bottom-sheet";
 
-import CreditCard from "@/components/credit-carousel/CreditCard";
+import CreditCard from "@/components/mycard/credit-carousel/CreditCard";
 import { Ionicons } from "@expo/vector-icons";
 
 const TextBold = styled(Text)({

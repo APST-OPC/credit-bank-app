@@ -5,10 +5,10 @@
         "label": "Sign in to your account"
       },
       "email": {
-        "label": "email"
+        "label": "Email"
       },
       "password": {
-        "label": "password"
+        "label": "Password"
       },
       "signInBtn": {
         "label": "SIGN IN"

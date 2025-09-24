@@ -2,35 +2,33 @@ import type { ReactElement } from "react";
 import type { IAddNewCardForm } from "@/components/mycard/type";
 
 import React from "react";
-import { useFormikContext } from "formik";
+import { useFormik, useFormikContext } from "formik";
 
-import { Form } from "@/components/common/form/Form";
-import FormContainer from "@/components/common/form/form-container/FormContainer";
+import FormContainer from "@/components/common/app-form/form-container/FormContainer";
 
 import { initialValues, inputRestrict } from "@/components/mycard/utils";
-import {
-  StyledLowerFormView,
-  StyledTextInput,
-} from "@/components/mycard/styled";
+import { StyledLowerFormView } from "@/components/mycard/styled";
 import ParallaxScrollView from "@/components/ParralaxView";
+import SubmitButton from "@/components/common/submit-button/SubmitButton";
+import Form from "@/components/common/app-form/Form";
+import { ControlledTextField } from "@/components/common/app-form/controlled";
 
 const AddNewCardForm = () => {
   const { values, setFieldValue } = useFormikContext<IAddNewCardForm>();
-  const { ControlledTextInput, Button } = Form;
   return (
     <>
-      <ControlledTextInput
+      <ControlledTextField
         name="cardType"
         label="Card Type"
         value={values.cardType}
         editable={false}
       />
-      <ControlledTextInput
+      <ControlledTextField
         name="cardHolderName"
         label="Card Holder Name"
         placeholder="John Doe"
       />
-      <ControlledTextInput
+      <ControlledTextField
         name="cardNumber"
         label="Card Number"
         placeholder="XXXX XXXX XXXX XXXX"
@@ -42,7 +40,8 @@ const AddNewCardForm = () => {
         }
       />
       <StyledLowerFormView>
-        <StyledTextInput
+        <ControlledTextField
+          width={"48.5%"}
           name="expiry"
           label="Expiry"
           placeholder="MM/YY"
@@ -50,27 +49,27 @@ const AddNewCardForm = () => {
             setFieldValue("expiry", inputRestrict(e))
           }
         />
-        <StyledTextInput
+        <ControlledTextField
+          width={"48.5%"}
           name="cvv"
           label="CVV"
           placeholder="XXX"
           maxLength={3}
         />
       </StyledLowerFormView>
-      <Button mode="contained">Add Card</Button>
+      <SubmitButton mode="contained">Add Card</SubmitButton>
     </>
   );
 };
 
 const AddNewCard = (): ReactElement => {
+  const formValue = useFormik<IAddNewCardForm>({
+    initialValues: initialValues,
+    onSubmit: (values) => console.log(values),
+  });
   return (
     <ParallaxScrollView>
-      <Form
-        instance={{
-          initialValues: initialValues,
-          onSubmit: (values) => console.log(values),
-        }}
-      >
+      <Form instance={formValue}>
         <FormContainer>
           <AddNewCardForm />
         </FormContainer>

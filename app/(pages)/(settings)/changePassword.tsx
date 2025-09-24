@@ -1,15 +1,19 @@
 import ParallaxScrollView from "@/components/ParralaxView";
 import React, { ReactElement } from "react";
-import { Form } from "@/components/common/form/Form";
 import { changePasswordInitialValues } from "@/components/settings/utils";
-import FormContainer from "@/components/common/form/form-container/FormContainer";
+import FormContainer from "@/components/common/app-form/form-container/FormContainer";
 import { stringFormat } from "@/utils/helpers";
+import SubmitButton from "@/components/common/submit-button/SubmitButton";
+import { ControlledTextField } from "@/components/common/app-form/controlled";
+import { useFormik } from "formik";
+import { IChangePassForm } from "@/components/settings/type";
+import Form from "@/components/common/app-form/Form";
 
 const ChangePassForm = (): ReactElement => {
   return (
     <FormContainer>
       {Object.keys(changePasswordInitialValues).map((data, index) => (
-        <Form.ControlledTextInput
+        <ControlledTextField
           key={index}
           name={data}
           label={stringFormat(data)}
@@ -17,20 +21,19 @@ const ChangePassForm = (): ReactElement => {
           placeholder="********"
         />
       ))}
-      <Form.Button>SET PASSWORD</Form.Button>
+      <SubmitButton>SET PASSWORD</SubmitButton>
     </FormContainer>
   );
 };
 
 const ChangePassword = (): ReactElement => {
+  const formValue = useFormik<IChangePassForm>({
+    initialValues: changePasswordInitialValues,
+    onSubmit: (values) => console.log(values),
+  });
   return (
     <ParallaxScrollView>
-      <Form
-        instance={{
-          initialValues: { ...changePasswordInitialValues },
-          onSubmit: (values) => console.log(values),
-        }}
-      >
+      <Form instance={formValue}>
         <ChangePassForm />
       </Form>
     </ParallaxScrollView>

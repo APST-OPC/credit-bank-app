@@ -23,12 +23,12 @@ export interface ISignInForm {
 }
 
 //sign-up-form
-export interface SignUpFormInstance {
+export interface ISignUpForm {
   name: string;
   email: string;
   password: string;
   confirmPassword: string;
-  termsAccepted: boolean;
+  termsAccepted: "checked" | "unchecked";
 }
 
 //verify-phone-form

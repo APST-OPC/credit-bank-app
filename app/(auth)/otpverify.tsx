@@ -7,7 +7,7 @@ import {
   KeyboardAvoidingView,
 } from "react-native";
 import { useRouter } from "expo-router";
-import { useFormikContext } from "formik";
+import { useFormik, useFormikContext } from "formik";
 
 import AuthContainer from "@/components/auth/auth-container/AuthContainer";
 import {
@@ -18,18 +18,18 @@ import {
   Subtitle,
   Title,
 } from "@/components/auth/styled";
-import { Form } from "@/components/common/form/Form";
+import Form from "@/components/common/app-form/Form";
+import SubmitButton from "@/components/common/submit-button/SubmitButton";
 
 interface FormValues {
   otp: string[];
 }
 
 const OptForm = () => {
-  const { Button } = Form;
   const initialValues: FormValues = {
     otp: Array(5).fill(""),
   };
-  const [formValue, setFormValue] = useState<FormValues>(initialValues);
+  const [optValue, setOtpValue] = useState<FormValues>(initialValues);
   const [isButtonDisabled, setIsButtonDisabled] = useState(true);
   const { setFieldValue } = useFormikContext<IOtpVerify>();
   const router = useRouter();
@@ -40,9 +40,9 @@ const OptForm = () => {
 
   const handleOtpChange = (index: number) => (text: string) => {
     if (/^\d*$/.test(text)) {
-      const newOtp = [...formValue.otp];
+      const newOtp = [...optValue.otp];
       newOtp[index] = text;
-      setFormValue({ ...formValue, otp: newOtp });
+      setOtpValue({ ...optValue, otp: newOtp });
 
       if (text.length === 1 && index < 4) {
         inputRefs[index + 1].current?.focus();
@@ -54,20 +54,22 @@ const OptForm = () => {
     }
   };
 
-  const handleSubmit = () => {
-    const reducedOpt = formValue.otp.reduce((prev, current) => prev + current);
+  const { handleSubmit } = useFormikContext<{ otp: string }>();
+  const otpSubmit = () => {
+    const reducedOpt = optValue.otp.reduce((prev, current) => prev + current);
     setFieldValue("otp", `${reducedOpt}`);
+    handleSubmit();
     router.push("/(auth)/verified");
   };
 
   useEffect(() => {
-    const allFieldsFilled = formValue.otp.every((digit) => digit.length === 1);
+    const allFieldsFilled = optValue.otp.every((digit) => digit.length === 1);
     setIsButtonDisabled(!allFieldsFilled);
-  }, [formValue.otp]);
+  }, [optValue.otp]);
   return (
-    <>
+    <OtpFormView>
       <OtpContainer>
-        {formValue.otp.map((digit, index) => (
+        {optValue.otp.map((digit, index) => (
           <OtpInput
             key={index}
             ref={inputRefs[index]}
@@ -79,14 +81,18 @@ const OptForm = () => {
           />
         ))}
       </OtpContainer>
-      <Button submitFn={handleSubmit} disabled={isButtonDisabled}>
+      <SubmitButton onPress={() => otpSubmit()} disabled={isButtonDisabled}>
         SEND CODE
-      </Button>
-    </>
+      </SubmitButton>
+    </OtpFormView>
   );
 };
 
 const VerifyPhoneScreen = (): ReactElement => {
+  const formValue = useFormik<{ otp: string }>({
+    initialValues: { otp: "" },
+    onSubmit: (values) => console.log(values),
+  });
   return (
     <KeyboardAvoidingView
       behavior={Platform.OS === "ios" ? "padding" : "height"}
@@ -99,15 +105,8 @@ const VerifyPhoneScreen = (): ReactElement => {
             We will send you a One-Time-Password (OTP){"\n"}on this mobile
             number.
           </Subtitle>
-          <Form
-            instance={{
-              initialValues: { otp: "" },
-              onSubmit: (values) => console.log(values),
-            }}
-          >
-            <OtpFormView>
-              <OptForm />
-            </OtpFormView>
+          <Form instance={formValue}>
+            <OptForm />
           </Form>
         </ElevatedView>
       </AuthContainer>

@@ -1,4 +1,5 @@
 import * as Yup from "yup";
+import { ISignUpForm } from "./type";
 
 export const validationSchemaSignUp = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -9,7 +10,7 @@ export const validationSchemaSignUp = Yup.object().shape({
   confirmPassword: Yup.string()
     .oneOf([Yup.ref("password")], "Passwords must match")
     .required("Confirm your password"),
-  termsAccepted: Yup.boolean().notRequired(),
+  termsAccepted: Yup.string().optional(),
 });
 export const validationSchemaSignIn = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -24,6 +25,13 @@ export const socialBtn = [
   require("@/assets/images/twitter.png"),
 ];
 
+export const signUpInitVal: ISignUpForm = {
+  name: "",
+  email: "",
+  password: "",
+  confirmPassword: "",
+  termsAccepted: "unchecked",
+};
 export const signUpFormInstance = {
   initialValues: {
     name: "",
