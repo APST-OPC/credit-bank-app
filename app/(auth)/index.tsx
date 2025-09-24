@@ -1,8 +1,7 @@
 import type { ReactElement } from "react";
-import type { ISignInForm } from "@/components/auth/type";
+import type { ICredentials } from "@/components/auth/type";
 import React from "react";
 import { KeyboardAvoidingView, Platform } from "react-native";
-import { useRouter } from "expo-router";
 import { useTranslation } from "react-i18next";
 import { Form } from "@/components/common/form/Form";
 import { signInFormInstance } from "@/components/auth/utils";
@@ -11,50 +10,52 @@ import { ElevatedView, FormView, Title } from "@/components/auth/styled";
 import { localizationKey } from "@/i18n/key";
 import AuthContainer from "@/components/auth/auth-container/AuthContainer";
 import AuthDescription from "@/components/auth/auth-description/AuthDescription";
+import { useAuth } from "@/context/authContext";
 
-const SignInForm = ({ onSubmit, translate }: ISignInForm): ReactElement => {
+const signInLocalKey = localizationKey.auth.signIn;
+
+const SignInForm = (): ReactElement => {
   const { Button, ControlledTextInput } = Form;
   const { t } = useTranslation();
   return (
-    <Form
-      instance={{
-        ...signInFormInstance,
-        onSubmit: onSubmit,
-      }}
-    >
-      <FormView>
-        <ControlledTextInput
-          name="email"
-          label={t(translate.email)}
-          placeholder="ex: jon.smith@email.com"
-        />
-        <ControlledTextInput
-          name="password"
-          type="password"
-          label={t(translate.password)}
-          placeholder="********"
-        />
-        <Button>{t(translate.signInBtn)}</Button>
-      </FormView>
-    </Form>
+    <FormView>
+      <ControlledTextInput
+        name="email"
+        label={t(signInLocalKey.email)}
+        placeholder="ex: jon.smith@email.com"
+      />
+      <ControlledTextInput
+        name="password"
+        type="password"
+        label={t(signInLocalKey.password)}
+        placeholder="********"
+      />
+      <Button>{t(signInLocalKey.signInBtn)}</Button>
+    </FormView>
   );
 };
 
 const LoginScreen = (): ReactElement => {
   const { t } = useTranslation();
-  const signInLocalKey = localizationKey.auth.signIn;
-  const router = useRouter();
+
+  const { login } = useAuth();
 
   const handleSubmit = (values: Record<string, unknown>) => {
-    console.log("form", values);
-    router.push("/(tabs)");
+    login(values as unknown as ICredentials);
   };
 
   const renderElevatedView = () => {
     return (
       <ElevatedView>
         <Title>{t(signInLocalKey.signInHeader)}</Title>
-        <SignInForm onSubmit={handleSubmit} translate={signInLocalKey} />
+        <Form
+          instance={{
+            ...signInFormInstance,
+            onSubmit: handleSubmit,
+          }}
+        >
+          <SignInForm />
+        </Form>
         <AuthDescription type="sign-in" />
       </ElevatedView>
     );

@@ -1,6 +1,6 @@
 import React, { ReactElement } from "react";
 import { useFonts } from "expo-font";
-import { Stack } from "expo-router";
+import { Slot } from "expo-router";
 import { StatusBar } from "expo-status-bar";
 import { useEffect, useState } from "react";
 import "react-native-reanimated";
@@ -16,6 +16,7 @@ import Animated, {
   withTiming,
 } from "react-native-reanimated";
 import "@/i18n/index";
+import { AuthProvider } from "@/context/authContext";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -92,22 +93,12 @@ const RootLayout = (): ReactElement => {
 
   return (
     <PaperProvider theme={theme}>
-      <ContainedView>
-        <Stack
-          screenOptions={{
-            headerShown: false,
-          }}
-          initialRouteName="(tabs)"
-        >
-          <Stack.Screen name="(tabs)" />
-          <Stack.Screen name="(home)" />
-          <Stack.Screen name="(mycard)" />
-          <Stack.Screen name="(auth)" />
-          <Stack.Screen name="(settings)" />
-          <Stack.Screen name="+not-found" />
-        </Stack>
-        <StatusBar style="auto" backgroundColor={theme.colors.primary} />
-      </ContainedView>
+      <AuthProvider>
+        <ContainedView>
+          <Slot />
+          <StatusBar style="auto" backgroundColor={theme.colors.primary} />
+        </ContainedView>
+      </AuthProvider>
     </PaperProvider>
   );
 };

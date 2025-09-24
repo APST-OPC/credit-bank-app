@@ -102,11 +102,11 @@ export default function HomeScreen() {
   ).length;
 
   const handleNotification = () => {
-    router.push("/(home)/notification");
+    router.push("/notification");
   };
 
   const handleViewRecent = () => {
-    router.push("/(home)/transaction");
+    router.push("/transaction");
   };
 
   const handleNavigateMenu = (route: RelativePathString) => {

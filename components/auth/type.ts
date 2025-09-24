@@ -13,10 +13,15 @@ export interface IElevatedView {
 }
 
 //sign-in-form
+export interface ICredentials {
+  email: string;
+  password: string;
+}
 export interface ISignInForm {
-  onSubmit: (values: Record<string, unknown>) => void;
+  onSubmit: (values: ICredentials) => void;
   translate: Record<string, string>;
 }
+
 //sign-up-form
 export interface SignUpFormInstance {
   name: string;

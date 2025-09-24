@@ -63,7 +63,7 @@ const TabLayout = (): ReactElement => {
       }}
     >
       <Tabs.Screen
-        name="index"
+        name="home"
         options={{
           title: "Home",
           tabBarIcon: (props) => (

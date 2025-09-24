@@ -9,6 +9,7 @@ import theme from "@/theme";
 import { useTranslation } from "react-i18next";
 import { ISettingsModal } from "@/components/settings/type";
 import { languageSetting } from "@/components/settings/utils";
+import { useAuth } from "@/context/authContext";
 
 const commonPadding = Platform.OS === "ios" ? 16 : 12;
 
@@ -161,7 +162,7 @@ const SettingsModal = (props: ISettingsModal) => {
 
 const SettingsScreen = () => {
   const { i18n } = useTranslation();
-  const router = useRouter();
+  const { logout } = useAuth();
   const reroute = useRouter();
   const [modalVisible, setModalVisible] = useState(false);
   const [visible, setVisible] = useState(false);
@@ -175,8 +176,7 @@ const SettingsScreen = () => {
   };
 
   const handleConfirmLogout = () => {
-    setModalVisible(false);
-    router.push("/(auth)");
+    logout();
   };
 
   const handleLanguageChange = (lng: string) => {
