@@ -151,7 +151,7 @@ const VerifyPhoneScreen = (): ReactElement => {
       style={{ flex: 1 }}
     >
       <AuthContainer>
-        <Form instance={formValue}>
+        <Form<PhoneVerifyForm> instance={formValue}>
           <ElevatedView>
             {renderHeader()}
             <VerifyPhoneForm />

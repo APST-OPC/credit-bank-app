@@ -31,6 +31,18 @@ export interface ISignUpForm {
   termsAccepted: "checked" | "unchecked";
 }
 
+export interface IDocumentScannerForm {
+  document: string;
+  idType: string;
+  idNumber: string;
+  nameOnId: string;
+}
+
+export interface ISignUpFormFields {
+  signUp: ISignUpForm;
+  documentUpload: IDocumentScannerForm;
+}
+
 //verify-phone-form
 export interface PhoneVerifyForm {
   countryCode: string;

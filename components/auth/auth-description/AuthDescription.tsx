@@ -21,7 +21,6 @@ const DescriptionView = styled(View)({
   display: "flex",
   flexDirection: "column",
   gap: 10,
-  margin: "0 0 20px 0px",
 });
 const ModeLabel = styled(Text)({
   color: theme.colors.primary,

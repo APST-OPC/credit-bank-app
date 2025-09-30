@@ -1,9 +1,8 @@
 import { View, Text, Pressable, ScrollView, Image } from "react-native";
 import { styled } from "styled-components/native";
-import { Button } from "react-native-paper";
 import TextField from "../common/app-form/text-field/TextField";
 
-//elevated-view
+//common
 export const ElevatedView = styled(View)({
   width: "100%",
   maxWidth: 480,
@@ -19,7 +18,6 @@ export const ElevatedView = styled(View)({
   gap: 20,
 });
 
-//verified
 export const Title = styled(Text)({
   fontSize: 20,
   fontFamily: "PoppinsBold",
@@ -30,6 +28,11 @@ export const Subtitle = styled(Text)({
   fontSize: 14,
   color: "#666",
 });
+export const FormView = styled(View)({
+  display: "flex",
+  flexDirection: "column",
+  gap: 15,
+});
 
 //verify-phone-form
 export const PhoneInputContainer = styled(View)({
@@ -37,11 +40,6 @@ export const PhoneInputContainer = styled(View)({
   flexDirection: "row",
   justifyContent: "space-between",
   gap: 5,
-});
-export const FormView = styled(View)({
-  display: "flex",
-  flexDirection: "column",
-  gap: 15,
 });
 
 //Modal
@@ -78,13 +76,11 @@ export const OtpInput = styled(TextField)({
   fontSize: 30,
   paddingLeft: 7,
 });
-
 export const OtpContainer = styled.View({
   display: "flex",
   flexDirection: "row",
   justifyContent: "space-between",
 });
-
 export const OtpFormView = styled(View)({
   gap: 15,
 });
@@ -99,32 +95,21 @@ export const Content = styled(View)({
   padding: 20,
   position: "absolute",
 });
-
 export const IconContainer = styled(Image)({
   width: 80,
   height: 80,
   marginBottom: 20,
 });
-
 export const VerifiedTitle = styled(Text)({
   fontSize: 24,
   fontWeight: "bold",
   color: "#fff",
   marginBottom: 10,
 });
-
 export const VerifiedSubtitle = styled(Text)({
   fontSize: 16,
   color: "#fff",
   textAlign: "center",
   marginBottom: 40,
   opacity: 0.8,
-});
-
-export const StyledButton = styled(Button)({
-  width: "100%",
-  marginTop: 20,
-  backgroundColor: "#fff",
-  borderRadius: 25,
-  paddingVertical: 8,
 });

@@ -5,6 +5,7 @@ import { ITextInput } from "@/components/common/app-form/type";
 
 const TextField = (props: ITextInput) => {
   const {
+    name,
     label,
     width = "100%",
     errorFn,
@@ -26,6 +27,7 @@ const TextField = (props: ITextInput) => {
         {label}
       </Text>
       <TextInput
+        nativeID={name}
         mode={mode}
         outlineStyle={{
           borderRadius: 10,

@@ -37,7 +37,7 @@
           "cameraPermission": "Allow $(CREDIT_CARD_APP) to access your camera",
           "microphonePermission": "Allow $(CREDIT_CARD_APP) to access your microphone",
           "recordAudioAndroid": true
-        }
+        } 
       ],
       "expo-router",
       [

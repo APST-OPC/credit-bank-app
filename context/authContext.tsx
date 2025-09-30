@@ -1,11 +1,11 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect } from "react";
 import { useRouter } from "expo-router";
 import { createContext, PropsWithChildren, useState } from "react";
 import { ICredentials } from "@/components/auth/type";
 
 interface IAuthContext {
   session: boolean;
-  login: (props: ICredentials) => void;
+  login: (props: ICredentials) => Promise<void>;
   logout: () => void;
 }
 const AuthContext = createContext<IAuthContext | undefined>(undefined);
@@ -14,12 +14,17 @@ export const AuthProvider = ({ children }: PropsWithChildren) => {
   const [session, setSession] = useState<boolean>(false);
   const router = useRouter();
 
-  const login = (props: ICredentials) => {
+  useEffect(() => {
+    if (session === true) {
+      router.push("/home");
+    }
+  }, [router, session]);
+
+  const login = async (props: ICredentials) => {
     const { email, password } = props;
     if (email && password) {
       setSession(true);
     }
-    router.push("/home");
   };
   const logout = () => {
     setSession(false);

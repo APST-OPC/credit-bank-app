@@ -53,7 +53,7 @@ const LoginScreen = (): ReactElement => {
     return (
       <ElevatedView>
         <Title>{t(signInLocalKey.signInHeader)}</Title>
-        <Form instance={formValue}>
+        <Form<ICredentials> instance={formValue}>
           <FormView>
             <SignInForm />
             <SubmitButton onPress={() => formValue.handleSubmit()}>

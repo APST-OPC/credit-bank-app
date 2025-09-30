@@ -1,16 +1,24 @@
 import * as Yup from "yup";
-import { ISignUpForm } from "./type";
+import { IDocumentScannerForm, ISignUpForm } from "./type";
 
-export const validationSchemaSignUp = Yup.object().shape({
-  name: Yup.string().required("Name is required"),
-  email: Yup.string().email("Invalid email").required("Email is required"),
-  password: Yup.string()
-    .min(6, "Minimum 6 characters")
-    .required("Password is required"),
-  confirmPassword: Yup.string()
-    .oneOf([Yup.ref("password")], "Passwords must match")
-    .required("Confirm your password"),
-  termsAccepted: Yup.string().optional(),
+const validationSchemaSignUp = Yup.object().shape({
+  signUp: Yup.object().shape({
+    name: Yup.string().required("Name is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    password: Yup.string()
+      .min(6, "Minimum 6 characters")
+      .required("Password is required"),
+    confirmPassword: Yup.string()
+      .oneOf([Yup.ref("password")], "Passwords must match")
+      .required("Confirm your password"),
+    termsAccepted: Yup.string().optional(),
+  }),
+  documentUpload: Yup.object().shape({
+    document: Yup.string().required("Document is required"),
+    idType: Yup.string().required("ID Type is required"),
+    idNumber: Yup.string().required("ID Number is required"),
+    nameOnId: Yup.string().required("Name on ID is required"),
+  }),
 });
 export const validationSchemaSignIn = Yup.object().shape({
   email: Yup.string().email("Invalid email").required("Email is required"),
@@ -25,7 +33,13 @@ export const socialBtn = [
   require("@/assets/images/twitter.png"),
 ];
 
-export const signUpInitVal: ISignUpForm = {
+const documentUploadInitValues: IDocumentScannerForm = {
+  document: "",
+  idType: "",
+  idNumber: "",
+  nameOnId: "",
+};
+const signUpInitValues: ISignUpForm = {
   name: "",
   email: "",
   password: "",
@@ -34,11 +48,9 @@ export const signUpInitVal: ISignUpForm = {
 };
 export const signUpFormInstance = {
   initialValues: {
-    name: "",
-    email: "",
-    password: "",
-    confirmPassword: "",
-    termsAccepted: false,
+    signUp: signUpInitValues,
+    documentUpload: documentUploadInitValues,
+
   },
   validationSchema: validationSchemaSignUp,
 };
@@ -62,7 +74,6 @@ export const signInPlaceholders = [
   "******",
   "******",
 ];
-export const signUpObj = Object.keys(signUpFormInstance.initialValues).slice(
-  0,
-  4
-);
+export const signUpObj = Object.keys(
+  signUpFormInstance.initialValues.signUp
+).slice(0, 4);
