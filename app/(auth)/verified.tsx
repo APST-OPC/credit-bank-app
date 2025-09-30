@@ -1,14 +1,13 @@
 import React, { ReactElement } from "react";
 import { useRouter } from "expo-router";
-import theme from "@/theme";
 import AuthContainer from "@/components/auth/auth-container/AuthContainer";
 import {
   Content,
   IconContainer,
-  StyledButton,
   VerifiedTitle,
   VerifiedSubtitle,
 } from "@/components/auth/styled";
+import SubmitButton from "@/components/common/submit-button/SubmitButton";
 
 const VerificationScreen = (): ReactElement => {
   const router = useRouter();
@@ -20,13 +19,9 @@ const VerificationScreen = (): ReactElement => {
         <VerifiedSubtitle>
           Your account has been created successfully.
         </VerifiedSubtitle>
-        <StyledButton
-          onPress={() => router.push("/(auth)")}
-          buttonColor={theme.colors.primary}
-          style={{ borderRadius: 10 }}
-        >
+        <SubmitButton onPress={() => router.push("/(auth)")}>
           SIGN IN
-        </StyledButton>
+        </SubmitButton>
       </Content>
     </AuthContainer>
   );

@@ -1,19 +1,22 @@
 import React, { ReactElement } from "react";
 import {
+  documentUploadInitValues,
+  documentUploadSchema,
   signInPlaceholders,
-  signUpFormInstance,
+  signUpInitValues,
   signUpObj,
+  signUpSchema,
 } from "@/components/auth/utils";
 import { FormView } from "@/components/auth/styled";
 import { useFormik, useFormikContext } from "formik";
-import { ISignUpForm, ISignUpFormFields } from "@/components/auth/type";
+import { IDocumentScannerForm, ISignUpForm } from "@/components/auth/type";
 import { stringFormat } from "@/utils/helpers";
 import Form from "@/components/common/app-form/Form";
 import {
   ControlledCheckbox,
   ControlledTextField,
 } from "@/components/common/app-form/controlled";
-import { useRouter } from "expo-router";
+// import { useRouter } from "expo-router";
 import styled from "styled-components/native";
 import { View } from "react-native";
 import { Text } from "react-native-paper";
@@ -37,7 +40,7 @@ const SignUpForm = (): ReactElement => {
         {signUpObj.map((data, index) => (
           <ControlledTextField
             key={index}
-            name={`signUp.${data}`}
+            name={data}
             label={stringFormat(data)}
             placeholder={signInPlaceholders[index]}
             type={index >= 2 ? "password" : undefined}
@@ -61,21 +64,41 @@ const SignUpForm = (): ReactElement => {
 
 const SignUpScreen = (): ReactElement => {
   const activeStep = useStepperStore((state) => state.activeStep);
-  const router = useRouter();
-  const handleSubmit = (values: ISignUpFormFields) => {
-    console.log(values);
-    router.push("/verifyphone");
-  };
-  const formValue = useFormik<ISignUpFormFields>({
-    initialValues: signUpFormInstance.initialValues,
-    // validationSchema: signUpFormInstance.validationSchema,
-    onSubmit: (values) => handleSubmit(values),
+  // const router = useRouter();
+
+  const signUpForm = useFormik<ISignUpForm>({
+    initialValues: signUpInitValues,
+    validationSchema: signUpSchema,
+    onSubmit: (values) => console.log(values),
   });
+  const scannedDocumentForm = useFormik<IDocumentScannerForm>({
+    initialValues: documentUploadInitValues,
+    validationSchema: documentUploadSchema,
+    onSubmit: (values) => console.log(values),
+  });
+
+  const handleSubmit = () => {
+    signUpForm.handleSubmit();
+    scannedDocumentForm.handleSubmit();
+    console.log("submitted");
+    // router.push("/verifyphone");
+  };
   const stepperItems = [
-    { label: "Sign Up", component: <SignUpForm /> },
+    {
+      label: "Sign Up",
+      component: (
+        <Form<ISignUpForm> instance={signUpForm}>
+          <SignUpForm />
+        </Form>
+      ),
+    },
     {
       label: "Upload Document",
-      component: <DocumentScanner />,
+      component: (
+        <Form<IDocumentScannerForm> instance={scannedDocumentForm}>
+          <DocumentScanner />
+        </Form>
+      ),
     },
     {
       label: "Review",
@@ -88,13 +111,11 @@ const SignUpScreen = (): ReactElement => {
   ];
   return (
     <ParallaxScrollView>
-      <Form<ISignUpFormFields> instance={formValue}>
-        <ProgressView
-          activeStep={activeStep}
-          items={stepperItems}
-          handleLast={() => formValue.handleSubmit()}
-        />
-      </Form>
+      <ProgressView
+        activeStep={activeStep}
+        items={stepperItems}
+        handleLast={() => handleSubmit()}
+      />
     </ParallaxScrollView>
   );
 };

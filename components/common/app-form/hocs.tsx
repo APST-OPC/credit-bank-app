@@ -20,6 +20,7 @@ const withHocs = <Type extends FormikValues>(
         placeholder={validate ? form.errors[name] : placeholder}
         errorFn={validate}
         name={name}
+        errorMsg={form.errors[name]}
         onChangeText={form.handleChange(name)}
         value={fieldValue}
         {...rest}

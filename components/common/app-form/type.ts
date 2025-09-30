@@ -14,4 +14,6 @@ export interface ITextInput extends TextInputProps {
 export interface ICheckbox extends CheckboxProps {
   name: string;
   label: string | ReactNode;
+  errorFn?: boolean;
+  errorMsg?: string;
 }
