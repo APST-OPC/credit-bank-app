@@ -24,23 +24,19 @@ export interface ISignInForm {
 
 //sign-up-form
 export interface ISignUpForm {
-  name: string;
-  email: string;
-  password: string;
-  confirmPassword: string;
-  termsAccepted: "checked" | "unchecked";
-}
-
-export interface IDocumentScannerForm {
-  document: string;
-  idType: string;
-  idNumber: string;
-  nameOnId: string;
-}
-
-export interface ISignUpFormFields {
-  signUp: ISignUpForm;
-  documentUpload: IDocumentScannerForm;
+  signUp: {
+    name: string;
+    email: string;
+    password: string;
+    confirmPassword: string;
+    termsAccepted: "checked" | "unchecked";
+  };
+  documentUpload: {
+    document: string;
+    idType: string;
+    idNumber: string;
+    nameOnId: string;
+  };
 }
 
 //verify-phone-form

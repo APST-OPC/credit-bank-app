@@ -13,18 +13,22 @@ const withHocs = <Type extends FormikValues>(
     const form = useFormikContext<Type>();
 
     const fieldValue = form.values[name] || getIn(form.values, name);
-    const validate = Boolean(form.errors[name] && form.touched[name]);
+    const error = getIn(form.errors, name);
+    const touched = getIn(form.touched, name);
+    const validate = Boolean(error && touched);
     return (
-      <Field
-        component={WrappedComponent}
-        placeholder={validate ? form.errors[name] : placeholder}
-        errorFn={validate}
-        name={name}
-        errorMsg={form.errors[name]}
-        onChangeText={form.handleChange(name)}
-        value={fieldValue}
-        {...rest}
-      />
+      <>
+        <Field
+          component={WrappedComponent}
+          placeholder={validate ? error : placeholder}
+          errorFn={validate}
+          name={name}
+          errorMsg={error}
+          onChangeText={form.handleChange(name)}
+          value={fieldValue}
+          {...rest}
+        />
+      </>
     );
   };
   return FieldWrapper;

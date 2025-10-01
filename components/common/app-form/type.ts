@@ -9,6 +9,7 @@ export interface ITextInput extends TextInputProps {
   type?: "password" | "text";
   iconColor?: string;
   errorFn?: boolean;
+  errorMsg?: string;
 }
 
 export interface ICheckbox extends CheckboxProps {

@@ -1,29 +1,28 @@
 import React, { ReactElement } from "react";
 import {
-  documentUploadInitValues,
-  documentUploadSchema,
   signInPlaceholders,
   signUpInitValues,
   signUpObj,
   signUpSchema,
 } from "@/components/auth/utils";
-import { FormView } from "@/components/auth/styled";
+import { Content, FormView } from "@/components/auth/styled";
 import { useFormik, useFormikContext } from "formik";
-import { IDocumentScannerForm, ISignUpForm } from "@/components/auth/type";
+import { ISignUpForm } from "@/components/auth/type";
 import { stringFormat } from "@/utils/helpers";
 import Form from "@/components/common/app-form/Form";
 import {
   ControlledCheckbox,
   ControlledTextField,
 } from "@/components/common/app-form/controlled";
-// import { useRouter } from "expo-router";
+import { useRouter } from "expo-router";
 import styled from "styled-components/native";
 import { View } from "react-native";
-import { Text } from "react-native-paper";
 import ParallaxScrollView from "@/components/ParralaxView";
 import DocumentScanner from "@/components/common/document-scanner/DocumentScanner";
 import useStepperStore from "@/store/useStepper";
 import ProgressView from "@/components/common/progress-view/ProgressView";
+import { Ionicons } from "@expo/vector-icons";
+import { Text } from "react-native-paper";
 
 const SignUpView = styled(View)({
   diplay: "flex",
@@ -40,19 +39,21 @@ const SignUpForm = (): ReactElement => {
         {signUpObj.map((data, index) => (
           <ControlledTextField
             key={index}
-            name={data}
+            name={`signUp.${data}`}
             label={stringFormat(data)}
             placeholder={signInPlaceholders[index]}
             type={index >= 2 ? "password" : undefined}
           />
         ))}
         <ControlledCheckbox
-          name="termsAccepted"
-          status={values.termsAccepted}
+          name="signUp.termsAccepted"
+          status={values.signUp.termsAccepted}
           onPress={() =>
             setFieldValue(
-              "termsAccepted",
-              values.termsAccepted === "checked" ? "unchecked" : "checked"
+              "signUp.termsAccepted",
+              values.signUp.termsAccepted === "checked"
+                ? "unchecked"
+                : "checked"
             )
           }
           label="I understood the terms & policy"
@@ -64,58 +65,55 @@ const SignUpForm = (): ReactElement => {
 
 const SignUpScreen = (): ReactElement => {
   const activeStep = useStepperStore((state) => state.activeStep);
-  // const router = useRouter();
+  const next = useStepperStore((state) => state.actions.nextStep);
+  const reset = useStepperStore((state) => state.actions.onReset);
+  const router = useRouter();
 
   const signUpForm = useFormik<ISignUpForm>({
     initialValues: signUpInitValues,
     validationSchema: signUpSchema,
-    onSubmit: (values) => console.log(values),
-  });
-  const scannedDocumentForm = useFormik<IDocumentScannerForm>({
-    initialValues: documentUploadInitValues,
-    validationSchema: documentUploadSchema,
-    onSubmit: (values) => console.log(values),
-  });
 
-  const handleSubmit = () => {
-    signUpForm.handleSubmit();
-    scannedDocumentForm.handleSubmit();
-    console.log("submitted");
-    // router.push("/verifyphone");
+    onSubmit: (values) => {
+      console.log(values);
+      next();
+    },
+  });
+  const handleSignIn = async () => {
+    router.push("/(auth)");
+    setTimeout(() => reset(), 1000);
   };
   const stepperItems = [
     {
       label: "Sign Up",
-      component: (
-        <Form<ISignUpForm> instance={signUpForm}>
-          <SignUpForm />
-        </Form>
-      ),
+      component: <SignUpForm />,
     },
     {
       label: "Upload Document",
-      component: (
-        <Form<IDocumentScannerForm> instance={scannedDocumentForm}>
-          <DocumentScanner />
-        </Form>
-      ),
+      component: <DocumentScanner />,
     },
     {
-      label: "Review",
+      label: "Success",
       component: (
-        <View>
-          <Text>REVIEW INPUTS</Text>
-        </View>
+        <Content>
+          <Ionicons name="checkmark-circle-sharp" size={200} color="green" />
+          <Text variant="headlineLarge">Success!</Text>
+          <Text variant="bodyLarge">
+            Your account has been created successfully.
+          </Text>
+        </Content>
       ),
     },
   ];
   return (
     <ParallaxScrollView>
-      <ProgressView
-        activeStep={activeStep}
-        items={stepperItems}
-        handleLast={() => handleSubmit()}
-      />
+      <Form<ISignUpForm> instance={signUpForm}>
+        <ProgressView
+          activeStep={activeStep}
+          items={stepperItems}
+          handleSecond={signUpForm.handleSubmit}
+          handleLast={handleSignIn}
+        />
+      </Form>
     </ParallaxScrollView>
   );
 };

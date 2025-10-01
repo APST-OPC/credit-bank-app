@@ -1,16 +1,19 @@
-import { View, TouchableOpacity, Image } from "react-native";
-import styled from "styled-components/native";
-import React, { useState, useRef, ReactElement } from "react";
-import { Ionicons } from "@expo/vector-icons";
+import type { ReactElement } from "react";
+
+import React, { useState, useRef } from "react";
+import { View, TouchableOpacity, Image, Modal } from "react-native";
+import { List, TextInput } from "react-native-paper";
 import { CameraView, useCameraPermissions } from "expo-camera";
-import * as ImagePicker from "expo-image-picker";
-import { FormView } from "@/components/auth/styled";
-import { ControlledTextField } from "../app-form/controlled";
-import { stringFormat } from "@/utils/helpers";
-import SubmitButton from "../submit-button/SubmitButton";
+import { Ionicons } from "@expo/vector-icons";
 import { useFormikContext } from "formik";
-import { ISignUpFormFields } from "@/components/auth/type";
-import { documentUploadInitValues } from "@/components/auth/utils";
+import styled from "styled-components/native";
+import * as ImagePicker from "expo-image-picker";
+
+import { ISignInForm } from "@/components/auth/type";
+import { FormView } from "@/components/auth/styled";
+import { ControlledTextField } from "@/components/common/app-form/controlled";
+import { idTypes } from "@/components/auth/utils";
+import SubmitButton from "@/components/common/submit-button/SubmitButton";
 
 const CameraBox = styled(View)({
   flex: 1,
@@ -49,16 +52,14 @@ const Uploader = styled(View)({
   padding: 20,
 });
 const UploaderBox = styled(View)({
-  height: 300,
   width: "100%",
   borderRadius: 5,
   backgroundColor: "white",
   gap: 10,
 });
 const UploadImage = styled(Image)({
-  width: "100%",
-  height: "100%",
   borderRadius: 5,
+  height: 300,
   objectFit: "cover",
   objectPosition: "center",
   position: "relative",
@@ -77,15 +78,69 @@ const UploaderButton = styled(TouchableOpacity)({
   top: "50%",
   left: "50%",
   borderRadius: 100,
-  boxShadow: "0 0px 15px rgba(255, 255, 255, 0.5)",
 });
+
+const ModalContainer = styled(View)({
+  flex: 1,
+  justifyContent: "center",
+  alignItems: "center",
+  backgroundColor: "rgba(0, 0, 0, 0.5)",
+  alignSelf: "center",
+  width: 480,
+});
+
+const ModalContent = styled(View)({
+  backgroundColor: "white",
+  padding: 20,
+  borderRadius: 25,
+  width: "70%",
+});
+
+const DropDown = (): ReactElement => {
+  const [visible, setVisible] = useState<boolean>(false);
+  const { setFieldValue } = useFormikContext<ISignInForm>();
+  const pickOption = (value: string) => {
+    setFieldValue("documentUpload.idType", value);
+    setVisible(false);
+  };
+  return (
+    <>
+      <ControlledTextField
+        name="documentUpload.idType"
+        label="Id Type"
+        right={
+          <TextInput.Icon
+            icon="chevron-down"
+            size={30}
+            onPress={() => setVisible(true)}
+          />
+        }
+        editable={false}
+      />
+      <Modal animationType="fade" visible={visible} transparent>
+        <ModalContainer>
+          <ModalContent>
+            {idTypes.map(({ item, description }, index) => (
+              <List.Item
+                key={index}
+                title={item}
+                description={description}
+                onPress={() => pickOption(item)}
+              />
+            ))}
+          </ModalContent>
+        </ModalContainer>
+      </Modal>
+    </>
+  );
+};
 
 const DocumentScanner = (): ReactElement => {
   const [permission, requestPermission] = useCameraPermissions();
   const [isCameraOpen, setIsCameraOpen] = useState(false);
   const [photo, setPhoto] = useState<string | null>(null);
   const cameraRef = useRef<CameraView | null>(null);
-  const { setFieldValue } = useFormikContext<ISignUpFormFields>();
+  const { setFieldValue } = useFormikContext<ISignInForm>();
 
   const handleChangePhoto = async (): Promise<void> => {
     if (!permission) {
@@ -101,7 +156,6 @@ const DocumentScanner = (): ReactElement => {
 
     setIsCameraOpen(true);
   };
-
   const capturePhoto = async (): Promise<void> => {
     if (cameraRef.current) {
       try {
@@ -109,7 +163,7 @@ const DocumentScanner = (): ReactElement => {
         if (photoData?.uri) {
           setPhoto(photoData.uri);
           setIsCameraOpen(false);
-          setFieldValue("document", photoData.uri);
+          setFieldValue("documentUpload.document", photoData.uri);
         } else {
           console.error("Failed to capture photo, no URI found.");
         }
@@ -118,7 +172,6 @@ const DocumentScanner = (): ReactElement => {
       }
     }
   };
-
   const openGallery = async (): Promise<void> => {
     const permission = await ImagePicker.requestMediaLibraryPermissionsAsync();
     if (permission.granted) {
@@ -135,7 +188,7 @@ const DocumentScanner = (): ReactElement => {
       console.error("Permission to access gallery was denied");
     }
   };
-
+  const placeHolders = ["", "ex: P123C*******", "ex: John Smith Barreta"];
   const openCamera = (): ReactElement => {
     return (
       <CameraView style={{ flex: 1 }} facing={"back"} ref={cameraRef}>
@@ -178,15 +231,17 @@ const DocumentScanner = (): ReactElement => {
         </View>
 
         <FormView>
-          {Object.keys(documentUploadInitValues)
-            .slice(1, 4)
-            .map((data, index) => (
-              <ControlledTextField
-                key={index}
-                name={data}
-                label={stringFormat(data)}
-              />
-            ))}
+          <DropDown />
+          <ControlledTextField
+            name="documentUpload.idNumber"
+            label="ID Number"
+            placeholder={placeHolders[1]}
+          />
+          <ControlledTextField
+            name="documentUpload.nameOnId"
+            label="Name on ID"
+            placeholder={placeHolders[2]}
+          />
           <SubmitButton
             style={{ backgroundColor: "green" }}
             onPress={openGallery}
@@ -198,26 +253,5 @@ const DocumentScanner = (): ReactElement => {
     </Uploader>
   );
 };
-
-{
-  /* <StyledView>
-        <AvatarFrame>
-          <Avatar.Image
-            size={120}
-            source={{
-              uri:
-                photo ||
-                "https://images7.alphacoders.com/489/thumb-1920-489447.jpg",
-            }}
-          />
-          <OverlayButton onPress={handleChangePhoto}>
-            <MaterialIcons name="camera-alt" size={24} color="white" />
-          </OverlayButton>
-        </AvatarFrame>
-        <StyledButtonChangePhoto onPress={openGallery}>
-          <StyledButtonTitle>Change Photo</StyledButtonTitle>
-        </StyledButtonChangePhoto>
-      </StyledView> */
-}
 
 export default DocumentScanner;
