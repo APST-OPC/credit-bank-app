@@ -1,4 +1,3 @@
-import { Text } from "react-native";
 import React from "react";
 import { Button, ButtonProps } from "react-native-paper";
 
@@ -11,7 +10,7 @@ const SubmitButton = (props: ButtonProps) => {
       labelStyle={{ fontSize: 17 }}
       {...rest}
     >
-      <Text>{children}</Text>
+      {children}
     </Button>
   );
 };
