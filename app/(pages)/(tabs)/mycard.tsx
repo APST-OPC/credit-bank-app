@@ -27,7 +27,6 @@ const HeaderView = styled(View)({
   justifyContent: "space-between",
   alignItems: "center",
 });
-
 const PointView = styled(View)({
   backgroundColor: theme.colors.tertiary,
   borderRadius: 10,
@@ -48,7 +47,6 @@ const StyledPointContent = styled(Text)({
   borderBottomLeftRadius: 7,
   fontWeight: "600",
 });
-
 const StyledAccountView = styled(View)({
   padding: "10px 15px 10px 15px",
   backgroundColor: "#004068",
@@ -59,7 +57,6 @@ const StyledAccountText = styled(Text)({
   fontFamily: "PoppinsBold",
   color: "white",
 });
-
 const StyledTransactionCard = styled(Surface)({
   gap: 15,
   padding: 15,
@@ -69,13 +66,11 @@ const StyledTransactionCard = styled(Surface)({
 const TextBold = styled(Text)({
   fontFamily: "PoppinsBold",
 });
-
 const TransactionContainer = styled(View)({
   flexDirection: "row",
   justifyContent: "space-between",
   alignItems: "center",
 });
-
 const TransactionAvatar = styled(View)({
   flexDirection: "row",
   gap: 5,

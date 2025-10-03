@@ -1,8 +1,10 @@
 import React, { ReactElement } from "react";
 import { RelativePathString, useRouter } from "expo-router";
 import {
+  Dimensions,
   FlatList,
   Image,
+  Platform,
   Pressable,
   TouchableOpacity,
   View,
@@ -156,6 +158,11 @@ export default function HomeScreen() {
   };
 
   const renderMenu = () => {
+    const { width } = Dimensions.get(
+      Platform.OS === "web" ? "window" : "screen"
+    );
+
+    const webWidth = width < 480 ? width : 480;
     return menuList.map((item, ids) => (
       <Pressable
         key={ids}
@@ -167,7 +174,10 @@ export default function HomeScreen() {
             borderRadius: 16,
             paddingHorizontal: 16,
             alignItems: "center",
-            width: 100,
+            flexBasis: "auto",
+            width:
+              Platform.OS === "web" ? (webWidth - 60) / 3 : (width - 60) / 3,
+            maxWidth: 480,
             height: 125,
             justifyContent: "center",
           }}

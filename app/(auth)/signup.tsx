@@ -5,7 +5,7 @@ import {
   signUpObj,
   signUpSchema,
 } from "@/components/auth/utils";
-import { Content, FormView } from "@/components/auth/styled";
+import { FormView } from "@/components/auth/styled";
 import { useFormik, useFormikContext } from "formik";
 import { ISignUpForm } from "@/components/auth/type";
 import { stringFormat } from "@/utils/helpers";
@@ -18,17 +18,27 @@ import { useRouter } from "expo-router";
 import styled from "styled-components/native";
 import { View } from "react-native";
 import ParallaxScrollView from "@/components/ParralaxView";
-import DocumentScanner from "@/components/common/document-scanner/DocumentScanner";
+import DocumentScanner from "@/components/auth/document-scanner/DocumentScanner";
 import useStepperStore from "@/store/useStepper";
 import ProgressView from "@/components/common/progress-view/ProgressView";
 import { Ionicons } from "@expo/vector-icons";
 import { Text } from "react-native-paper";
+import AuthDescription from "@/components/auth/auth-description/AuthDescription";
 
 const SignUpView = styled(View)({
   diplay: "flex",
   gap: 5,
   paddingHorizontal: 20,
   justfyContent: "flex-end",
+});
+const Content = styled(View)({
+  display: "flex",
+  width: "100%",
+  height: "100%",
+  justifyContent: "center",
+  alignItems: "center",
+  padding: 20,
+  position: "absolute",
 });
 
 const SignUpForm = (): ReactElement => {
@@ -59,7 +69,23 @@ const SignUpForm = (): ReactElement => {
           label="I understood the terms & policy"
         />
       </FormView>
+      <AuthDescription type="sign-up" />
     </SignUpView>
+  );
+};
+
+const SignUpSuccess = (): ReactElement => {
+  return (
+    <Content>
+      <Ionicons name="checkmark-circle-sharp" size={200} color="green" />
+      <Text variant="headlineLarge">Success!</Text>
+      <Text variant="bodyLarge">
+        Your account has been registered successfully.
+      </Text>
+      <Text variant="bodyLarge">
+        Please wait 24 hours for your account verification.
+      </Text>
+    </Content>
   );
 };
 
@@ -93,15 +119,7 @@ const SignUpScreen = (): ReactElement => {
     },
     {
       label: "Success",
-      component: (
-        <Content>
-          <Ionicons name="checkmark-circle-sharp" size={200} color="green" />
-          <Text variant="headlineLarge">Success!</Text>
-          <Text variant="bodyLarge">
-            Your account has been created successfully.
-          </Text>
-        </Content>
-      ),
+      component: <SignUpSuccess />,
     },
   ];
   return (

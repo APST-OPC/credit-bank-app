@@ -162,42 +162,43 @@ const SettingsModal = (props: ISettingsModal) => {
 
 const SettingsScreen = () => {
   const { i18n } = useTranslation();
+  const { push } = useRouter();
   const { logout } = useAuth();
-  const reroute = useRouter();
   const [modalVisible, setModalVisible] = useState(false);
   const [visible, setVisible] = useState(false);
 
   const handleLogout = () => {
     setModalVisible(true);
   };
-
   const handleCloseModal = () => {
     setModalVisible(false);
   };
-
   const handleConfirmLogout = () => {
     logout();
   };
-
   const handleLanguageChange = (lng: string) => {
     i18n.changeLanguage(lng);
     setVisible(false);
   };
 
-  return (
-    <ParallaxScrollView>
-      <StyledView>
-        <Section>
-          <SectionTitle>Settings</SectionTitle>
-        </Section>
-
+  const renderTitle = () => {
+    return (
+      <Section>
+        <SectionTitle>Settings</SectionTitle>
+      </Section>
+    );
+  };
+  const renderGeneralMenu = () => {
+    return (
+      <>
         <Description>General</Description>
-        <MenuItem onPress={() => reroute.push("/profile")}>
+
+        <MenuItem onPress={() => push("/profile")}>
           <MenuText>My Profile</MenuText>
           <MaterialIcons name="chevron-right" size={24} color="#7E848D" />
         </MenuItem>
 
-        <MenuItem onPress={() => reroute.push("/contactUs")}>
+        <MenuItem onPress={() => push("/contactUs")}>
           <MenuText>Contact Us</MenuText>
           <MaterialIcons name="chevron-right" size={24} color="#7E848D" />
         </MenuItem>
@@ -214,16 +215,39 @@ const SettingsScreen = () => {
           </LanguageView>
         </MenuItem>
 
+        <SettingsModal open={visible} title="Language">
+          {languageSetting.map(({ label, code }, index) => (
+            <LanguageItem
+              key={index}
+              onPress={() => handleLanguageChange(code)}
+            >
+              <MenuText>{label}</MenuText>
+            </LanguageItem>
+          ))}
+        </SettingsModal>
+      </>
+    );
+  };
+  const renderSecurityMenu = () => {
+    return (
+      <>
         <Description>Security</Description>
-        <MenuItem onPress={() => reroute.push("/termsAndConditons")}>
+
+        <MenuItem onPress={() => push("/termsAndConditons")}>
           <MenuText>Terms and Conditions</MenuText>
           <MaterialIcons name="chevron-right" size={24} color="#7E848D" />
         </MenuItem>
-        <MenuItem onPress={() => reroute.push("/changePassword")}>
+
+        <MenuItem onPress={() => push("/changePassword")}>
           <MenuText>Change Password</MenuText>
           <MaterialIcons name="chevron-right" size={24} color="#7E848D" />
         </MenuItem>
-
+      </>
+    );
+  };
+  const renderLogoutMenu = () => {
+    return (
+      <>
         <LogoutItem onPress={handleLogout}>
           <LogoutText>Log out</LogoutText>
           <MaterialIcons name="exit-to-app" size={24} color="#FF0000" />
@@ -233,7 +257,6 @@ const SettingsScreen = () => {
           <Text style={{ fontSize: 14, marginBottom: 30 }}>
             Are you sure you want to logout?
           </Text>
-
           <ButtonsContainer>
             <ModalButton onPress={handleConfirmLogout}>
               <ModalButtonText style={{ color: "red" }}>
@@ -246,17 +269,17 @@ const SettingsScreen = () => {
             </ModalButton>
           </ButtonsContainer>
         </SettingsModal>
+      </>
+    );
+  };
 
-        <SettingsModal open={visible} title="Language">
-          {languageSetting.map(({ label, code }, index) => (
-            <LanguageItem
-              key={index}
-              onPress={() => handleLanguageChange(code)}
-            >
-              <MenuText>{label}</MenuText>
-            </LanguageItem>
-          ))}
-        </SettingsModal>
+  return (
+    <ParallaxScrollView>
+      <StyledView>
+        {renderTitle()}
+        {renderGeneralMenu()}
+        {renderSecurityMenu()}
+        {renderLogoutMenu()}
       </StyledView>
     </ParallaxScrollView>
   );

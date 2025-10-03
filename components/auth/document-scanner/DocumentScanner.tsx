@@ -46,7 +46,6 @@ const CloseCameraButton = styled(TouchableOpacity)({
   opacity: 0.5,
   zIndex: 1,
 });
-
 const Uploader = styled(View)({
   flex: 1,
   padding: 20,
@@ -79,7 +78,6 @@ const UploaderButton = styled(TouchableOpacity)({
   left: "50%",
   borderRadius: 100,
 });
-
 const ModalContainer = styled(View)({
   flex: 1,
   justifyContent: "center",
@@ -88,7 +86,6 @@ const ModalContainer = styled(View)({
   alignSelf: "center",
   width: 480,
 });
-
 const ModalContent = styled(View)({
   backgroundColor: "white",
   padding: 20,

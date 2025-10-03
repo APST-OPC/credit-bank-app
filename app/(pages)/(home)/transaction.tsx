@@ -1,5 +1,5 @@
 import React, { ReactElement } from "react";
-import { FlatList, TouchableOpacity, View } from "react-native";
+import { FlatList, View } from "react-native";
 import Animated from "react-native-reanimated";
 import { Avatar, Text } from "react-native-paper";
 
@@ -19,8 +19,8 @@ const Transaction = (): ReactElement => {
           data={transaction}
           keyExtractor={(_item, index) => index.toString()}
           renderItem={({ item }) => (
-            <TouchableOpacity>
-              <Animated.View
+            <View>
+              <View
                 style={{
                   flexDirection: "row",
                   justifyContent: "space-between",
@@ -28,6 +28,7 @@ const Transaction = (): ReactElement => {
                   paddingHorizontal: 16,
                   paddingVertical: 16,
                   backgroundColor: "#FFFFFF",
+                  borderBottom: "1px solid #c3c3c3ff",
                 }}
               >
                 <View style={{ flexDirection: "row", columnGap: 4 }}>
@@ -57,8 +58,8 @@ const Transaction = (): ReactElement => {
                 >
                   {item.price}
                 </Text>
-              </Animated.View>
-            </TouchableOpacity>
+              </View>
+            </View>
           )}
           ListEmptyComponent={
             <Animated.View

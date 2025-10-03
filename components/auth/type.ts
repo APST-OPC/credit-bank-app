@@ -7,11 +7,6 @@ export interface IAuthContainer {
   type?: "sign-up" | "sign-in";
 }
 
-//elevated-view
-export interface IElevatedView {
-  children: ReactNode;
-}
-
 //sign-in-form
 export interface ICredentials {
   email: string;
@@ -37,20 +32,4 @@ export interface ISignUpForm {
     idNumber: string;
     nameOnId: string;
   };
-}
-
-//verify-phone-form
-export interface PhoneVerifyForm {
-  countryCode: string;
-  phoneNumber: string;
-}
-export interface IVerifierModal {
-  open: boolean;
-  handleFieldValue: (name: string, value: string) => void;
-  handleOnClose: () => void;
-}
-
-//otp-verify-form
-export interface IOtpVerify {
-  otp: string;
 }
