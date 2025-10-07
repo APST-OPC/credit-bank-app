@@ -38,6 +38,9 @@
         },
         "viewMore": {
           "label": "查看更多"
+        },
+        "home": {
+          "label": "首頁"
         }
       },
       "menu": {

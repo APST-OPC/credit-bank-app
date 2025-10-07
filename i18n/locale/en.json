@@ -38,6 +38,9 @@
         },
         "viewMore": {
           "label": "View more"
+        },
+        "home": {
+          "label": "Home"
         }
       },
       "menu": {

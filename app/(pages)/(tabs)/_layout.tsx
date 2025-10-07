@@ -12,6 +12,8 @@ import * as Haptics from "expo-haptics";
 import { BottomTabBarButtonProps } from "@react-navigation/bottom-tabs";
 import { PlatformPressable } from "@react-navigation/elements";
 import { IconSymbol } from "@/components/ui/IconSymbol";
+import { useTranslation } from "react-i18next";
+import { localizationKey } from "@/i18n/key";
 
 const tabBarStyle: StyleProp<ViewStyle> = {
   maxWidth: 480,
@@ -50,6 +52,8 @@ const HapticsTab = (props: BottomTabBarButtonProps): ReactElement => {
 };
 
 const TabLayout = (): ReactElement => {
+  const { t } = useTranslation();
+  const localKey = localizationKey.tabs;
   return (
     <Tabs
       screenOptions={{
@@ -65,7 +69,7 @@ const TabLayout = (): ReactElement => {
       <Tabs.Screen
         name="home"
         options={{
-          title: "Home",
+          title: t(localKey.home.home),
           tabBarIcon: (props) => (
             <TabBarIcon color={props.color} name="house.fill" />
           ),
@@ -74,7 +78,7 @@ const TabLayout = (): ReactElement => {
       <Tabs.Screen
         name="mycard"
         options={{
-          title: "My Card",
+          title: t(localKey.myCard.myCards),
           tabBarIcon: (props) => (
             <TabBarIcon color={props.color} name="creditcard.fill" />
           ),
@@ -83,7 +87,7 @@ const TabLayout = (): ReactElement => {
       <Tabs.Screen
         name="settings"
         options={{
-          title: "Settings",
+          title: t(localKey.settings.title),
           tabBarIcon: (props) => (
             <TabBarIcon color={props.color} name="gear.circle.fill" />
           ),
