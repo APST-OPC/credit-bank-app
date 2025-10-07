@@ -1,23 +1,5 @@
 import { NotificationItem } from "@/store/home/useNotification";
 
-export const menuList = [
-  {
-    label: "Add Card",
-    image: require("@/assets/images/add-card.png"),
-    route: "/(mycard)/addNewCard",
-  },
-  {
-    label: "Activate Card",
-    image: require("@/assets/images/activate-card.png"),
-    route: "/(home)/activate-card",
-  },
-  {
-    label: "Promos & Discounts",
-    image: require("@/assets/images/promo.png"),
-    route: "/(home)/promos",
-  },
-];
-
 export const transaction = [
   {
     title: "Amazon",

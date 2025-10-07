@@ -3,7 +3,7 @@ import React, { ReactElement } from "react";
 import { changePasswordInitialValues } from "@/components/settings/utils";
 import FormContainer from "@/components/common/app-form/form-container/FormContainer";
 import { stringFormat } from "@/utils/helpers";
-import SubmitButton from "@/components/common/submit-button/SubmitButton";
+import SubmitButton from "@/components/common/SubmitButton";
 import { ControlledTextField } from "@/components/common/app-form/controlled";
 import { useFormik } from "formik";
 import { IChangePassForm } from "@/components/settings/type";

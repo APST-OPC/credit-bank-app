@@ -13,7 +13,7 @@ import { ISignInForm } from "@/components/auth/type";
 import { FormView } from "@/components/auth/styled";
 import { ControlledTextField } from "@/components/common/app-form/controlled";
 import { idTypes } from "@/components/auth/utils";
-import SubmitButton from "@/components/common/submit-button/SubmitButton";
+import SubmitButton from "@/components/common/SubmitButton";
 
 const CameraBox = styled(View)({
   flex: 1,

@@ -23,5 +23,34 @@
         "label": "SIGN UP"
       }
     }
+  },
+  "tabs": {
+    "home": {
+      "headers": {
+        "welcomeMsg": {
+          "label": "Welcome back,"
+        },
+        "recentTransaction": {
+          "label": "Recent Transaction"
+        },
+        "availableCredit": {
+          "label": "Available Credit"
+        },
+        "viewMore": {
+          "label": "View more"
+        }
+      },
+      "menu": {
+        "addCard": {
+          "label": "Add Card"
+        },
+        "activateCard": {
+          "label": "Activate Card"
+        },
+        "promosAndDiscount": {
+          "label": "Promos & Discount"
+        }
+      }
+    }
   }
 }

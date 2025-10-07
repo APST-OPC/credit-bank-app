@@ -18,12 +18,12 @@ import { useRouter } from "expo-router";
 import styled from "styled-components/native";
 import { View } from "react-native";
 import ParallaxScrollView from "@/components/ParralaxView";
-import DocumentScanner from "@/components/auth/document-scanner/DocumentScanner";
+import DocumentScanner from "@/components/auth/DocumentScanner";
 import useStepperStore from "@/store/useStepper";
-import ProgressView from "@/components/common/progress-view/ProgressView";
+import ProgressView from "@/components/common/ProgressView";
 import { Ionicons } from "@expo/vector-icons";
 import { Text } from "react-native-paper";
-import AuthDescription from "@/components/auth/auth-description/AuthDescription";
+import AuthDescription from "@/components/auth/AuthDescription";
 
 const SignUpView = styled(View)({
   diplay: "flex",

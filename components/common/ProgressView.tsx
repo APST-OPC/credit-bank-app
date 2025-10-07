@@ -2,7 +2,7 @@ import useStepperStore from "@/store/useStepper";
 import React, { ReactElement } from "react";
 import { Dimensions, Platform, View, ViewProps } from "react-native";
 import styled from "styled-components/native";
-import SubmitButton from "@/components/common/submit-button/SubmitButton";
+import SubmitButton from "@/components/common/SubmitButton";
 import { Text } from "react-native-paper";
 import * as Progress from "react-native-progress";
 

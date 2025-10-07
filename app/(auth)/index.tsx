@@ -8,12 +8,12 @@ import { signInFormInstance } from "@/components/auth/utils";
 import { ElevatedView, FormView, Title } from "@/components/auth/styled";
 
 import { localizationKey } from "@/i18n/key";
-import AuthContainer from "@/components/auth/auth-container/AuthContainer";
-import AuthDescription from "@/components/auth/auth-description/AuthDescription";
+import AuthContainer from "@/components/auth/AuthContainer";
+import AuthDescription from "@/components/auth/AuthDescription";
 import { useAuth } from "@/context/authContext";
 import { useFormik } from "formik";
 import { ControlledTextField } from "@/components/common/app-form/controlled";
-import SubmitButton from "@/components/common/submit-button/SubmitButton";
+import SubmitButton from "@/components/common/SubmitButton";
 
 const signInLocalKey = localizationKey.auth.signIn;
 

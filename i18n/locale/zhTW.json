@@ -23,5 +23,34 @@
         "label": "註冊"
       }
     }
+  },
+  "tabs": {
+    "home": {
+      "headers": {
+        "welcomeMsg": {
+          "label": "歡迎回來，"
+        },
+        "recentTransaction": {
+          "label": "最近交易"
+        },
+        "availableCredit": {
+          "label": "可用信用額度"
+        },
+        "viewMore": {
+          "label": "查看更多"
+        }
+      },
+      "menu": {
+        "addCard": {
+          "label": "新增卡片"
+        },
+        "activateCard": {
+          "label": "啟用卡片"
+        },
+        "promosAndDiscount": {
+          "label": "優惠與折扣"
+        }
+      }
+    }
   }
 }

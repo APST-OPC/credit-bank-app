@@ -1,14 +1,6 @@
 import React, { ReactElement } from "react";
-import { RelativePathString, useRouter } from "expo-router";
-import {
-  Dimensions,
-  FlatList,
-  Image,
-  Platform,
-  Pressable,
-  TouchableOpacity,
-  View,
-} from "react-native";
+import { useRouter } from "expo-router";
+import { FlatList, TouchableOpacity, View } from "react-native";
 import { Avatar, Badge, Surface, Text } from "react-native-paper";
 import styled from "styled-components/native";
 
@@ -16,16 +8,14 @@ import { Ionicons } from "@expo/vector-icons";
 
 import CreditCard from "@/components/mycard/credit-carousel/CreditCard";
 import ParallaxScrollView from "@/components/ParralaxView";
-import { initialNotifications, menuList, transaction } from "@/data/home";
+import { initialNotifications, transaction } from "@/data/home";
 import { useAppTheme } from "@/hooks/useTheme";
 import { creditCardArray } from "@/data/mycard";
 import theme from "@/theme";
-
-interface TransactionItem {
-  title: string;
-  category: string;
-  price: string;
-}
+import { useTranslation } from "react-i18next";
+import { tabsLocalKey } from "@/i18n/key/modules/tabs";
+import Menu from "@/components/tabs/home/Menu";
+import TransactionItem from "@/components/tabs/home/TransactionItem";
 
 const BlueBackground = styled(View)({
   width: "100%",
@@ -34,18 +24,6 @@ const BlueBackground = styled(View)({
   position: "absolute",
   borderBottomLeftRadius: 24,
   borderBottomRightRadius: 24,
-});
-
-const TransactionContainer = styled(View)({
-  flexDirection: "row",
-  justifyContent: "space-between",
-  alignItems: "center",
-});
-
-const TransactionAvatar = styled(View)({
-  flexDirection: "row",
-  gap: 5,
-  alignItems: "center",
 });
 
 const WhiteText = styled(Text)({
@@ -71,33 +49,10 @@ const StyledAccountText = styled(Text)({
   color: "white",
 });
 
-const RenderTransactionItem = (props: TransactionItem): ReactElement => {
-  return (
-    <TransactionContainer>
-      <TransactionAvatar>
-        <Avatar.Text size={30} label={props.title.slice(0, 2).toUpperCase()} />
-        <View>
-          <TextBold>{props.title}</TextBold>
-          <Text
-            variant="labelSmall"
-            style={{
-              fontFamily: "Poppins",
-            }}
-          >
-            {props.category}
-          </Text>
-        </View>
-      </TransactionAvatar>
-
-      <Text>{props.price}</Text>
-    </TransactionContainer>
-  );
-};
-
-export default function HomeScreen() {
+const HomeScreen = (): ReactElement => {
   const router = useRouter();
-
   const theme = useAppTheme();
+  const { t } = useTranslation();
 
   const unreadCount = initialNotifications.filter(
     (notification) => !notification.read
@@ -109,10 +64,6 @@ export default function HomeScreen() {
 
   const handleViewRecent = () => {
     router.push("/transaction");
-  };
-
-  const handleNavigateMenu = (route: RelativePathString) => {
-    router.push(route);
   };
 
   const renderHeader = () => {
@@ -138,7 +89,9 @@ export default function HomeScreen() {
             }}
           />
           <View>
-            <WhiteText variant="labelSmall">Welcome back,</WhiteText>
+            <WhiteText variant="labelSmall">
+              {t(tabsLocalKey.home.welcomeMsg)}
+            </WhiteText>
             <WhiteText variant="labelLarge">Charles James</WhiteText>
           </View>
         </View>
@@ -157,51 +110,12 @@ export default function HomeScreen() {
     );
   };
 
-  const renderMenu = () => {
-    const { width } = Dimensions.get(
-      Platform.OS === "web" ? "window" : "screen"
-    );
-
-    const webWidth = width < 480 ? width : 480;
-    return menuList.map((item, ids) => (
-      <Pressable
-        key={ids}
-        onPress={() => handleNavigateMenu(item.route as RelativePathString)}
-      >
-        <Surface
-          style={{
-            backgroundColor: theme.colors.background,
-            borderRadius: 16,
-            paddingHorizontal: 16,
-            alignItems: "center",
-            flexBasis: "auto",
-            width:
-              Platform.OS === "web" ? (webWidth - 60) / 3 : (width - 60) / 3,
-            maxWidth: 480,
-            height: 125,
-            justifyContent: "center",
-          }}
-        >
-          <Image source={item.image} style={{ width: 70, height: 70 }} />
-          <Text
-            variant="labelMedium"
-            style={{
-              textAlign: "center",
-              fontFamily: "PoppinsSemiBold",
-              fontSize: 12,
-            }}
-          >
-            {item.label}
-          </Text>
-        </Surface>
-      </Pressable>
-    ));
-  };
-
   const renderBalance = () => {
     return (
       <StyledAccountView>
-        <StyledAccountText>Available Credit</StyledAccountText>
+        <StyledAccountText>
+          {t(tabsLocalKey.home.availableCredit)}
+        </StyledAccountText>
         <StyledAccountText>PHP 60,530.00</StyledAccountText>
       </StyledAccountView>
     );
@@ -224,7 +138,7 @@ export default function HomeScreen() {
             alignContent: "center",
           }}
         >
-          {renderMenu()}
+          <Menu />
         </View>
 
         <View
@@ -234,7 +148,9 @@ export default function HomeScreen() {
             alignItems: "center",
           }}
         >
-          <TextBold variant="labelLarge">Recent Transaction</TextBold>
+          <TextBold variant="labelLarge">
+            {t(tabsLocalKey.home.recentTransaction)}
+          </TextBold>
           <TouchableOpacity hitSlop={20} onPress={handleViewRecent}>
             <Text
               variant="bodySmall"
@@ -243,7 +159,7 @@ export default function HomeScreen() {
                 color: theme.colors.primary,
               }}
             >
-              View more
+              {t(tabsLocalKey.home.viewMore)}
             </Text>
           </TouchableOpacity>
         </View>
@@ -261,7 +177,7 @@ export default function HomeScreen() {
             data={transaction.slice(0, 4)}
             keyExtractor={(_item, index) => index.toString()}
             renderItem={({ item }) => (
-              <RenderTransactionItem
+              <TransactionItem
                 title={item.title}
                 price={item.price}
                 category={item.category}
@@ -280,4 +196,6 @@ export default function HomeScreen() {
       </View>
     </ParallaxScrollView>
   );
-}
+};
+
+export default HomeScreen;

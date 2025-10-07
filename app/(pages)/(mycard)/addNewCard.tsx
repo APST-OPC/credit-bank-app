@@ -9,7 +9,7 @@ import FormContainer from "@/components/common/app-form/form-container/FormConta
 import { initialValues, inputRestrict } from "@/components/mycard/utils";
 import { StyledLowerFormView } from "@/components/mycard/styled";
 import ParallaxScrollView from "@/components/ParralaxView";
-import SubmitButton from "@/components/common/submit-button/SubmitButton";
+import SubmitButton from "@/components/common/SubmitButton";
 import Form from "@/components/common/app-form/Form";
 import { ControlledTextField } from "@/components/common/app-form/controlled";
 

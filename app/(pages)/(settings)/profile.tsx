@@ -15,7 +15,7 @@ import { profileChangeInitialValues } from "@/components/settings/utils";
 import FormContainer from "@/components/common/app-form/form-container/FormContainer";
 import { stringFormat } from "@/utils/helpers";
 import { ControlledTextField } from "@/components/common/app-form/controlled";
-import SubmitButton from "@/components/common/submit-button/SubmitButton";
+import SubmitButton from "@/components/common/SubmitButton";
 import Form from "@/components/common/app-form/Form";
 import { useFormik } from "formik";
 import { IChangeProfileForm } from "@/components/settings/type";

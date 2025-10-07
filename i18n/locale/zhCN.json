@@ -23,5 +23,34 @@
         "label": "注册"
       }
     }
+  },
+  "tabs": {
+    "home": {
+      "headers": {
+        "welcomeMsg": {
+          "label": "欢迎回来，"
+        },
+        "recentTransaction": {
+          "label": "最近交易"
+        },
+        "availableCredit": {
+          "label": "可用信用额度"
+        },
+        "viewMore": {
+          "label": "查看更多"
+        }
+      },
+      "menu": {
+        "addCard": {
+          "label": "添加卡片"
+        },
+        "activateCard": {
+          "label": "激活卡片"
+        },
+        "promosAndDiscount": {
+          "label": "促销与折扣"
+        }
+      }
+    }
   }
 }

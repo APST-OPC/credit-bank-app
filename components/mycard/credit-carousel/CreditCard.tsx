@@ -158,7 +158,11 @@ const CreditCard = ({ creditCard }: CardProperty) => {
               <CardDetailSection>
                 <CardDetailsLabel>Expired Date</CardDetailsLabel>
                 <CardDetailsValue>
-                  {renderNumbers(creditCard?.expiryDate ?? "12/12", "exp", toggleHidden)}
+                  {renderNumbers(
+                    creditCard?.expiryDate ?? "12/12",
+                    "exp",
+                    toggleHidden
+                  )}
                 </CardDetailsValue>
               </CardDetailSection>
 
