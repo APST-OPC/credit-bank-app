@@ -10,6 +10,7 @@ import { useTranslation } from "react-i18next";
 import { ISettingsModal } from "@/components/settings/type";
 import { languageSetting } from "@/components/settings/utils";
 import { useAuth } from "@/context/authContext";
+import { localizationKey } from "@/i18n/key";
 
 const commonPadding = Platform.OS === "ios" ? 16 : 12;
 
@@ -161,11 +162,12 @@ const SettingsModal = (props: ISettingsModal) => {
 };
 
 const SettingsScreen = () => {
-  const { i18n } = useTranslation();
+  const { i18n, t } = useTranslation();
   const { push } = useRouter();
   const { logout } = useAuth();
   const [modalVisible, setModalVisible] = useState(false);
   const [visible, setVisible] = useState(false);
+  const localKey = localizationKey.tabs.settings;
 
   const handleLogout = () => {
     setModalVisible(true);
@@ -180,37 +182,39 @@ const SettingsScreen = () => {
     i18n.changeLanguage(lng);
     setVisible(false);
   };
+  const handleLanguageCode = () => {
+    if (i18n.language.length > 2) {
+      return i18n.language.toUpperCase().slice(2, 4);
+    }
+    return i18n.language.toUpperCase();
+  };
 
   const renderTitle = () => {
     return (
       <Section>
-        <SectionTitle>Settings</SectionTitle>
+        <SectionTitle>{t(localKey.title)}</SectionTitle>
       </Section>
     );
   };
   const renderGeneralMenu = () => {
     return (
       <>
-        <Description>General</Description>
+        <Description>{t(localKey.general)}</Description>
 
         <MenuItem onPress={() => push("/profile")}>
-          <MenuText>My Profile</MenuText>
+          <MenuText>{t(localKey.myProfile)}</MenuText>
           <MaterialIcons name="chevron-right" size={24} color="#7E848D" />
         </MenuItem>
 
         <MenuItem onPress={() => push("/contactUs")}>
-          <MenuText>Contact Us</MenuText>
+          <MenuText>{t(localKey.contactUs)}</MenuText>
           <MaterialIcons name="chevron-right" size={24} color="#7E848D" />
         </MenuItem>
 
         <MenuItem onPress={() => setVisible(true)}>
-          <MenuText>Language</MenuText>
+          <MenuText>{t(localKey.language)}</MenuText>
           <LanguageView>
-            <LanguageText>
-              {i18n.language !== "en"
-                ? i18n.language.toUpperCase().slice(2, 4)
-                : "en".toUpperCase()}
-            </LanguageText>
+            <LanguageText>{handleLanguageCode()}</LanguageText>
             <MaterialIcons name="more-vert" size={24} color="#7E848D" />
           </LanguageView>
         </MenuItem>
@@ -231,15 +235,15 @@ const SettingsScreen = () => {
   const renderSecurityMenu = () => {
     return (
       <>
-        <Description>Security</Description>
+        <Description>{t(localKey.security)}</Description>
 
         <MenuItem onPress={() => push("/termsAndConditons")}>
-          <MenuText>Terms and Conditions</MenuText>
+          <MenuText>{t(localKey.termsAndCondition)}</MenuText>
           <MaterialIcons name="chevron-right" size={24} color="#7E848D" />
         </MenuItem>
 
         <MenuItem onPress={() => push("/changePassword")}>
-          <MenuText>Change Password</MenuText>
+          <MenuText>{t(localKey.changePassword)}</MenuText>
           <MaterialIcons name="chevron-right" size={24} color="#7E848D" />
         </MenuItem>
       </>
@@ -249,23 +253,23 @@ const SettingsScreen = () => {
     return (
       <>
         <LogoutItem onPress={handleLogout}>
-          <LogoutText>Log out</LogoutText>
+          <LogoutText>{t(localKey.logOut)}</LogoutText>
           <MaterialIcons name="exit-to-app" size={24} color="#FF0000" />
         </LogoutItem>
 
-        <SettingsModal open={modalVisible} title="Log out">
+        <SettingsModal open={modalVisible} title={t(localKey.logOut)}>
           <Text style={{ fontSize: 14, marginBottom: 30 }}>
-            Are you sure you want to logout?
+            {t(localKey.areYouSureYouWantToLogOut)}
           </Text>
           <ButtonsContainer>
             <ModalButton onPress={handleConfirmLogout}>
               <ModalButtonText style={{ color: "red" }}>
-                Log out
+                {t(localKey.logOut)}
               </ModalButtonText>
             </ModalButton>
             <Separator />
             <ModalButton onPress={handleCloseModal}>
-              <ModalButtonText>Cancel</ModalButtonText>
+              <ModalButtonText>{t(localKey.cancel)}</ModalButtonText>
             </ModalButton>
           </ButtonsContainer>
         </SettingsModal>

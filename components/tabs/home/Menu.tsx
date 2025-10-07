@@ -1,30 +1,31 @@
+import { localizationKey } from "@/i18n/key";
 import theme from "@/theme";
 import { useRouter, RelativePathString } from "expo-router";
 import React from "react";
 import { useTranslation } from "react-i18next";
 import { Dimensions, Platform, Pressable, Image } from "react-native";
 import { Surface, Text } from "react-native-paper";
-import { tabsLocalKey } from "@/i18n/key/modules/tabs";
 
 const Menu = () => {
   const { width } = Dimensions.get(Platform.OS === "web" ? "window" : "screen");
   const webWidth = width < 480 ? width : 480;
   const { push } = useRouter();
   const { t } = useTranslation();
+  const localKey = localizationKey.tabs;
 
   const menuList = [
     {
-      label: t(tabsLocalKey.home.addCard),
+      label: t(localKey.home.addCard),
       image: require("@/assets/images/add-card.png"),
       route: "/(mycard)/addNewCard",
     },
     {
-      label: t(tabsLocalKey.home.activateCard),
+      label: t(localKey.home.activateCard),
       image: require("@/assets/images/activate-card.png"),
       route: "/(home)/activate-card",
     },
     {
-      label: t(tabsLocalKey.home.promosAndDiscount),
+      label: t(localKey.home.promosAndDiscount),
       image: require("@/assets/images/promo.png"),
       route: "/(home)/promos",
     },

@@ -51,6 +51,73 @@
           "label": "優惠與折扣"
         }
       }
+    },
+    "myCard": {
+      "headers": {
+        "myCards": {
+          "label": "我的卡片"
+        },
+        "newCard": {
+          "label": "新卡片"
+        },
+        "accountDetails": {
+          "label": "帳戶詳情"
+        },
+        "pointBalance": {
+          "label": "點數餘額"
+        },
+        "outstandingBalance": {
+          "label": "未付款餘額"
+        },
+        "availableCredit": {
+          "label": "可用信用額度"
+        },
+        "recentTransaction": {
+          "label": "最近交易"
+        },
+        "viewMore": {
+          "label": "查看更多"
+        }
+      }
+    },
+    "settings": {
+      "headers": {
+        "title": {
+          "label": "設定"
+        },
+        "general": {
+          "label": "一般"
+        },
+        "security": {
+          "label": "安全"
+        }
+      },
+      "menu": {
+        "myProfile": {
+          "label": "我的個人資料"
+        },
+        "contactUs": {
+          "label": "聯絡我們"
+        },
+        "language": {
+          "label": "語言"
+        },
+        "termsAndCondition": {
+          "label": "條款與條件"
+        },
+        "changePassword": {
+          "label": "更改密碼"
+        },
+        "logOut": {
+          "label": "登出"
+        },
+        "areYouSureYouWantToLogOut": {
+          "label": "你確定要登出嗎？"
+        },
+        "cancel": {
+          "label": "取消"
+        }
+      }
     }
   }
 }

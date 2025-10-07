@@ -51,6 +51,73 @@
           "label": "Promos & Discount"
         }
       }
+    },
+    "myCard": {
+      "headers": {
+        "myCards": {
+          "label": "My Cards"
+        },
+        "newCard": {
+          "label": "New Card"
+        },
+        "pointBalance": {
+          "label": "Point Balance"
+        },
+        "accountDetails": {
+          "label": "Account Details"
+        },
+        "outstandingBalance": {
+          "label": "Outstanding Balance"
+        },
+        "availableCredit": {
+          "label": "Available Credit"
+        },
+        "recentTransaction": {
+          "label": "Recent Transaction"
+        },
+        "viewMore": {
+          "label": "View more"
+        }
+      }
+    },
+    "settings": {
+      "headers": {
+        "general": {
+          "label": "General"
+        },
+        "security": {
+          "label": "Security"
+        },
+        "title": {
+          "label": "Settings"
+        }
+      },
+      "menu": {
+        "myProfile": {
+          "label": "My Profile"
+        },
+        "contactUs": {
+          "label": "Contact Us"
+        },
+        "language": {
+          "label": "Language"
+        },
+        "termsAndCondition": {
+          "label": "Terms and Condition"
+        },
+        "changePassword": {
+          "label": "Change Password"
+        },
+        "logOut": {
+          "label": "Log out"
+        },
+        "areYouSureYouWantToLogOut": {
+          "label": "Are you sure you want to log out?"
+        },
+        "cancel": {
+          "label": "Cancel"
+        }
+      }
     }
   }
 }

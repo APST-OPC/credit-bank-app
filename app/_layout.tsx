@@ -45,6 +45,8 @@ const AnimatedLayoutView = styled(Animated.View)({
   overflow: "hidden",
 });
 
+
+
 const RootLayout = (): ReactElement => {
   const [isSplashVisible, setIsSplashVisible] = useState<boolean>(true);
   const fadeAnim = useSharedValue(1);
@@ -55,6 +57,7 @@ const RootLayout = (): ReactElement => {
     PoppinsExtraBold: require("@/assets/fonts/Poppins-ExtraBold.ttf"),
     PoppinsSemiBold: require("@/assets/fonts/Poppins-SemiBold.ttf"),
   });
+
 
   useEffect(() => {
     if (!loaded) return;

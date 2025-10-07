@@ -13,9 +13,9 @@ import { useAppTheme } from "@/hooks/useTheme";
 import { creditCardArray } from "@/data/mycard";
 import theme from "@/theme";
 import { useTranslation } from "react-i18next";
-import { tabsLocalKey } from "@/i18n/key/modules/tabs";
 import Menu from "@/components/tabs/home/Menu";
 import TransactionItem from "@/components/tabs/home/TransactionItem";
+import { localizationKey } from "@/i18n/key";
 
 const BlueBackground = styled(View)({
   width: "100%",
@@ -53,6 +53,7 @@ const HomeScreen = (): ReactElement => {
   const router = useRouter();
   const theme = useAppTheme();
   const { t } = useTranslation();
+  const localKey = localizationKey.tabs.home;
 
   const unreadCount = initialNotifications.filter(
     (notification) => !notification.read
@@ -90,7 +91,7 @@ const HomeScreen = (): ReactElement => {
           />
           <View>
             <WhiteText variant="labelSmall">
-              {t(tabsLocalKey.home.welcomeMsg)}
+              {t(localKey.welcomeMsg)}
             </WhiteText>
             <WhiteText variant="labelLarge">Charles James</WhiteText>
           </View>
@@ -114,7 +115,7 @@ const HomeScreen = (): ReactElement => {
     return (
       <StyledAccountView>
         <StyledAccountText>
-          {t(tabsLocalKey.home.availableCredit)}
+          {t(localKey.availableCredit)}
         </StyledAccountText>
         <StyledAccountText>PHP 60,530.00</StyledAccountText>
       </StyledAccountView>
@@ -149,7 +150,7 @@ const HomeScreen = (): ReactElement => {
           }}
         >
           <TextBold variant="labelLarge">
-            {t(tabsLocalKey.home.recentTransaction)}
+            {t(localKey.recentTransaction)}
           </TextBold>
           <TouchableOpacity hitSlop={20} onPress={handleViewRecent}>
             <Text
@@ -159,7 +160,7 @@ const HomeScreen = (): ReactElement => {
                 color: theme.colors.primary,
               }}
             >
-              {t(tabsLocalKey.home.viewMore)}
+              {t(localKey.viewMore)}
             </Text>
           </TouchableOpacity>
         </View>
