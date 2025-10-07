@@ -66,11 +66,10 @@ const TextBold = styled(Text)({
 interface ICardDetails {
   data: CardDataProps;
   reroute: Router;
-  key: number;
 }
 
 const CardDetails = (props: ICardDetails): ReactElement => {
-  const { data, reroute, key } = props;
+  const { data, reroute } = props;
   const { t } = useTranslation();
   const localKey = localizationKey.tabs.myCard;
   const detailsLabel = [
@@ -78,7 +77,7 @@ const CardDetails = (props: ICardDetails): ReactElement => {
     t(localKey.availableCredit),
   ];
   return (
-    <ParentView key={key}>
+    <ParentView>
       <PointView>
         <StyledPointTitle variant="titleMedium">
           {t(localKey.pointBalance)}
