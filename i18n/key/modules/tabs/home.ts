@@ -1,4 +1,5 @@
 export const homeLocalKey = {
+  home: "tabs.home.headers.home.label",
   welcomeMsg: "tabs.home.headers.welcomeMsg.label",
   recentTransaction: "tabs.home.headers.recentTransaction.label",
   availableCredit: "tabs.home.headers.availableCredit.label",
